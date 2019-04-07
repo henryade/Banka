@@ -2,90 +2,76 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="width=device-width initial-scale=1.0">
 		<meta name="author" content="Adeola Adeyemo">
 		<title>Banka | Create User</title>
 		<link rel="stylesheet" type="text/css" href="./styles/index.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	</head>
 	<body>
 		<header>
 			<div class="container">
 				<div id="brand">
-					<a href="landing.html"><img src="images/banka.png">
-					<h1>Banka</h1></a>	
+					<a href="../index.html"><img src="images/banka.png">
+					<h1>Banka </h1></a>	<span id="toggle" class="toggle-color fa fal fa-chevron-circle-down"></span>
 				</div>
-				<nav>	
+				<nav class="nav">
 					<ul>
 						<li><a href="Dashboard-admin.html" title="Return to the previous page">Dashboard</a></li>
-						<li><a href="landing.html">Logout</a></li>
+						<li><a href="../index.html">Logout</a></li>
 					</ul>
 				</nav>
 			</div>
 		</header>
-		<section class="content dashboard" id="dashboard-admin-create">
-			<div>
-				<div id="admin">
-					<div class="tab-tran-acc current-tab" id="tab-admin">
-						<a href="createUser.html">CREATE A STAFF/ADMIN</a>
-					</div>>				
+		<section class="dashboard dashboard-full overlay">
+			<div class="wrapper">
+				<div id="dashboard-admin-create">
+					<div class="tab-tran-acc">
+						<a  class="index-link" href="createUser.html">Create User</a>
+					</div>				
 				</div>
-				<div id="createAccountContainer">
-					<form action="dashboard.html" >
+				<div>
+					<form action="Dashboard-admin.html" >
 						<div id="createAccountForm">
-							<div class="secA">
+							<div class="sec-A">
 								<h3>Account Information</h3>
-								<div class="secB1-1">
+								<div class="sec-B">
 									<p>
-										<label for="userType">Choose User Type: </label>
 										<select>
-											<option value="">--Please choose an option--</option>
+										<option value="">--Choose User Type--</option>
 											<option value="staff">Staff</option>
 											<option value="admin">Admin</option>
 										</select>
 									</p>
 									<p>
-										<label for="firstName">First Name: </label>
-										<input type="text" id="firstName" name="firstName" class="authInput" required />
+										<input type="text" id="firstName" placeholder="First name" name="firstName" class="authInput input-sd" required />
+														
+										<input type="text" id="middleName" placeholder="Middle name" name="middleName" class="authInput input-sd" />
+				
+										<input type="text" id="lastName" placeholder="Last name" name="lastName" class="authInput input-sd" required />
 									</p>
-
-									<p>
-										<label for="lastName">Last Name: </label>
-										<input type="text" id="lastName" name="lastName" class="authInput" required />
-									</p>
-									<p>
-										
-									
-										<label for="middleName">Middle Name: </label>
-										<input type="text" id="middleName" name="middleName" class="authInput" />
+								
+									<p>				
+										<textarea id="address" name="address" placeholder="Address" required ></textarea>
 									</p>	
 
 									<p>				
-										<label for="address">Contact Address: </label>
-										<textarea id="address" name="address" required ></textarea>
-									</p>	
-
-									<p>				
-										<label for="mobile">Phone number: </label>
-										<input type="tel" id="mobile" name="mobile" required class="authInput" />
+										<input type="tel" id="mobile" placeholder="Mobile" name="mobile" required class="authInput input-md" />
 									</p>
 
 									<p>
-										<label for="email">Email Address: </label>
-										<input type="email" id="email" name="email" required class="authInput" />	
+										<input type="email" id="email" placeholder="Email" name="email" required class="authInput input-md" />	
 									</p>
 
 								</div>
 							</div>
 						</div>
-						<button id="createbtn" class="authBtn">Submit</button>
+						<button id="createbtn" class="btn form-btn">Submit</button>
 				    </form>
 				</div>
 			</div>
 		</section>
-		<footer id="createUserAccountFooter">
-			<div id="footerlinks">
-				<a href="landing.html">Home</a>  | <a href="#">Services</a> | <a href="#">About</a> | <a href="#">Contact Us</a> | <a href="#">Term and Conditions</a> | <a href="#">Bank Locations</a>
-			</div>
+		<footer>
 			&copy; 2019 Banka Plc. All Rights Reserved.
 		</footer>
 		<script type="text/javascript" src="scripts/index.js"></script>
