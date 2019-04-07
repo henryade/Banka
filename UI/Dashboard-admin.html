@@ -2,51 +2,71 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="width=device-width initial-scale=1.0">
 		<meta name="author" content="Adeola Adeyemo">
 		<title>Banka | Dashboard</title>
 		<link rel="stylesheet" type="text/css" href="./styles/index.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	</head>
 	<body>
 		<header>
-			<div class="container">
+			<div class="container user-header-div">
 				<div id="brand">
-					<a href="landing.html"><img src="images/banka.png">
-					<h1>Banka</h1></a>	
+					<span class="img-icon"><img src="images/profile.png" alt="profile" /></span>
+				
+					<a href="../index.html"><img src="images/banka.png">
+					<h1>Banka </h1></a><span id="toggle" class="toggle-color fa fa-chevron-circle-down"></span>	
 				</div>
-				<nav>	
+				<nav class="nav">	
 					<ul>
-						<li><a href="landing.html">Logout</a></li>
+						<li><a href="../index.html">Logout</a></li>
 					</ul>
 				</nav>
 			</div>
 		</header>
-		<section class="content dashboard" id="dashboard-background">
-			<div>
-				<aside>
-					<div class="profilePic">
-						<a class="normal-link" href="#pop-up6"><img src="images/profile.png" alt="profile" />change picture</a>
-						<div>
-							<p>Welcome,</p>
-							<p>Mr. Riyad Suhg</p>
-						<p id="usertype">Banka Admin</p>
-							
+		<section class="dashboard dashboard-seg">
+				<div class="col-9-1 dashboard-full">
+					<aside class="col-1">
+						<div class="profilePic">
+							<a class="normal-link" href="#pop-up6"><img src="images/profile.png" alt="profile" />change picture</a>
+							<div>
+								<p>Welcome,</p>
+								<p>Mr. Riyad Suhg</p>
+							<p id="usertype">Banka Admin</p>
+								
+							</div>
+						</div>
+					</aside>
+					<div class="col-9">
+						<div class="col-header" id="dashboard-admin-create">
+							<div class="tab-admin">
+								<a href="createUser.html">Create Staff</a>
+							</div>
+
+							<div class="tab-admin">
+								<a href="bankAccounts.html">Bank Accounts</a>
+							</div>
+
+							<div class="tab-admin">
+								<a href="Users.html">User Account</a>
 						</div>
 					</div>
-				</aside>
-				<div id="admin">
-					<div class="tab-admin">
-						<a href="createUser.html">CREATE A STAFF/ADMIN</a>
-					</div>
+					<h1>Dashboard</h1>
+					<div id="accountDetails">
 
-					<div class="tab-admin">
-						<a href="bankAccounts.html">BANK ACCOUNTS</a>
-					</div>
-
-					<div class="tab-admin">
-						<a href="Users.html">ACTIVATE/DEACTIVATE USER</a>
-					</div>				
+						<p class="eachDetail">Login Time: <span>8:00am</span></p>
+						<br />
+						<p class="eachDetail">Total Number of Accounts <span>3,000</span></p>
+						<p class="eachDetail">Total Account Activated <span>2,996</span></p>
+						<p class="eachDetail">Total Account Deactivated <span>4</span></p>
+						
+						<br />
+						<p class="eachDetail">Number of Staff Online <span>5</span></p>
+						<p class="eachDetail">Number of Admin Online<span>4</span></p>
+						
+					</div>	
 				</div>
+			</div>					
 				<div id="pop-up6" class="pop-up">
 					<div class="pop-upBody">
 						<span class="pop-upSpan"></span>
@@ -59,17 +79,14 @@
 										<img src="images/profile.png" alt="profile" />
 										<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
 									</div>
-									<button id="changebtn" class="authBtn">Submit</button>
+									<button id="changebtn" class="btn btn-sm">Submit</button>
 								</form>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 		</section>
 		<footer>
-			<a href="landing.html">Home</a>  | <a href="#">Services</a> | <a href="#">About</a> | <a href="#">Contact Us</a> | <a href="#">Term and Conditions</a> | <a href="#">Bank Locations</a>
-			<br /><br />
 			&copy; 2019 Banka Plc. All Rights Reserved.
 		</footer>
 		<script type="text/javascript" src="scripts/index.js"></script>

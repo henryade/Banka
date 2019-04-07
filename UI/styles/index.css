@@ -1,27 +1,53 @@
 body{
-	font: 15px/1.5 Arial, Comic Sans MS, Garamond, sans-serif;
+	font: 15px/1.5 Arial, Comic Sans MS, Garamond, ZCOOLXiaoWei-Regular, sans-serif;
+	background-color: #172A3A;
+}
+
+@font-face{
+	font-family: "ZCOOL XiaoWei";
+	src: url("../fonts/ZCOOLXiaoWei-Regular.ttf");
+}
+
+body, html{
+	height: 100%;
+	width: 100%;
 	padding: 0;
 	margin: 0;
-	background-color: #172A3A
+}
+
+* {
+	box-sizing: border-box;
 }
 
 /* Global */
 textarea {
-	width: 300px;
-	margin: 10px 0;
+	width: 50%;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	height: 50px;
 	border: 1px solid magenta;
 	outline: none;
-	display: block;
 	background-color: #F8F8FF;
+	padding-left: 10px;
 }
+
+.pop-up11 th, .pop-up11 td  {
+	padding: 0;
+	
+}
+
 
 table{
 	margin: 20px auto;
 	border-collapse: collapse;
 }
+
+.table-default-color td, .table-default-color th{
+	border: 2px solid #000;
+}
+
 th,td{
-	border: 2px solid #FF7F50;
+	border: 2px solid #fff;
 	text-align: left;
 	padding: 10px 27px;
 }
@@ -44,44 +70,78 @@ select{
 .content{
 	padding: 0;
 	margin: 0;
-	min-height: 487px;
-	text-align: center; 
+	height: 74%;
 	width: 100%;
 }
 
-.authInput, .authBtn{
-	border-radius: 6px;
-	margin: 5px 0;
-	display: block;
+.authInput, .btn{
+	border-radius: 3px;
 }
 .authInput{
-	min-width: 300px;
-	min-height: 25px;
+	min-height: 33px;
 	padding:4px;
 	border: 1px solid magenta;
 	outline: none;
-	border-radius: 6px;
 	background-color: #F8F8FF;
 }
 
-.authBtn{
-	width: 310px;
+
+input[type="checkbox"],input[type="radio"]{
+	transform:scale(1.5);
+}
+
+.btn{
 	min-height: 33px;
 	background-color: #09BC8A;
 	border: none;
 	color: #FFFAFA;
-	font-size: 20px;
-	font-weight: bold;
-	margin-bottom: 20px;
+	font-size: 17px;
 }
 
-.authBtn:hover{
+.input-lg{
+	width: 100%;
+	margin: 5px auto;
+}
+.input-lm{
+	width: 75%;
+}
+.input-md{
+	width: 50%;
+}
+.input-sd{
+	width:20%;
+}
+.input-ms{
+	width: 25%;
+
+}
+
+.btn-lg{
+	width: 100%;
+}
+
+.btn-md{
+	width: 50%;
+}
+.btn-sm{
+	width: 25%;
+}
+
+#toggle{
+	display: none;
+	z-index: 5;
+}
+#toggle-user{
+	display: none;
+	z-index: 5;
+}
+
+.btn:hover{
 	background-color: #05674c;
 }
 
 .authForm{
-	margin-top: 100px;
-	margin:100px auto 5px auto;
+	margin: 20px auto;
 	width: 60%;
 }
 
@@ -90,8 +150,9 @@ select{
 	padding: 10px 0;
 	display: block;
 	color: #191818;
-	text-transform: uppercase;
+	text-transform: capitalize;
 	font-size: 28px;
+	text-align: center;
 }
 
 .pop-up{
@@ -113,13 +174,17 @@ select{
 
 .pop-upBody{
 	background-color: white;
-	margin: 20px auto;
+	margin: 7% auto 0 auto;
 	padding: 15px 22px;
 	border-radius: 10px;
 	width: 35%;
 	box-sizing: border-box;
 	position: relative;
 	transition: all 2s ease-out;
+}
+
+#pop-up11 .pop-upBody{
+	width: 50%;
 }
 
 .pop-upBody div h3+form{
@@ -142,6 +207,11 @@ select{
 	text-decoration: none;
 }
 
+.sign-up-link{
+	color: blue;
+	font-size: 20px;
+}
+
 .normal-link{
 	color: blue;
 	font-size: 13px;
@@ -149,21 +219,27 @@ select{
 
 .normal-link-user{
 	color: blue;
-	font-size: 18px;
+	font-size: 16px;
 	text-align: center;
 }
 
-.normal-link:hover{
-	text-decoration: underline;
+.normal-link-user, .sign-up-link, .normal-link{
+	z-index: 7;
 }
 
-.normal-link-user:hover{
+.normal-link-user:hover, .sign-up-link:hover, .normal-link:hover{
+	cursor: pointer;
 	text-decoration: underline;
 }
 
 a {
 	text-decoration: none;
 	color: white;
+	cursor: pointer;
+}
+
+.index-link{
+	color: black;
 }
 
 ul{
@@ -173,10 +249,14 @@ ul{
 
 /* Header */
 header{
-	color: white;
-	padding-top: 30px;
-	min-height: 60px;
-	border-bottom: 3px solid #09BC8A; 
+	margin: 2% auto 1% auto;
+	top: 0;
+	width: 100%;
+	z-index: 4;
+}
+
+.fixed{
+		position: fixed;
 }
 
 header nav{
@@ -186,8 +266,7 @@ header nav{
 
 header nav a{
 	font-family: Georgia;
-	font-weight: bold;
-	text-transform: uppercase;
+	text-transform: capitalize;
 	font-size: 18px;
 }
 
@@ -231,21 +310,36 @@ header nav a:hover{
 /*** Section ***/
 
 /*landing-img-section*/
-#landing-img-section{
-	min-height: 487px;
-	background: url('../images/background3.jpg') no-repeat 0 -200px;
+.section-bg{
+	height: 100%;
+	background: url('../images/background5.jpg') no-repeat;
+	background-position: center;
 	background-size: cover;
-	text-align: center; 
-	font-size: 20px;
-	color: #FF7F11;
-	font-weight: bold;
-	box-sizing: border-box;
 }
 
-#landing-img-section h3{
+.landing-img-text{
+	font-family: "ZCOOL XiaoWei";
+	z-index: 2;
+	position: absolute;
+	text-align: center; 
+	font-size: 20px;
+	left: 10%;
+	right: 10%;
+	top:10%;
+}
+
+.landing-img-text button{
+	margin-top: 5%;
+	display: initial;
+	outline: none;
+}
+
+.landing-img-text h3{
+	color: black;
+	text-shadow: 3px 0 0 rgba(255,255,255,.3), -3px 0 0 rgba(255,255,255,.3);
 	font-size: 50px;
-	color: rgba(0,0,0,0.8);
 	margin-top: 100px;
+	filter: brightness(4);
 	margin-bottom: 10px;
 	text-transform: capitalize;
 }
@@ -273,6 +367,7 @@ header nav a:hover{
 #landing-img2{
 	min-height: 490px;
 	background: url('../images/background2.jpg') no-repeat 0 -200px;
+
 	background-size: cover;
 	text-align: center;
 	font-size: 20px;
@@ -287,50 +382,115 @@ header nav a:hover{
 }
 
 /* Content */
-.content aside, .content #half-background {
-		display: inline;
-		min-height: 490px;
+.col-6-4{
+	display: flex;
+		flex-wrap: wrap;
 }
-.content aside {
+.col-6-4 aside {
 	background-color: #fff; 
-	width: 40%;
-	float: right;
 }
 
-.content #half-background{
-	background: url('../images/background1.jpg') no-repeat 0 -200px;
-	width: 60%;
-	float: left;
+.col-4{
+	flex-basis: 40%;
+}
+
+.col-sign-up p {
+	text-align: center;
+}
+
+.col-sign-up form div:first child {
+	box-sizing: content-box;
+}
+
+.col-9-1{
+	display: flex;
+	flex-wrap: wrap;
+	text-align: center;
+}
+
+.col-1 {
+	flex-basis: 17%;
+	background-color: rgba(23,42,58,0.2);
+	height: 100%;
+}
+
+.col-9{
+	flex-basis: 83%;
+	flex-shrink: 7;
+}
+
+.col-9 h1{
+	margin: 10px auto;
+}
+
+.col-header{
+	width: 100%;
+	text-align: center;
+	background-color: #DCDCDC;
+	border-top: 1px solid rgba(23,42,58,0.2);
+	border-bottom: 1px solid rgba(23,42,58,0.2); 
+}
+
+.blend{
+	min-height: 487px;
+}
+
+.col-6{
+	background: url('../images/background1.jpg');
+	background-size:cover;
+	background-position: center;
+	flex-basis: 60%;
+	display: block;
 }
 
 
 /* dashboard */
-.dashboard aside{
-	width: 18%;
-	background-color: #09BC8A;
-}
-
 .dashboard{
+	width: 100%;
+	background-color: #75DDDD;	
+}
+.dashboard-full{
 	height: 100%;
-	background-color: #75DDDD;
+}
+.dashboard-seg{
+	height: 74%;
+
 }
 
-#dashboard-background{
-	background: url('../images/background4.jpg') no-repeat 0 -300px;
+#wrapper{
+	position: relative;
 }
 
-#dashboard-content{
-	width: 82%;
-	margin: 10px auto;
-	float: left;
+i .fa-user { 
+	position: absolute; 
+	top: 10px; 
+	left: 50px; 
+}
+
+.center{
+	text-align: center;
 }
 
 #usertype{
 	font-size: 15px;
-	color: 
+	color: rgb(23,42,58);
 }
 
 /*Profile Picture*/
+.profilePic {
+	margin: 0 auto;
+	text-align: center;
+}
+header #brand .img-icon img{
+	border-radius: 100px;
+	float: left;
+	margin: 1px 0 1px 5px;
+	width: 40px;
+	height: 40px;
+}
+.img-icon{
+	display: none; 
+}
 
 .profilePic img{
 	width: 130px;
@@ -372,11 +532,12 @@ header nav a:hover{
 
 /* eachDetail */
 .eachDetail{
-	padding: 15px 10px 0 10px;
-	border: 2px solid magenta;
+	padding: 1% 2%;
+	border: 2px solid #75DDDD;
 	border-radius: 5px;
 	height: 40px;
-	min-width: 400px;
+	background-color: white;
+	width: 75%;
 	display: block;
 	text-align: left;
 }
@@ -385,83 +546,90 @@ header nav a:hover{
 }
 
 /*Create Account*/
-#createAccountContainer{
+.overlay{
+	overflow-y: overlay;
+	padding-bottom: 2%;
+	height: 100%;
+	position: all;
 	background-color: #75DDDD;
-	min-height: 500px
+	
 }
-
-.update h1{
+.wrapper{
+	width: 97%;
+	margin: 0 auto;
+	box-shadow: -1px 0px 15px 5px rgba(0,0,0,0.75);
+}
+.wrapper h1{
 	width: 100%;
-	background-color: #172A3A;
 	text-align: center;
-	color: white;
+	color: black;
+	padding-top: 2%;
 	text-transform: uppercase;
 }
 
-.secA{
+.secA, .sec-A{
 	display: flex;
-	flex-wrap: wrap;
-	background-color: #ffffff;
+	background-color: #fff;
 	margin: 10px auto;
 	width: 97%;
 	padding-left: 20px;
 
 }
 
-.secA h3{
-	width: 200px;
+.secA h3, .sec-A h3{
+	width: 20%;
+}
+
+.secB2{
+	width: 80%;
+	margin-top: 2.3%;
+}
+.secB2 p{
+	display: inline;
+	
+	width: 80%;
+}
+.secB2 p:last-child{
+	display: block;
+	text-align: right;
+	margin:5px 1% 5px auto;
 }
 
 .secB{
-	margin-left: 40px;
+	margin-left: 1.5%;
+	margin-top: 4%;
 	width: 80%;
 }
 
-.secB1-1 p{
-	display: block;
+.secB p input,.sec-B p input, textarea{
+	margin-left: 1%;
 }
 
-.secB1-1 p *{
-	display: inline;
+.sec-B{
+	margin-left: 1.5%;
+	width: 80%;
 }
 
-.secB1-1 p label{
-	min-width: 150px;
-	display: inline-block;
-}
-
-.secB p label{
-	min-width: 150px;
-	display: inline-block;
-}
 
 .secB1{
-	display: inline;
 	margin-top: 20px;
+}
+
+.secB1 p{
+	display: inline;
+	
 	width: 30%;
 }
-.secB2{
-	display: inline;
-	margin-top: 20px;
-	width: 80%;
-}
 
-.secB1 input[type=text]{
-	margin-top: 0;
-}
-
-.secB1Custom{
-	font-size: 20px;
-}
-
-.secC{
-	display: inline;
-	float: right;
-	margin-bottom:10px;
-}
 
 #changebtn{
 	width: 180px;
+}
+
+.form-btn{
+	float:right;
+	margin-right: 20px;
+	margin-bottom: 10px; 
 }
 #createbtn{
 	float: center;
@@ -471,25 +639,20 @@ header nav a:hover{
 }
 
 /* search */
-#searchbtn {
-	width: 100px;
-	margin-right: 150px;
-	margin-left: 20px;
-}
+
 .search *{
-	display: inline-block;
+	display: inline;
 }
 
 .search{
-	float: right;
+	margin: 0 auto;
+	text-align: center;
 }
 
 /* tab-admin */
-#admin{
-	background-color: #172A3A;
-}
+
 #tab-admin{
-	width:49%
+	width:25%;
 }
 
 .tab-tran-acc{
@@ -498,25 +661,40 @@ header nav a:hover{
 	font-family: Georgia;
 	font-weight: bold;
 	font-size: 20px;
-	text-transform: uppercase;
+	text-transform: capitalize;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
+.tab-tran-acc a{
+	padding-left: 30px;
+}
+
+
+.tab-admin a{
+	color: brown;
+}
+.tab-admin a:hover{
+	text-decoration: underline;
+}
+
 .tab-admin{
 	display: inline-block;
-	width: 27.1%;
+	width: 26%;
 	font-family: Georgia;
-	font-weight: bold;
-	text-transform: uppercase;
+	text-transform: capitalize;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
 /* Bank Account Page */
 
+.hide, .hidden{
+	display: table-cell;
+}
+
 #bankAccbtn, #bankAccClosebtn{
-	width: 180px;
+	width: 100px;
 }
 #bankAccClosebtn{
 	float: right;
@@ -524,7 +702,8 @@ header nav a:hover{
 }
 .transactionForm{
 	margin: 0 auto;
-	width: 75%;
+	width: 100%;
+	text-align: center;
 }
 
 .transactionForm form div{
@@ -534,9 +713,12 @@ header nav a:hover{
 	display: flex;
 }
 
+#account-search *{
+	display: inline-block;
+}
 
 .bankAccForm p label, #transactionContainer label{
-	font-size: 22px;
+	font-size: 20px;
 }
 
 .bankAccForm p{
@@ -562,43 +744,44 @@ header nav a:hover{
    	width: 180px;
 }
 
-#accInfo span{
-	width: 150px;
+#accInfo, #flex-form{
+	margin-top: 2%;
+	background-color: white;
+	width: 45%;
+	border-radius: 15px 15px 0 0;
 }
 
-#accInfo{
-	margin-top: 10px;
-	margin-left: 10px;
+#accInfo h1, #flex-form h1{
+	background-color: #ef9a9a;
+	padding: 5%;
+	margin: 0;
+	text-align: center;
+	border-radius: 15px 15px 0 0;
+}
+
+#accInfo p, #flex-form p, #flex-form div{
+	padding: 3% 5% 0 5%;
+	margin: 0 auto;
+}
+
+#accInfo p {
+	display: flex;
+}
+
+#accInfo p span{
+	flex-basis: 50%;
+}
+
+#flex-form p, #flex-form div{
+	text-align: center;
 }
 
 #accountInformation{
 	display: flex;
 	font-size: 20px;
-	width: 80%;
-padding-left: 100px;
-	text-align: left;
-	justify-content: space-between;
+	justify-content: space-around;
 }
 
-#accountInformation form label, #accountInformation form input {
-	display: inline-block;
-}
-
-#accountInformation form div label{
-	min-width: 150px;
-	text-align: right;
-}
-
-#accountInformation h1{
-	margin-top: 5px;
-}
-
-
-#accountInformation button{
-	margin: 0 auto;
-	width: 180px;
-	float: right;
-}
 
 /* Email */
 
@@ -618,12 +801,21 @@ padding-left: 100px;
 	margin: 10px auto 0 auto;
 }
 
+#alert{
+	float: right;
+	text-align: center;
+	width: 100%;
+	background-color: #DCDCDC;
+	display: none;
+}
+
 /* Footer */
 
 footer{
+	height: 10%;
 	text-align: center;
 	color: white;
-	padding-top: 20px;
+	padding-top: 30px;
 }
 
 footer img{
@@ -649,83 +841,377 @@ footer #footerlinks{
 	padding-bottom: 10px;
 }
 
+br{
+	display: block;
+	margin: 5px 0;
+	content: " ";
+}
+
 .adjust-footer{
-	margin-top:50px;
+	margin-top:100px;
 	overflow: hidden;
 }
 
-
-@media screen and (max-width: 710px) {
-	#landing-img-section h3{
-		margin-top: 20px;
-	}
-	#landing-img-section{
-		background-position: 0;
-	}	
-	#accountdetails{
-		margin: 0;
-	}
-	.eachDetail{
-		padding: 10px 5px 0 5px;
-		height: 30px;
-		min-width: 300px;
-	}
-}
 @media screen and (max-width: 830px) {
-	#landing-img2{
-		background-position: 0;
-	}
-		#accountInformation{
-			flex-direction: column-reverse;	
-			text-align: center;		
-		}
 
-}
-
-@media screen and (max-width: 720px) {
-	.secB1 input+label{
-		display:inline-block;
-		margin-top: 0;
-		width: 80%;
-	}
-	.secB1{
-		margin-top: 10px;
-	}
-}
-
-@media screen and (max-width: 680px) {
-	#accInfo{
-		float: left;
-	}
-	.dashboard aside{
-		width: 0;
-	}
-	#accountdetails{
+	#dashboard-admin-create{
 		width: 100%;
 	}
-	#accountInformation form label + #accountInformation form input {
-	display: block;
-}
-	#bankAccbtn{
-		width: 310px;
+	.pop-upBody{
+		width:70%;
+		margin-top:15%;
 	}
+	.user-header-div-user{
+		display: flex;
+		flex-direction: column;
+		margin: 0 auto;
+		text-align: center;
+		width: 100%;
+	}
+	.user-header-div-user #brand{
+		display: block;
+	}
+	.user-header-div-user #nav-user {
+		display: none;
+		width: 100%;
+		margin: 10px auto;
+		transition: display 3s ease-in-out;
+
+	}
+	.user-header-div-user #nav-user *{
+		width: 100%;
+		font-size: 20px;
+		border-top:  1px solid rgba(23,42,58,0.2);
+
+	}
+	#toggle-user{
+		position: relative;
+		display: inline;
+		font-size: 30px;
+		color: white;
+	}
+	.col-1{
+		display: none;
+	}
+	.col-9{
+		flex-basis: 100%;
+	}
+	#nav-user li{
+		border-top: 1px solid #75DDDD;
+	}
+	#nav-user li:last-child{
+		border-bottom: 1px solid #75DDDD;
+	}
+	#accountInformation{
+		font-size: 16px;
+		justify-content: space-between;
+		padding: 2%;
+
+	}
+	#accInfo p, #flex-form p, #flex-form div{
+		padding: 3% 1% 0 1%;
+		margin: 0 auto;
+	}
+	#accInfo p span{
+		padding-left: 3%;
+		flex-basis: 60%;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	header div{
+		display: flex;
+		flex-direction: column;
+		margin: 0 auto;
+		text-align: center;
+		width: 100%;
+	}
+	.img-icon{
+		display: block;
+		position: absolute;
+	}
+	.hidden{
+		display: none;
+	}
+	.eachDetail{
+ 		width: 100%;
+	}
+
+	#pop-up11 .pop-upBody{
+		width: 70%;
+	}
+	#brand{
+		display: block;
+	}
+
+	#brand a *{
+		margin-right: 0;
+		padding-right: 0;
+	}
+	header div nav {
+		display: none;
+		width: 100%;
+		margin: 10px auto;
+		transition: display 3s ease-in-out;
+
+	}
+	header div nav *{
+		width: 100%;
+		font-size: 20px;
+		border-top:  1px solid rgba(23,42,58,0.2);
+
+	}
+	header .nav-index *{
+		background-color: #DCDCDC;
+	}
+
+	.container{
+		width:100%;
+	}
+
+	.landing-img-text button{
+		width: 200px;
+
+	}
+	#toggle{
+		position: relative;
+		display: inline;
+		font-size: 30px;
+	}
+
+	.toggle-color{
+		color: white;	
+	}
+	.nav li{
+		border-top: 1px solid #75DDDD;
+	}
+	.nav li:last-child{
+		border-bottom: 1px solid #75DDDD;
+	}
+	.secA, .sec-A{
+		flex-direction: column;
+	}
+	.create-form .secA h3, .secB2, .sec-A h3, .secB1 p{
+		width: 100%;
+	}
+	.secB2 p,.secB p *, .secB1 p{
+		display: block;
+	}
+	.secB, .secB1{
+		margin-top: 0;
+	}
+	.secB1 h3{
+		flex-basis: 50%;
+	}
+
+
+	.secB p:first-child *, {
+		display: block;
+		margin-top: 2%;
+		margin-bottom: 2%;
+	}
+	.sec-B .align-row input{
+		margin-top: 2%;
+		margin-bottom: 2%;
+	}
+
+	.secB p input, .secB p textarea, .sec-B p textarea,.sec-B p input{
+		width: 70%;
+		margin: 0 auto;
+	}
+	.sec-B p, .sec-B div, .align-row {
+		width: 100%;
+	}
+
+	#accInfo, #flex-form{
+		background-color: transparent;
+		width: 100%;
+		border-radius: 0;
+
+	}
+	#accInfo p {
+		margin-left: 20%
+	}
+	#accInfo p span{
+		flex-basis: 50%;
+	}
+
+	#accountInformation, #accInfo,#accInfo p, #accInfo h1, #flex-form, #flex-form p, #flex-form h1{
+		padding-top: 0;
+		padding-bottom: 1%;
+	}
+
+	#flex-form h1{
+		display: none;
+	}
+
+	 #accInfo , #flex-form {
+	 	margin-top: 0;
+	 }
+
+	#accInfo h1, #flex-form h1{
+		background-color: transparent;
+		text-align: center;
+		border-radius: 0;
+	}
+
+	#accountInformation{
+		font-size: 15px;
+		display: flex;
+		flex-direction: column-reverse;
+		margin: 0 auto;
+	}
+
+
+}
+
+@media screen and (min-width: 550px) {
+	header div nav {
+		display: block;
+	}
+}
+
+@media screen and (max-width: 465px) {
+	#account-search #bankAccbtn {
+		width: 181px;
+		margin: 0 auto;
+	}
+	.pop-upBody{
+		width:100%;
+		margin-top:20%;
+	}
+	.col-full{
+		display: flex;
+		justify-content: space-around;
+	}
+
+
+
+}
+
+@media screen and (max-width: 768px) {
+	.col-6 {
+		display: none;
+	}
+	.col-6-4 aside{
+		flex-basis: 100%;
+	}	
+	.hide{
+		display: none;
+	}
+	.col-header{
+		width:80%;
+	}
+	.col-9 .col-full{
+		width: 100%;
+	}
+	#dashboard-admin-create{
+		width: 100%;
+	}
+
 }
 
 @media screen and (max-width: 980px) {
+	.col-6{
+		background: url('../images/background1-1.jpg');
+		background-size:cover;
+		background-position: center;
+	}
+
+}
+
+
+@media screen and (max-width: 1095px) {
 	th,td{
-		padding: 10px 2px;
+		padding: 10px 20.5px;
+	}
+}
+
+@media screen and (max-width: 1005px) {
+	th,td{
+		padding: 5px 2px;
 	}
 
 }
 
-@media screen and (max-width: 1300px) {
-	#dashboard-background{
-		background-position: -200px -300px;
+@media screen and (max-width: 390px) {
+	br{
+		display: none;
+	}
+	table *, .normal-link-user{
+		font-size: 12px;
 	}
 }
 
-@media screen and (max-width: 860px) {
-	#dashboard-background{
-		background-position: -300px -300px;
+
+@media screen and (max-width: 650px) and (max-height: 370px) {
+	.landing-img-text h3 {
+		margin-top: 40px;
+		font-size: 40px;
 	}
+
+}
+
+@media screen and (max-width: 461px) and (max-height: 526px) {
+	.col-9 h1{
+		margin: 3px 0;
+	}
+	#accountDetails p{
+		padding: 0.5% 1%;
+		margin: 1%;
+	}
+}
+
+@media screen and (max-width: 823px) and (max-height: 415px) {
+	#accountDetails{
+		height: 60%;
+	}
+	.eachDetail{
+		height: 30px;
+		padding: 0.5% 1%;
+	}
+	.col-9 h1{
+		margin: 9px auto;
+		font-size: 1.35em;
+	}
+	.dashboard{
+		height: 100%;
+	}
+	br{
+		display: none;
+	}
+
+	#accountInformation{
+		font-size: 14px;
+		justify-content: space-between;
+		padding: 2%;
+
+	}
+	#accInfo h1, #flex-form h1{
+		padding: 1%;
+		font-size: 17px;
+	} 
+	#accInfo p, #flex-form p, #flex-form div{
+		padding: 3% 1% 0 1%;
+		margin: 0 auto;
+	}
+	#accInfo p span{
+		padding-left: 3%;
+		flex-basis: 60%;
+	}
+	#accountInformation, #accInfo, #accInfo h1, #flex-form, #flex-form h1{
+		padding-top: 0;
+		padding-bottom: 1%;
+	}
+	#accInfo , #flex-form {
+	 	margin-top: 0;
+	 	height: 70%;
+	 }
+	#flex-form input, #flex-form button{
+		min-height: 25px;
+	}
+	#flex-form button{
+		margin-bottom: 1%;
+	}
+
 }

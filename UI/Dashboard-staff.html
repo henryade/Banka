@@ -2,46 +2,65 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="width=device-width initial-scale=1.0">
 		<meta name="author" content="Adeola Adeyemo">
 		<title>Banka | Dashboard</title>
 		<link rel="stylesheet" type="text/css" href="./styles/index.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	</head>
 	<body>
 		<header>
-			<div class="container">
+			<div class="container user-header-div">
 				<div id="brand">
-					<a href="landing.html"><img src="images/banka.png">
-					<h1>Banka</h1></a>	
+					<span class="img-icon"><img src="images/profile.png" alt="profile" /></span>
+					<a href="../index.html"><img src="images/banka.png">
+					<h1>Banka </h1></a><span id="toggle" class="toggle-color fa fa-chevron-circle-down"></span>	
 				</div>
-				<nav>	
+				<nav class="nav">	
 					<ul>
-						<li><a href="landing.html">Logout</a></li>
+						<li><a href="../index.html">Logout</a></li>
 					</ul>
 				</nav>
 			</div>
 		</header>
 		<section class="content dashboard" id="dashboard-background">
-			<div>
-				<aside>
-					<div class="profilePic">
-						<a class="normal-link" href="#pop-up7"><img src="images/profile.png" alt="profile" />change picture</a>
-						<div>
-							<p>Welcome,</p>
-							<p>Mr. Emmanuel Joshua</p>
-						<p id="usertype">Banka Staff</p>
-							
+			<div class="dashboard-full">
+				<div class="col-9-1 dashboard-full">
+					<aside class="col-1">
+						<div class="profilePic">
+							<a class="normal-link" href="#pop-up7"><img src="images/profile.png" alt="profile" />change picture</a>
+							<div>
+								<p>Welcome,</p>
+								<p>Mr. Emmanuel Joshua</p>
+							<p id="usertype">Banka Staff</p>
+								
+							</div>
 						</div>
-					</div>
-				</aside>
-				<div id="admin">
-					<div class="tab-admin">
-						<a class="tab-bank-acc" href="accountTransaction.html">DEBIT/CREDIT USER</a>
-					</div>
+					</aside>
+					<div class="col-9">
+						<div class="col-header col-full">
+							<div class="tab-admin">
+								<a class="tab-bank-acc" href="accountTransaction.html">Debit/Credit User</a>
+							</div>
 
-					<div class="tab-admin">
-						<a class="tab-bank-acc" href="bankAccounts.html">BANK ACCOUNTS</a>
-					</div>			
+							<div class="tab-admin">
+								<a class="tab-bank-acc" href="bankAccounts.html">Bank Accounts</a>
+							</div>
+						</div>
+						<h1>Dashboard</h1>
+						<div id="accountDetails">
+
+							<p class="eachDetail">Login Time: <span>8:00am</span></p>
+							<br />
+							<p class="eachDetail">Total Account Credited <span> 20</span></p>
+							<p class="eachDetail">Total Account Debiited <span>10</span></p>
+							
+							<br />
+							<p class="eachDetail">Total Cash Received <span>N4,000,000</span></p>
+							<p class="eachDetail">Total Cash Withdrawn <span>N1,000,000</span></p>
+							<p class="eachDetail">Total Cash Remaining <span>N3,000,00</span></p>
+						</div>			
+					</div>
 				</div>
 				<div id="pop-up7" class="pop-up">
 					<div class="pop-upBody">
@@ -55,7 +74,7 @@
 										<img src="images/profile.png" alt="profile" />
 										<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
 									</div>
-									<button id="changebtn" class="authBtn">Submit</button>
+									<button id="changebtn" class="btn btn-sm">Submit</button>
 								</form>
 							</div>
 						</div>
@@ -64,10 +83,8 @@
 			</div>
 		</section>
 		<footer>
-			<div id="footerlinks">
-				<a href="landing.html">Home</a>  | <a href="#">Services</a> | <a href="#">About</a> | <a href="#">Contact Us</a> | <a href="#">Term and Conditions</a> | <a href="#">Bank Locations</a>
-			</div>
 			&copy; 2019 Banka Plc. All Rights Reserved.
 		</footer>
+		<script type="text/javascript" src="scripts/index.js"></script>
 	</body>
 </html>
