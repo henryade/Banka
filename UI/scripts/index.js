@@ -1,16 +1,17 @@
-const 	username = document.getElementById("usernames"),
- 		submit = document.getElementById("submit"),
- 		accountInformation = document.getElementById("accountInformation"),
- 		accNumber = document.getElementById("accNum"),
- 		toggle = document.getElementById("toggle"),
- 		nav = document.getElementsByTagName("nav")[0],
- 		credentials = document.getElementById("credentials"),
- 		toggleUser = document.getElementById("toggle-user"),
- 		navUser = document.getElementById("nav-user"),
-	  	transactType = document.getElementById("transactType"),
-	  	transactAmount = document.getElementById("transactAmount"),
-	  	emailNotification = document.getElementById("emailNotification"),
-	  	transactbtn = document.getElementById("transactbtn");
+const username = document.getElementById("usernames");
+const password = document.getElementById("password");
+const submit = document.getElementById("submit");
+const accountInformation = document.getElementById("accountInformation");
+const accNumber = document.getElementById("accNum");
+const toggle = document.getElementById("toggle");
+const nav = document.getElementsByTagName("nav")[0];
+const credentials = document.getElementById("credentials");
+const toggleUser = document.getElementById("toggle-user");
+const navUser = document.getElementById("nav-user");
+const transactType = document.getElementById("transactType");
+const transactAmount = document.getElementById("transactAmount");
+const emailNotification = document.getElementById("emailNotification");
+const transactbtn = document.getElementById("transactbtn");
 
 const path = window.location.href;
 const fileName = path.slice(path.lastIndexOf("/") + 1);
@@ -88,9 +89,11 @@ const checkUser = (a) => {
 	a.href = `dashboard-${localStorage.getItem("user").toLowerCase()}.html`;
 }
 
-if(fileName === "signIn.html"){
+if(fileName === "SignIn.html"){
 	username.addEventListener("click", () => {
 		credentials.style.display = "none";
+		username.value = "";
+		password.value = "";
 	})
 
 }

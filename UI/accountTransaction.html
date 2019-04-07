@@ -2,54 +2,58 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="width=device-width initial-scale=1.0">
 		<meta name="author" content="Adeola Adeyemo">
-		<title>Banka | Account Transaction</title>
+		<title>Banka | Dashboard</title>
 		<link rel="stylesheet" type="text/css" href="./styles/index.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	</head>
 	<body>
 		<header>
-			<div class="container">
+			<div class="container user-header-div">
 				<div id="brand">
-					<a href="landing.html"><img src="images/banka.png">
-					<h1>Banka</h1></a>	
+					<span class="img-icon"><img src="images/profile.png" alt="profile" /></span>
+				
+					<a href="../index.html"><img src="images/banka.png">
+					<h1>Banka </h1></a><span id="toggle" class="toggle-color fa fa-chevron-circle-down"></span>	
 				</div>
-				<nav>	
+				<nav class="nav">
 					<ul>
 						<li><a href="Dashboard-staff.html">DashBoard</a></li>
-						<li><a href="landing.html">Logout</a></li>
+						<li><a href="../index.html">Logout</a></li>
 					</ul>
 				</nav>
 			</div>
 		</header>
-		<section class="content dashboard" id="dashboard-admin-create">
-			<div>
-				<div id="admin">
-					<div class="tab-tran-acc">
-						<a href="javascript:void(0)">ACCOUNT TRANSACTION</a>
+		<section class="content dashboard dashboard-full">
+			<div id="dashboard-admin-create">
+				<div class="col-header">
+					<div class="tab-tran-acc transactionForm">
+						<a class="index-link"  href="javascript:void(0)">ACCOUNT TRANSACTION</a>
 					</div>
 	
 				</div>
-				<div id="transactionContainer">
-					<div class="transactionForm">
+				<div class="search">
+					<div id="account-search">
 						<form onsubmit="loadAcc()" action="javascript:void(0);">
 							<p>				
 								<label for="accNum">Account Number: </label>
 								<input type="number" id="accNum" name="accNum" id="accNum" required class="authInput" />
 							</p>
-							<button id="bankAccbtn" class="authBtn">Submit</button>
+							<button id="bankAccbtn" class="btn btn-md ">Submit</button>
 						</form>
 					</div>
-				</div>
-			</div>
+				</div>				
 				<div id="accountInformation">
 					
 				</div>
+			</div>
+
 				<div id="pop-up9" class="pop-up">
 					<div class="pop-upBody">
 						<span class="pop-upSpan"></span>
 						<div>
-							<a class="closePop-up" href="#">X</a>
+							<a class="closePop-up" href="#"><i class="fas fa-times-circle"></i></a>
 							<div>
 								<h2>EMAIL NOTIFICATION</h2>
 								<form id="email-form" action="#">
@@ -82,9 +86,6 @@
 			
 		</section>
 		<footer>
-			<div id="footerlinks">
-				<a href="landing.html">Home</a>  | <a href="#">Services</a> | <a href="#">About</a> | <a href="#">Contact Us</a> | <a href="#">Term and Conditions</a> | <a href="#">Bank Locations</a>
-			</div>
 			&copy; 2019 Banka Plc. All Rights Reserved.
 		</footer>
 		<script type="text/javascript" src="scripts/index.js"></script>

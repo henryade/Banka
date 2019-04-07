@@ -209,7 +209,7 @@ input[type="checkbox"],input[type="radio"]{
 
 .sign-up-link{
 	color: blue;
-	font-size: 20px;
+	font-size: px;
 }
 
 .normal-link{
@@ -344,30 +344,11 @@ header nav a:hover{
 	text-transform: capitalize;
 }
 
-/* Other-Links */
-#other-links{
-	background-color: #004346;
-}
-
-#other-links .box{
-	display: inline-block;
-	width: 19%;
-	min-height: 30px;
-	text-align: center;
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
-#other-links .box:hover{
-	background-color: #09BC8A;
-	font-weight: bold;
-}
 
 /* landing-img2 */
 #landing-img2{
 	min-height: 490px;
 	background: url('../images/background2.jpg') no-repeat 0 -200px;
-
 	background-size: cover;
 	text-align: center;
 	font-size: 20px;
@@ -481,14 +462,14 @@ i .fa-user {
 	margin: 0 auto;
 	text-align: center;
 }
-header #brand .img-icon img{
+header #brand .img-icon img, header #brand .img-icon-user img{
 	border-radius: 100px;
 	float: left;
 	margin: 1px 0 1px 5px;
 	width: 40px;
 	height: 40px;
 }
-.img-icon{
+.img-icon, .img-icon-user{
 	display: none; 
 }
 
@@ -795,13 +776,13 @@ header #brand .img-icon img{
 
 #email-form{
 	margin-right: auto 5px;
-	text-align: left;
+	text-align: center;
 }
 #email-form button{
 	margin: 10px auto 0 auto;
 }
 
-#alert{
+#credentials{
 	float: right;
 	text-align: center;
 	width: 100%;
@@ -833,13 +814,6 @@ footer a{
 	padding-right: 15px;
 }
 
-footer #footerlinks a:hover{
-	text-decoration: underline;
-}
-
-footer #footerlinks{	
-	padding-bottom: 10px;
-}
 
 br{
 	display: block;
@@ -854,6 +828,10 @@ br{
 
 @media screen and (max-width: 830px) {
 
+	.img-icon-user{
+		display: block;
+		position: absolute;
+	}
 	#dashboard-admin-create{
 		width: 100%;
 	}
@@ -1073,7 +1051,6 @@ br{
 
 @media screen and (max-width: 465px) {
 	#account-search #bankAccbtn {
-		width: 181px;
 		margin: 0 auto;
 	}
 	.pop-upBody{
@@ -1099,15 +1076,16 @@ br{
 	.hide{
 		display: none;
 	}
-	.col-header{
+/*	.col-header{
 		width:80%;
-	}
+	}*/
 	.col-9 .col-full{
 		width: 100%;
 	}
 	#dashboard-admin-create{
 		width: 100%;
 	}
+
 
 }
 
@@ -1141,6 +1119,12 @@ br{
 	table *, .normal-link-user{
 		font-size: 12px;
 	}
+	#bankAccbtn, #bankAccNum{
+		display: block;
+	}
+	#bankAccbtn{
+		width: 100%;
+	}
 }
 
 
@@ -1149,7 +1133,6 @@ br{
 		margin-top: 40px;
 		font-size: 40px;
 	}
-
 }
 
 @media screen and (max-width: 461px) and (max-height: 526px) {
