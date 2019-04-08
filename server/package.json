@@ -1,0 +1,32 @@
+{
+  "name": "banka",
+  "version": "1.0.0",
+  "description": "a lightweight banking application",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint index.js --fix",
+    "test-init": "jasmine init",
+    "start": "nodemon --exec babel-node index.js",
+    "test": "babel-node spec/run.js"
+  },
+  "author": "Adeola Adeyemo",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^7.0.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.3",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "jasmine": "^3.4.0",
+    "nodemon": "^1.18.10"
+  }
+}
