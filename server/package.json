@@ -7,15 +7,20 @@
     "lint": "eslint index.js --fix",
     "test-init": "jasmine init",
     "start": "nodemon --exec babel-node index.js",
-    "test": "babel-node spec/run.js"
+    "test": "nodemon --exec babel-node spec/run.js"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "dotenv": "^7.0.0",
     "eslint-config-airbnb": "^17.1.0",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-authentication": "^0.4.0",
+    "moment": "^2.24.0",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
@@ -27,6 +32,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-promise": "^4.1.1",
     "jasmine": "^3.4.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "request": "^2.88.0"
   }
 }
