@@ -2,10 +2,12 @@ import db from "../models/database";
 
 module.exports = {
   getUsers() {
-    return db.USERS;
+    const b = JSON.parse(JSON.stringify(db.USERS));
+    return b;
   },
   getAccounts() {
-    return db.ACCOUNTS;
+    const a = JSON.parse(JSON.stringify(db.ACCOUNTS));
+    return a;
   },
   save(obj, model) {
     db[model].push(obj);
@@ -32,7 +34,7 @@ module.exports = {
     };
     this.save(user, "USERS");
   },
-  findOneUser(Key, Value) { 
+  findOneUser(Key, Value) {
     return this.getUsers().find(field => field[Key] === Value);
   },
   createAccount(
@@ -64,12 +66,14 @@ module.exports = {
       dob,
       address,
       type,
-      
+
     };
     this.save(userAccount, "ACCOUNTS");
   },
-  findAccountById(Value) { 
+  findAccountById(Value) {
     return this.getAccounts().find(field => field.owner === Value);
   },
-
+  findAccountByAccountNumber(accountNumber) {
+    return this.getAccounts().find(field => field.accountNumber === accountNumber);
+  },
 };

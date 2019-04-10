@@ -1,5 +1,25 @@
 import data from "./dbController";
 
+const logic = (action, req, res) => {
+  const accounts = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
+  if (!accounts) {
+    return res.status(400).json({
+      status: 400,
+      error: "Invalid account number",
+    });
+  }
+  if (accounts.status === action) {
+    return res.status(400).json({
+      status: 400,
+      error: `Account is ${action}`,
+    });
+  }
+  accounts.status = action;
+  return res.status(200).json({
+    status: 200,
+    data: accounts,
+  });
+};
 
 class AccountController {
   static createAccount(req, res) {
@@ -57,15 +77,25 @@ class AccountController {
     const accountNumber = bankAccountNumberBranding + Math.floor(Math.random() * lengthOfAccountNumber);
     const createdOn = new Date(Date.now());
     const owner = data.findOneUser("email", req.body.email).id;
- 
+
     data.createAccount(id, accountNumber, createdOn, owner, "active", req.body.firstName, req.body.lastName, req.body.email, req.body.type, req.body.balance, req.body.phoneNumber, req.body.dob, req.body.address);
     const newAccount = data.findAccountById(owner);
-    
+
     res.status(201).json({
       status: 201,
       data: newAccount,
     });
   }
+
+  static activateAccount(req, res) {
+    logic("active", req, res);
+  }
+
+  static deactivateAccount(req, res) {
+    // eslint-disable-next-line radix
+    logic("dormant", req, res);
+  }
 }
+
 
 export default AccountController;
