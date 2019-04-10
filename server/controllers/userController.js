@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { JWT_KEY } from "../config";
-import data from "../models/migrations";
+import data from "./dbController";
 
-const salt = bcrypt.genSaltSync(10);
+const salt = 10;
 
 class UserController {
   static signin(req, res) {
@@ -19,7 +19,7 @@ class UserController {
         error: "password is required",
       });
     }
-    const User = data.getUsers().find(m => m.email === req.body.email);
+    const User = data.findOneUser("email", req.body.email);
     if (!User) {
       return res.status(401).json({
         status: 401,
@@ -52,6 +52,7 @@ class UserController {
             id: User.id,
             firstName: User.firstName,
             lastName: User.lastName,
+            password: User.password,
             type: User.type,
             isAdmin: User.isAdmin,
           },
@@ -60,6 +61,84 @@ class UserController {
       return res.status(401).json({
         status: 401,
         error: "Auth failed",
+      });
+    });
+  }
+
+  static signup(req, res) {
+    if (!req.body.email) {
+      return res.status(400).json({
+        status: 400,
+        error: "email is required",
+      });
+    }
+    if (!req.body.password) {
+      return res.status(400).json({
+        status: 400,
+        error: "password is required",
+      });
+    }
+    if (!req.body.firstName) {
+      return res.status(400).json({
+        status: 400,
+        error: "first name is required",
+      });
+    }
+    if (!req.body.lastName) {
+      return res.status(400).json({
+        status: 400,
+        error: "last name is required",
+      });
+    }
+    if (!req.body.confirmPassword || (req.body.password !== req.body.confirmPassword)) {
+      return res.status(401).json({
+        status: 401,
+        error: "passwords do not match",
+      });
+    }
+    const User = data.findOneUser("email", req.body.email);
+    if (User) {
+      return res.status(400).json({
+        status: 400,
+        error: "email already exist",
+      });
+    }
+
+
+    bcrypt.hash(req.body.password, salt, (err, hash) => {
+      if (err) {
+        return res.status(500).json({
+          error: err,
+        });
+      }
+      const allUser = data.getUsers().map(x => x.id).sort(); 
+      const id = allUser[allUser.length - 1] + 1;
+
+      const token = jwt.sign({
+        email: req.body.email,
+        id,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        type: "client",
+        isAdmin: false,
+      }, JWT_KEY,
+      {
+        expiresIn: "1h",
+      });
+      data.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash);
+      const newUser = data.findOneUser("id", id);
+
+      return res.status(201).json({
+        status: 201,
+        data: {
+          token: newUser.token,
+          id: newUser.id,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          password: newUser.password,
+          type: newUser.type,
+          isAdmin: newUser.isAdmin,
+        },
       });
     });
   }

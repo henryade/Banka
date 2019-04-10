@@ -19,8 +19,7 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
     "jwt-authentication": "^0.4.0",
-    "moment": "^2.24.0",
-    "supertest": "^4.0.2"
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
