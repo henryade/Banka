@@ -1,11 +1,8 @@
 /* eslint-disable no-undef */
-import jasmine from "jasmine";
 import request from "request";
-import router from "../../routes/index";
-import app from "../../app";
 
 describe("Sign in test", () => {
-  const endpoint = "http://localhost:8080/api/v1/auth/signin";
+  const endpoint = "http://localhost:3000/api/v1/auth/signin";
   it("should not login a user when there are no parameters", (done) => {
     request.post(endpoint, { json: true, body: {} }, (error, response) => {
       expect(response.statusCode).toEqual(400);

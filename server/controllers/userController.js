@@ -19,7 +19,7 @@ class UserController {
         error: "password is required",
       });
     }
-    const User = data.findOneUser("email", req.body.email);
+    const User = data.getUsers().find(userField => userField.email === req.body.email);
     if (!User) {
       return res.status(401).json({
         status: 401,
@@ -125,7 +125,7 @@ class UserController {
       {
         expiresIn: "1h",
       });
-      data.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash);
+      data.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash,"client", false);
       const newUser = data.findOneUser("id", id);
 
       return res.status(201).json({
@@ -135,7 +135,7 @@ class UserController {
           id: newUser.id,
           firstName: newUser.firstName,
           lastName: newUser.lastName,
-          password: newUser.password,
+          email: newUser.email,
           type: newUser.type,
           isAdmin: newUser.isAdmin,
         },
