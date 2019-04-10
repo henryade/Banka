@@ -1,10 +1,9 @@
 /* eslint-disable no-undef */
 import request from "request";
-import dataFunction from "../../controllers/dbController";
 
-describe("Sign in test", () => {
+describe("Create Account test", () => {
   const endpoint = "http://localhost:3000/api/v1/accounts";
-  it("should not login a user when there are no parameters", (done) => {
+  it("should not create account if there are no parameters", (done) => {
     request.post(endpoint, { json: true, body: {} }, (error, response) => {
       expect(response.statusCode).toEqual(400);
       done();
@@ -171,7 +170,6 @@ describe("Sign in test", () => {
     });
   });
   it("should create a user account if all credentials are given", (done) => {
-      
     const pageload1 = {
       json: true,
       body: {
@@ -200,4 +198,80 @@ describe("Sign in test", () => {
       done();
     });
   });
+});
+
+
+
+describe("Activate account test", () => {
+  it("should be able to activate account if the body is empty", (done) => {
+    request.put(`http://localhost:3000/api/v1/accounts/9000134354/activate`, { json: true, body: {} }, (error, response) => {
+      expect(response.statusCode).toEqual(200);
+      done();
+    });
+  });
+
+  it("should not do nothing if user account is active", (done) => {
+
+    request.put(`http://localhost:3000/api/v1/accounts/9000134322/activate`, { json: true }, (error, response, body) => {
+      expect(response.statusCode).toEqual(400);
+      console.log(body)
+      expect(body.error).toBe("Account is active")
+      done();
+    });
+  });
+
+  it("should activate a user account if account is dormant", (done) => {
+
+    request.put(`http://localhost:3000/api/v1/accounts/9000134354/activate`, { json: true }, (error, response, body) => {
+      expect(response.statusCode).toEqual(200);
+      expect(body.data.status).toBe("active");
+      expect(body.data.accountNumber).toBe(9000134354);
+      done();
+    });
+  });
+
+  it("should not activate if account number is invalid", (done) => {
+    request.put(`http://localhost:3000/api/v1/accounts/8000134322/activate`, { json: true }, (error, response, body) => {
+      expect(response.statusCode).toEqual(400);
+      expect(body.error).toBe("Invalid account number");
+      done();
+    });
+  });
+});
+
+describe("Deactivate account test", () => {
+  
+  it("should be able to deactivate account if there are no parameters", (done) => {
+    request.put(`http://localhost:3000/api/v1/accounts/9000134322/deactivate`, { json: true, body: {} }, (error, response, body) => {
+      expect(response.statusCode).toEqual(200);
+      console.log(body)
+      done();
+    });
+  });
+
+  it("should not do nothing if user account is dormant", (done) => {
+    request.put(`http://localhost:3000/api/v1/accounts/9000134354/deactivate`, { json: true }, (error, response, body) => {
+      expect(response.statusCode).toEqual(400);
+      expect(body.error).toBe("Account is dormant");
+      done();
+    });
+  });
+
+  
+  it("should deactivate a user account if account is active", (done) => {
+    request.put(`http://localhost:3000/api/v1/accounts/9000134322/deactivate`, { json: true}, (error, response, body) => {
+      expect(response.statusCode).toEqual(200);
+      expect(body.data.status).toBe("dormant");
+      done();
+    });
+  });
+
+  it("should not deactivate if account number is invalid", (done) => {
+    request.put(`http://localhost:3000/api/v1/accounts/8000134354/deactivate`, { json: true}, (error, response, body) => {
+      expect(response.statusCode).toEqual(400);
+      expect(body.error).toBe("Invalid account number");
+      done();
+    });
+  });
+
 });

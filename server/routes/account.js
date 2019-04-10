@@ -4,7 +4,6 @@ import isLoggedIn from "../middleware/authorization";
 
 const router = express.Router();
 
-
 // ///////////////////
 // Create Account //
 // /////////////////
@@ -31,9 +30,8 @@ router.post("/:userId/transactions/:account-number/credit", (req, res) => {
 // Activate/Deactivate Account //
 // //////////////////////////////
 
-router.put("/:userId/account/:account-number", (req, res) => {
-
-});
+router.put("/accounts/:accountNumber/activate", accountData.activateAccount);
+router.put("/accounts/:accountNumber/deactivate", accountData.deactivateAccount);
 
 // ////////////////////////
 // /// Delete Account ///
