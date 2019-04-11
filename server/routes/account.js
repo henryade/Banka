@@ -21,7 +21,6 @@ router.put("/accounts/:accountNumber/deactivate", accountData.deactivateAccount)
 // /// Delete Account ///
 // //////////////////////
 
-router.delete("/account/:account-number", (req, res) => {
-});
+router.delete("/account/:accountNumber", accountData.deleteAccount);
 
 module.exports = router;

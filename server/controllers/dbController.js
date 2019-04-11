@@ -109,4 +109,9 @@ module.exports = {
   findTransactionByAccountNumber(Value) {
     return this.getTransactions().find(field => field.accountNumber === Value);
   },
+  deleteAccount(specificAccount) {
+    const allAccount = db.ACCOUNTS;
+    const index = allAccount.indexOf(specificAccount);
+    db.ACCOUNTS = allAccount.splice(index, 1);
+  },
 };
