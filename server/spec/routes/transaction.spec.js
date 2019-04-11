@@ -95,19 +95,19 @@ describe("Credit Account test", () => {
   });
 
 
-//   it("should not credit a user if the account number is invalid", (done) => {
-//     const pageload = {
-//       json: true,
-//       body: {
-//         amount: 700,
-//         depositor: "Simon",
-//         phoneNumber: "08064372423",
-//       },
-//     };
-//     request.post(`http://localhost:3000/api/v1/transactions/${fallingTest}/credit`, pageload, (error, response, body) => {
-//       expect(response.statusCode).toEqual(400);
-//       expect(body.error).toEqual("Invalid Account Number");
-//       done();
-//     });
-//   });
+  it("should not credit a user if the account number is invalid", (done) => {
+    const pageload = {
+      json: true,
+      body: {
+        amount: 700,
+        depositor: "Simon",
+        phoneNumber: "08064372423",
+      },
+    };
+    request.post(`http://localhost:3000/api/v1/transactions/${fallingTest}/credit`, pageload, (error, response, body) => {
+      expect(response.statusCode).toEqual(400);
+      expect(body.error).toEqual("Invalid Account Number");
+      done();
+    });
+  });
 });
