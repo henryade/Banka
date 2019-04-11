@@ -26,6 +26,7 @@ const logic = (action, req, res) => {
       error: "Account is Inactive",
     });
   }
+  console.log(req.params.amount)
   const newBalance = accounts.balance + action * parseFloat(req.body.amount);
   const lengthOfTransactionId = 6;
   const id = Math.floor(Math.random() * lengthOfTransactionId);

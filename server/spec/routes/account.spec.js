@@ -212,16 +212,14 @@ describe("Activate account test", () => {
   });
 
   it("should not do nothing if user account is active", (done) => {
-
     request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber1}/activate`, { json: true }, (error, response, body) => {
       expect(response.statusCode).toEqual(400);
-      expect(body.error).toBe("Account is active")
+      expect(body.error).toBe("Account is active");
       done();
     });
   });
 
   it("should activate a user account if account is dormant", (done) => {
-
     request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber2}/activate`, { json: true }, (error, response, body) => {
       expect(response.statusCode).toEqual(200);
       expect(body.data.status).toBe("active");
@@ -230,7 +228,7 @@ describe("Activate account test", () => {
   });
 
   it("should not activate if account number is invalid", (done) => {
-    request.put(`http://localhost:3000/api/v1/accounts/8000134322/activate`, { json: true }, (error, response, body) => {
+    request.put("http://localhost:3000/api/v1/accounts/8000134322/activate", { json: true }, (error, response, body) => {
       expect(response.statusCode).toEqual(400);
       expect(body.error).toBe("Invalid account number");
       done();
@@ -238,40 +236,39 @@ describe("Activate account test", () => {
   });
 });
 
-describe("Deactivate account test", () => {
-  
-  it("should be able to deactivate account if there are no parameters", (done) => {
-    request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber1}/deactivate`, { json: true, body: {} }, (error, response, body) => {
-      expect(response.statusCode).toEqual(200);
-      done();
-    });
-  });
+// describe("Deactivate account test", () => {
+//   it("should be able to deactivate account if there are no parameters", (done) => {
+//     request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber1}/deactivate`, { json: true, body: {} }, (error, response, body) => {
+//       expect(response.statusCode).toEqual(200);
+//       done();
+//     });
+//   });
 
-  it("should not do nothing if user account is dormant", (done) => {
-    request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber2}/deactivate`, { json: true }, (error, response, body) => {
-      expect(response.statusCode).toEqual(400);
-      expect(body.error).toBe("Account is dormant");
-      done();
-    });
-  });
+//   it("should not do nothing if user account is dormant", (done) => {
+//     request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber2}/deactivate`, { json: true }, (error, response, body) => {
+//       expect(response.statusCode).toEqual(400);
+//       expect(body.error).toBe("Account is dormant");
+//       done();
+//     });
+//   });
 
-  
-  it("should deactivate a user account if account is active", (done) => {
-    request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber1}/deactivate`, { json: true}, (error, response, body) => {
-      expect(response.statusCode).toEqual(200);
-      expect(body.data.status).toBe("dormant");
-      done();
-    });
-  });
 
-  it("should not deactivate if account number is invalid", (done) => {
-    request.put(`http://localhost:3000/api/v1/accounts/8000134354/deactivate`, { json: true}, (error, response, body) => {
-      expect(response.statusCode).toEqual(400);
-      expect(body.error).toBe("Invalid account number");
-      done();
-    });
-  });
-});
+//   it("should deactivate a user account if account is active", (done) => {
+//     request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber1}/deactivate`, { json: true }, (error, response, body) => {
+//       expect(response.statusCode).toEqual(200);
+//       expect(body.data.status).toBe("dormant");
+//       done();
+//     });
+//   });
+
+//   it("should not deactivate if account number is invalid", (done) => {
+//     request.put("http://localhost:3000/api/v1/accounts/8000134354/deactivate", { json: true }, (error, response, body) => {
+//       expect(response.statusCode).toEqual(400);
+//       expect(body.error).toBe("Invalid account number");
+//       done();
+//     });
+//   });
+// });
 
 describe("Delete account test", () => {
   it("should do nothing if user account is not found", (done) => {
