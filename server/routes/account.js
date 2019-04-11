@@ -10,22 +10,6 @@ const router = express.Router();
 
 router.post("/accounts", accountData.createAccount);
 
-// ///////////////////
-// Debit Account //
-// /////////////////
-
-router.post("/:userId/transactions/:account-number/debit", (req, res) => {
-
-});
-
-// ///////////////////
-// Credit Account //
-// /////////////////
-
-router.post("/:userId/transactions/:account-number/credit", (req, res) => {
-
-});
-
 // ////////////////////////////////
 // Activate/Deactivate Account //
 // //////////////////////////////

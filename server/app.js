@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import accountRoutes from "./routes/account";
+import transactionRoutes from "./routes/transaction";
 import authRoutes from "./routes/index";
 
 const app = express();
@@ -11,6 +12,7 @@ app.get("/", (req, res) => {
   res.send("Home Page");
 });
 
+app.use("/api/v1", transactionRoutes);
 app.use("/api/v1", accountRoutes);
 app.use("/api/v1", authRoutes);
 

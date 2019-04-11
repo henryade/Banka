@@ -1,37 +1,18 @@
+import express from "express";
+import transactionData from "../controllers/transactionController";
 
+const router = express.Router();
 
-//////////////////////////
-////// GET ROUTES ///////
-////////////////////////
+// ///////////////////
+// Debit Account //
+// /////////////////
 
-///////////////////////
-// All Bank Account //
-/////////////////////
+router.post("/transactions/:accountNumber/debit", transactionData.debitAccount);
 
-app.get("/:userId/accounts",(req,res) => {
+// ///////////////////
+// Credit Account //
+// /////////////////
 
-})
+router.post("/transactions/:accountNumber/credit", transactionData.creditAccount);
 
-////////////////////////////
-// Specific Bank Account //
-//////////////////////////
-
-app.get("/:userId/accounts/:id",(req,res) => {
-
-})
-
-///////////////////////
-// All User Account //
-/////////////////////
-
-app.get("/:userId/users",(req,res) => {
-
-})
-
-////////////////////////////
-// Specific User Account //
-//////////////////////////
-
-app.get("/:userId/users/:id",(req,res) => {
-
-})
+module.exports = router;
