@@ -272,3 +272,21 @@ describe("Deactivate account test", () => {
     });
   });
 });
+
+describe("Delete account test", () => {
+  it("should do nothing if user account is not found", (done) => {
+    request.delete("http://localhost:3000/api/v1/account/8000134354", { json: true }, (error, response, body) => {
+      expect(response.statusCode).toEqual(404);
+      expect(body.message).toBe("Account Not Found");
+      done();
+    });
+  });
+
+  it("should delete a user account if account is found", (done) => {
+    request.delete("http://localhost:3000/api/v1/account/9000134322", { json: true }, (error, response, body) => {
+      expect(response.statusCode).toEqual(200);
+      expect(body.message).toBe("Account Successfully Delete");
+      done();
+    });
+  });
+});
