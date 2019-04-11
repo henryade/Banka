@@ -2,12 +2,13 @@ import db from "../models/database";
 
 module.exports = {
   getUsers() {
-    const b = JSON.parse(JSON.stringify(db.USERS));
-    return b;
+    return JSON.parse(JSON.stringify(db.USERS));
   },
   getAccounts() {
-    const a = JSON.parse(JSON.stringify(db.ACCOUNTS));
-    return a;
+    return JSON.parse(JSON.stringify(db.ACCOUNTS));
+  },
+  getTransactions() {
+    return JSON.parse(JSON.stringify(db.TRANSACTIONS));
   },
   save(obj, model) {
     db[model].push(obj);
@@ -75,5 +76,34 @@ module.exports = {
   },
   findAccountByAccountNumber(accountNumber) {
     return this.getAccounts().find(field => field.accountNumber === accountNumber);
+  },
+  createTransaction(
+    id,
+    createdOn,
+    type,
+    accountNumber,
+    //cashier,
+    amount,
+    oldBalance,
+    newBalance,
+    depositor,
+    phoneNumber,
+  ) {
+    const userTransaction = {
+      id,
+      createdOn,
+      type,
+      accountNumber,
+      //cashier,
+      amount,
+      oldBalance,
+      newBalance,
+      depositor,
+      phoneNumber,
+    };
+    this.save(userTransaction, "TRANSACTIONS");
+  },
+  findTransactionById(Value) {
+    return this.getTransactions().find(field => field.id === Value);
   },
 };
