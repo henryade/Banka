@@ -2,11 +2,22 @@ import data from "./dbController";
 
 const logic = (action, req, res) => {
   const accounts = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-  const money = accounts.balance;
   if (!accounts) {
     return res.status(400).json({
       status: 400,
-      error: "Invalid account number",
+      error: "Invalid Account Number",
+    });
+  }
+  if (!req.body.amount) {
+    return res.status(400).json({
+      status: 400,
+      error: "Amount is required",
+    });
+  }
+  if (Number.isNaN(parseFloat(req.body.amount))) {
+    return res.status(400).json({
+      status: 400,
+      error: "Amount is Invalid",
     });
   }
   if (accounts.status === "dormant") {
@@ -15,12 +26,12 @@ const logic = (action, req, res) => {
       error: "Account is Inactive",
     });
   }
-  const newBalance = money + action * req.body.amount;
-
+  const newBalance = accounts.balance + action * parseFloat(req.body.amount);
   const lengthOfTransactionId = 6;
   const id = Math.floor(Math.random() * lengthOfTransactionId);
   const createdOn = new Date(Date.now());
   const type = action === 1 ? "credit" : "debit";
+
 
   data.createTransaction(
     id,
@@ -29,9 +40,10 @@ const logic = (action, req, res) => {
     req.params.accountNumber,
     // cashier,
     req.body.amount,
+    accounts.balance,
     newBalance,
     req.body.depositor || null,
-    type === "credit" ? req.body.phoneNumber : null,
+    type === "debit" ? req.body.phoneNumber : null,
   );
   const newTransaction = data.findTransactionById(id);
 
@@ -45,13 +57,12 @@ const logic = (action, req, res) => {
 
 class TransactionController {
   static creditAccount(req, res) {
-    console.log("Dsffs")
     return logic(1, req, res);
   }
 
   static debitAccount(req, res) {
     const account = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-    const accountMoney = account.balance;
+    const accountMoney = parseFloat(req.body.amount);
     if (!account) {
       return res.status(400).json({
         status: 400,

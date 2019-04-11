@@ -215,7 +215,6 @@ describe("Activate account test", () => {
 
     request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber1}/activate`, { json: true }, (error, response, body) => {
       expect(response.statusCode).toEqual(400);
-      console.log(body)
       expect(body.error).toBe("Account is active")
       done();
     });
@@ -226,7 +225,6 @@ describe("Activate account test", () => {
     request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber2}/activate`, { json: true }, (error, response, body) => {
       expect(response.statusCode).toEqual(200);
       expect(body.data.status).toBe("active");
-      expect(body.data.accountNumber).toBe(${testAccountNumber2});
       done();
     });
   });
@@ -245,7 +243,6 @@ describe("Deactivate account test", () => {
   it("should be able to deactivate account if there are no parameters", (done) => {
     request.put(`http://localhost:3000/api/v1/accounts/${testAccountNumber1}/deactivate`, { json: true, body: {} }, (error, response, body) => {
       expect(response.statusCode).toEqual(200);
-      console.log(body)
       done();
     });
   });
@@ -274,5 +271,4 @@ describe("Deactivate account test", () => {
       done();
     });
   });
-
 });

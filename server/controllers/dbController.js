@@ -106,4 +106,7 @@ module.exports = {
   findTransactionById(Value) {
     return this.getTransactions().find(field => field.id === Value);
   },
+  findTransactionByAccountNumber(Value) {
+    return this.getTransactions().find(field => field.accountNumber === Value);
+  },
 };
