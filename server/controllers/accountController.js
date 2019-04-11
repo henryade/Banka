@@ -95,6 +95,29 @@ class AccountController {
     // eslint-disable-next-line radix
     logic("dormant", req, res);
   }
+
+  static deleteAccount(req, res) {
+    const specificAccount = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
+    if (!specificAccount) {
+      return res.status(404).json({
+        status: 404,
+        message: "Account Not Found",
+      });
+    }
+    
+    data.deleteAccount(specificAccount);
+    const checkAccountData = data.findAccountByAccountNumber(specificAccount);
+    if (!checkAccountData) {
+      return res.status(200).json({
+        status: 200,
+        message: "Account Successfully Delete",
+      }); 
+    }
+    return res.status(400).json({
+      status: 400,
+      message: "Account still exist",
+    });
+  }
 }
 
 

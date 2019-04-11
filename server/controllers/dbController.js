@@ -2,12 +2,10 @@ import db from "../models/database";
 
 module.exports = {
   getUsers() {
-    const b = JSON.parse(JSON.stringify(db.USERS));
-    return b;
+    return JSON.parse(JSON.stringify(db.USERS));
   },
   getAccounts() {
-    const a = JSON.parse(JSON.stringify(db.ACCOUNTS));
-    return a;
+    return JSON.parse(JSON.stringify(db.ACCOUNTS));
   },
   save(obj, model) {
     db[model].push(obj);
@@ -75,5 +73,10 @@ module.exports = {
   },
   findAccountByAccountNumber(accountNumber) {
     return this.getAccounts().find(field => field.accountNumber === accountNumber);
+  },
+  deleteAccount(specificAccount) {
+    const allAccount = db.ACCOUNTS;
+    const index = allAccount.indexOf(specificAccount);
+    db.ACCOUNTS = allAccount.splice(index, 1);
   },
 };
