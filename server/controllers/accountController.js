@@ -3,6 +3,7 @@ import data from "./dbController";
 const logic = (action, req, res) => {
   const accounts = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
   if (!accounts) {
+
     return res.status(400).json({
       status: 400,
       error: "Invalid account number",
