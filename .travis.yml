@@ -3,8 +3,7 @@ language: node_js
 node_js:
   - "stable"
 install:
-  npm install
-  npm install @babel/node
+  - npm install
 
 before_install:
   - npm i -g npm@6.4.1
@@ -19,6 +18,7 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+  - babel test -d build
 script:
   - npm test
 after_script:
