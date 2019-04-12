@@ -7,7 +7,7 @@
     "lint": "eslint index.js --fix",
     "build": "babel spec/routes/*.js --out-dir build",
     "start": "node server/build/index.js",
-    "test": "mocha server/spec/routes/**.spec.js --require @babel/register --exit"
+    "test": "mocha server/build/spec/routes/**.spec.js --exit"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
