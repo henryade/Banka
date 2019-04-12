@@ -7,7 +7,7 @@
     "lint": "eslint index.js --fix",
     "test-init": "jasmine init",
     "start": "nodemon --exec babel-node index.js",
-    "test": "nodemon --exec babel-node spec/run.js"
+    "test": "babel-node spec/run.js"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
