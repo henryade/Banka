@@ -4,10 +4,11 @@ node_js:
   - "stable"
 install:
   - npm install
-  - npm install @babel/node
 
 before_install:
   - npm i -g npm@6.4.1
+after_install:
+  - npm install babel @babel/node 
 
 env: 
   global:CC_TEST_REPORTER_ID = 31a263eb20aa2377a1528c9aa82d298d9272b3375a11fb416615682c51f9e8a0
