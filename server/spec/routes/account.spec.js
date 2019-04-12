@@ -185,16 +185,8 @@ describe("Create Account test", () => {
     };
 
     request.post(endpoint, pageload1, (error, response, body) => {
-      const {
-        accountNumber, owner, id, createdOn, status, ...acc
-      } = body.data;
       expect(response.statusCode).toEqual(201);
-      expect(accountNumber).toBeDefined();
-      expect(owner).toBeDefined();
-      expect(id).toBeDefined();
-      expect(status).toBeDefined();
-      expect(createdOn).toBeDefined();
-      expect(acc).toEqual(pageload1.body);
+      expect(body.data).toEqual(pageload1.body);
       done();
     });
   });

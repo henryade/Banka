@@ -80,11 +80,11 @@ class AccountController {
     const owner = data.findOneUser("email", req.body.email).id;
 
     data.createAccount(id, accountNumber, createdOn, owner, "active", req.body.firstName, req.body.lastName, req.body.email, req.body.type, req.body.balance, req.body.phoneNumber, req.body.dob, req.body.address);
-    const newAccount = data.findAccountById(owner);
+   
 
     res.status(201).json({
       status: 201,
-      data: newAccount,
+      data: req.body,
     });
   }
 
