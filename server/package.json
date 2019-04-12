@@ -21,7 +21,8 @@
     "jasmine": "^3.4.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-authentication": "^0.4.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
@@ -32,7 +33,6 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-promise": "^4.1.1",
-    "nodemon": "^1.18.10",
-    "request": "^2.88.0"
+    "nodemon": "^1.18.10"
   }
 }

@@ -1,5 +1,10 @@
-/* eslint-disable no-undef */
 import request from "request";
+
+/**
+ * @param describe('Account', () => {
+   
+ });
+ */
 
 describe("Create Account test", () => {
   const endpoint = "http://localhost:3000/api/v1/accounts";
