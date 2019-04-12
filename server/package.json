@@ -6,13 +6,12 @@
   "scripts": {
     "lint": "eslint index.js --fix",
     "test-init": "jasmine init",
-    "start": "node --exec babel-node index.js",
-    "test": "babel-node spec/run.js"
+    "start": "nodemon --exec babel-node index.js",
+    "test": "nodemon --exec babel-node spec/run.js"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
   "dependencies": {
-    "babel-travis": "^1.5.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "dotenv": "^7.0.0",
