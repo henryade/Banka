@@ -20,10 +20,10 @@ app.post("*", (req, res) => {
 app.delete("*", (req, res) => {
   res.send("Banka - Invalid Route ");
 });
-app.put("/", (req, res) => {
+app.put("*", (req, res) => {
   res.send("Banka - Invalid Route ");
 });
-app.patch("/", (req, res) => {
+app.patch("*", (req, res) => {
   res.send("Banka - Invalid Route ");
 });
 
