@@ -3,30 +3,54 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
 
-var _express = _interopRequireDefault(require("express"));
+var _express = require("express");
 
-var _bodyParser = _interopRequireDefault(require("body-parser"));
+var _express2 = _interopRequireDefault(_express);
 
-var _account = _interopRequireDefault(require("./routes/account"));
+var _bodyParser = require("body-parser");
 
-var _transaction = _interopRequireDefault(require("./routes/transaction"));
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _index = _interopRequireDefault(require("./routes/index"));
+var _account = require("./routes/account");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _account2 = _interopRequireDefault(_account);
 
-var app = (0, _express["default"])();
-app.use(_bodyParser["default"].json());
-app.use(_bodyParser["default"].urlencoded({
-  extended: true
-}));
+var _transaction = require("./routes/transaction");
+
+var _transaction2 = _interopRequireDefault(_transaction);
+
+var _index = require("./routes/index");
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var app = (0, _express2.default)();
+app.use(_bodyParser2.default.json());
+app.use(_bodyParser2.default.urlencoded({ extended: true }));
+
 app.get("/", function (req, res) {
   res.send("Home Page");
 });
-app.use("/api/v1", _transaction["default"]);
-app.use("/api/v1", _account["default"]);
-app.use("/api/v1", _index["default"]);
-var _default = app;
-exports["default"] = _default;
+app.get("*", function (req, res) {
+  res.send("Banka - Invalid Route ");
+});
+app.post("*", function (req, res) {
+  res.send("Banka - Invalid Route ");
+});
+app.delete("*", function (req, res) {
+  res.send("Banka - Invalid Route ");
+});
+app.put("*", function (req, res) {
+  res.send("Banka - Invalid Route ");
+});
+app.patch("*", function (req, res) {
+  res.send("Banka - Invalid Route ");
+});
+
+app.use("/api/v1", _transaction2.default);
+app.use("/api/v1", _account2.default);
+app.use("/api/v1", _index2.default);
+
+exports.default = app;
