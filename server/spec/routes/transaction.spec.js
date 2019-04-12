@@ -11,7 +11,7 @@ describe("Debit Account test", () => {
       expect(response.statusCode).toEqual(400);
       done();
     });
-  });
+  });   
 
   it("should debit a user when the parameters are correct", (done) => {
     const pageload = {

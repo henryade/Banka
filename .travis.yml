@@ -3,17 +3,18 @@ language: node_js
 node_js:
   - "stable"
 install:
-  npm install
+  - npm install
 
 before_install:
   - npm i -g npm@6.4.1
+  - npm install -g babel-cli
+  - npm install jasmine
 
 env: 
   global:CC_TEST_REPORTER_ID = 31a263eb20aa2377a1528c9aa82d298d9272b3375a11fb416615682c51f9e8a0
-cache:
-  directories:
-    - "node_modules"
+
 before_script:
+  - cd server
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
@@ -23,4 +24,3 @@ after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 after_success:
   - npm run coverage
-
