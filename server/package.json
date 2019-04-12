@@ -7,12 +7,8 @@
     "lint": "eslint index.js --fix",
     "build": "babel server --out-dir ./dist --source-maps",
     "start": "nodemon --exec babel-node index.js",
-<<<<<<< HEAD
     "serve": "node ./dist/index.js",
     "test": "mocha ./spec/routes/**.js --require @babel/register --exit"
-=======
-    "test": "babel-node spec/run.js"
->>>>>>> 7c5bfc36ffd485d444f880dbfc457f864fbc5dbe
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
