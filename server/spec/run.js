@@ -1,5 +1,5 @@
-import Jasmine from "jasmine";
+import jasmine from "jasmine";
 
-const jasmine = new Jasmine();
-jasmine.loadConfigFile("spec/support/jasmine.json");
-jasmine.execute();
+const Jasmine = new jasmine();
+Jasmine.loadConfigFile("spec/support/jasmine.json");
+Jasmine.execute();
