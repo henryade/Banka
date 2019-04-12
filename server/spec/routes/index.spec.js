@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-import request from "request";
+const request = require("request");
 
 describe("Sign in test", () => {
   const endpoint = "http://localhost:3000/api/v1/auth/signin";

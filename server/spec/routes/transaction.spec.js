@@ -1,5 +1,5 @@
-import request from "request";
-import Tdata from "../../controllers/dbController";
+const request = require("request");
+const Tdata = require("../../controllers/dbController");
 
 const passingTest = 9000134322;
 const fallingTest = 8000134354;
