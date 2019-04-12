@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js --fix",
-    "build": "babel index.js --out-dir build",
+    "build": "babel server/build/index.js --out-dir build",
     "start": "node server/build/index.js",
     "test": "mocha server/build/spec/routes/**.spec.js --exit"
   },
