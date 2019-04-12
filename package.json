@@ -9,6 +9,9 @@
     "start": "node server/build/index.js",
     "test": "mocha server/build/spec/routes/**.spec.js --exit"
   },
+  "engines": {
+    "npm": "6.x"
+  },
   "author": "Adeola Adeyemo",
   "license": "ISC",
   "dependencies": {
