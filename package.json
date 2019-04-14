@@ -5,10 +5,9 @@
     "main": "index.js",
     "scripts": {
       "lint": "eslint server/index.js --fix",
-      "build": "babel server --out-dir build",
-      "start": "node server/build/index.js",
+      "build": "npm run clean && npm run build-babel",
+      "start": "npm run build && node ./build/index.js",
       "test": "nyc mocha server/build/test/**/*.spec.js",
-      "heroku-postbuild": "npm run build"
     },
     "author": "Adeola Adeyemo",
     "license": "ISC",
