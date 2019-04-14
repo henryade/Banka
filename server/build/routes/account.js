@@ -19,10 +19,10 @@ router.post("/accounts", _accountController["default"].createAccount); // //////
 // Activate/Deactivate Account //
 // //////////////////////////////
 
-router.put("/accounts/:accountNumber/activate", _accountController["default"].activateAccount);
-router.put("/accounts/:accountNumber/deactivate", _accountController["default"].deactivateAccount); // ////////////////////////
+router.patch("/accounts/:accountNumber/activate", _accountController["default"].activateAccount);
+router.patch("/accounts/:accountNumber/deactivate", _accountController["default"].deactivateAccount); // ////////////////////////
 // /// Delete Account ///
 // //////////////////////
 
-router["delete"]("/account/:accountNumber", _accountController["default"].deleteAccount);
+router["delete"]("/accounts/:accountNumber", _accountController["default"].deleteAccount);
 module.exports = router;

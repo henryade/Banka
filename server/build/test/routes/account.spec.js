@@ -168,9 +168,9 @@ describe("Create Account test", function () {
   });
 });
 
-var activeAccount = "9000134322";
+var activeAccount = 9000134322;
 var dormantAccount = 9000134354;
-var wrongAccount = 900013432;
+var wrongAccount = 800013432;
 
 describe("Activate account test", function () {
   it("should do nothing if user account is active", function () {

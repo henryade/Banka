@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js --fix",
-    "build": "babel ./test/routes/* --out-dir build",
+    "build": "babel index.js --out-dir build",
     "start": "node build/index.js",
     "dev": "nodemon --exec babel-node index.js",
-    "test": "nyc --require babel-core/register ./node_modules/.bin/mocha test/routes/**.spec.js --exit -w",
-    "test-dev": "mocha spec/routes/**.spec.js -r @babel/register --exit",
-    "coveralls": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "test": "nyc ./node_modules/.bin/mocha build/test/routes/**.spec.js -r @babel/register --exit -w",
+    "test-dev": "nyc --require babel-core/register ./node_modules/.bin/mocha test/routes/**.spec.js --exit -w",
+    "coveralls": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "cover" : "nyc cover _mocha"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
