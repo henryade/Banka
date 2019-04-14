@@ -12,7 +12,7 @@
     "test:coveralls": "mocha build/test/**/*.spec.js",
     "test-dev": "nyc --require babel-core/register mocha test/**/*.js --exit",
     "coveralls": "nyc report --reporter=text-lcov mocha build/test/**/*.spec.js",
-    "coverage": "nyc report --reporter=text-lcov mocha build/test/**/*.spec.js"
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov npm test"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
