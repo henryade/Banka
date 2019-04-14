@@ -97,8 +97,7 @@ class UserController {
 
 
     bcrypt.hash(req.body.password, salt, (err, hash) => {
-      const allUser = data.getUsers().map(x => x.id).sort();
-      const id = allUser[allUser.length - 1] + 1;
+      const id = Math.floor(Math.random() * 6);
 
       const token = jwt.sign({
         email: req.body.email,

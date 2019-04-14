@@ -1,37 +1,45 @@
 let db = {
-  USERS: [
-    {
-      token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsImlkIjoyMDAwMDIsImZpcnN0TmFtZSI6ImtzbmRma2QiLCJsYXN0TmFtZSI6ImRmamRmbGZuIiwidHlwZSI6ImNsaWVudCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTUyMzM3MjcsImV4cCI6MTU1NTIzNzU4NSwianRpIjoiYjA5NTM2MTMtMTkwMy00N2M3LWJjMTMtZTYzOGNiYzgyNGJkIn0.2FHaotY9jKFFXHpHlu42lpx-HIGWMVAnZOzn-WUDA",
-      id: 100001,
-      email: "user1@gmail.com",
-      firstName: "First",
-      lastName: "User",
-      password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
-      type: "client",
-      isAdmin: false,
-    },
-    {
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsImlkIjoyMDAwMDIsImZpcnN0TmFtZSI6ImFkZSIsImxhc3ROYW1lIjoiYWRlIiwidHlwZSI6ImNsaWVudCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTUyNDYzNzEsImV4cCI6MTU1NTI0OTk3MX0.jeQR87wJFw4zaAwT9-G1CaH_7k1Kanrj8I84N9DFq5A",
-      email: "user5@gmail.com",
-      id: 200002,
-      firstName: "ade",
-      lastName: "ade",
-      password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
-      type: "client",
-      isAdmin: false,
-    },
-    {
-      token: "token002",
-      id: 200001,
-      email: "user1@gmail.com",
-      firstName: "First",
-      lastName: "User",
-      password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
-      type: "client",
-      isAdmin: false,
-    },
-  ],
-  ACCOUNTS:[
+  USERS: {
+    ADMIN: [
+
+    ],
+    STAFF: [
+
+    ],
+    USER: [
+      {
+        token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsImlkIjoyMDAwMDIsImZpcnN0TmFtZSI6ImtzbmRma2QiLCJsYXN0TmFtZSI6ImRmamRmbGZuIiwidHlwZSI6ImNsaWVudCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTUyMzM3MjcsImV4cCI6MTU1NTIzNzU4NSwianRpIjoiYjA5NTM2MTMtMTkwMy00N2M3LWJjMTMtZTYzOGNiYzgyNGJkIn0.2FHaotY9jKFFXHpHlu42lpx-HIGWMVAnZOzn-WUDA",
+        id: 100001,
+        email: "user1@gmail.com",
+        firstName: "First",
+        lastName: "User",
+        password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
+        type: "client",
+        isAdmin: false,
+      },
+      {
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsImlkIjoyMDAwMDIsImZpcnN0TmFtZSI6ImFkZSIsImxhc3ROYW1lIjoiYWRlIiwidHlwZSI6ImNsaWVudCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTUyNDYzNzEsImV4cCI6MTU1NTI0OTk3MX0.jeQR87wJFw4zaAwT9-G1CaH_7k1Kanrj8I84N9DFq5A",
+        email: "user5@gmail.com",
+        id: 200002,
+        firstName: "ade",
+        lastName: "ade",
+        password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
+        type: "client",
+        isAdmin: false,
+      },
+      {
+        token: "token002",
+        id: 200001,
+        email: "user1@gmail.com",
+        firstName: "First",
+        lastName: "User",
+        password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
+        type: "client",
+        isAdmin: false,
+      },
+    ],
+  },
+  ACCOUNTS: [
     {
       id: 345346,
       accountNumber: 9000134322,

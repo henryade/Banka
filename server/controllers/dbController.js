@@ -1,8 +1,8 @@
-import  db  from "../models/database";
+import db from "../models/database";
 
 module.exports = {
   getUsers() {
-    return JSON.parse(JSON.stringify(db.USERS));
+    return JSON.parse(JSON.stringify(db.USERS.USER));
   },
   getAccounts() {
     return JSON.parse(JSON.stringify(db.ACCOUNTS));
@@ -10,8 +10,20 @@ module.exports = {
   getTransactions() {
     return JSON.parse(JSON.stringify(db.TRANSACTIONS));
   },
+  getStaff() {
+    return JSON.parse(JSON.stringify(db.USERS.STAFF));
+  },
+  getAdmin() {
+    return JSON.parse(JSON.stringify(db.USERS.ADMIN));
+  },
   save(obj, model) {
+    if (model === "USER") db.USERS.USER.push(obj);
     db[model].push(obj);
+  },
+  saveUser(obj) {
+    if (obj.isAdmin === true) db.USERS.ADMIN.push(obj);
+    else if (obj.isAdmin === false && obj.type.toLowerCase() === "staff") db.USERS.STAFF.push(obj);
+    else db.USERS.USER.push(obj);
   },
   createUser(
     token,
@@ -33,7 +45,7 @@ module.exports = {
       type,
       isAdmin,
     };
-    this.save(user, "USERS");
+    this.saveUser(user);
   },
   findOneUser(Key, Value) {
     return this.getUsers().find(field => field[Key] === Value);
@@ -82,7 +94,7 @@ module.exports = {
     createdOn,
     type,
     accountNumber,
-    //cashier,
+    // cashier,
     amount,
     oldBalance,
     newBalance,
@@ -94,7 +106,7 @@ module.exports = {
       createdOn,
       type,
       accountNumber,
-      //cashier,
+      // cashier,
       amount,
       oldBalance,
       newBalance,

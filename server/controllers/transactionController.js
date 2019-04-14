@@ -39,7 +39,7 @@ const logic = (action, req, res) => {
     createdOn,
     type,
     req.params.accountNumber,
-    // cashier,
+    req.userData.id,
     req.body.amount,
     accounts.newBalance,
     newBalance,
