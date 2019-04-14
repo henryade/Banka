@@ -4,7 +4,9 @@ var _express = _interopRequireDefault(require("express"));
 
 var _transactionController = _interopRequireDefault(require("../controllers/transactionController"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { "default": obj };
+}
 
 var router = _express["default"].Router(); // ///////////////////
 // Debit Account //

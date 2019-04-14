@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js --fix",
-    "build": "babel ./app.js --out-dir build",
+    "build": "babel ./test/routes/* --out-dir build",
     "start": "node build/index.js",
     "dev": "nodemon --exec babel-node index.js",
-    "test": "_mocha build/test/routes/**.test.js --timeout 2000 --exit ",
+    "test": "nyc --require babel-core/register mocha test/routes/**.spec.js --exit -w",
     "test-dev": "mocha spec/routes/**.spec.js -r @babel/register --exit",
     "coveralls": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },

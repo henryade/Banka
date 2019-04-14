@@ -6,7 +6,9 @@ var _accountController = _interopRequireDefault(require("../controllers/accountC
 
 var _authorization = _interopRequireDefault(require("../middleware/authorization"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { "default": obj };
+}
 
 var router = _express["default"].Router(); // ///////////////////
 // Create Account //

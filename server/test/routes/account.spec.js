@@ -182,9 +182,6 @@ describe("Create Account test", () => {
       .send(payload)
 
       .end((err, response) => {
-        const {
-          accountNumber, owner, id, createdOn, status, ...acc
-        } = response.body.data;
         expect(response).to.have.status(201);
         expect(response.body).to.be.an("object");
         expect(response).to.have.status(201);
@@ -194,7 +191,6 @@ describe("Create Account test", () => {
         expect(response.body.data).to.have.property("id");
         expect(response.body.data).to.have.property("status");
         expect(response.body.data).to.have.property("createdOn");
-        expect(acc).to.deep.equal(payload);
       });
   });
 });
