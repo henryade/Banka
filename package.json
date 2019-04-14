@@ -7,7 +7,7 @@
       "lint": "eslint server/index.js --fix",
       "build": "babel server/build/index.js --out-dir build",
       "start": "node server/build/index.js",
-      "test": "nyc mocha server/build/test/**/*.spec.js",
+      "test": "nyc mocha server/build/test/**/*.spec.js"
     },
     "author": "Adeola Adeyemo",
     "license": "ISC",
@@ -29,6 +29,8 @@
       "@babel/node": "^7.2.2",
       "@babel/preset-env": "^7.4.3",
       "@babel/register": "^7.4.0",
+      "babel-cli": "^6.26.0",
+      "babel-preset-env": "^1.7.0",
       "babel-watch": "^7.0.0",
       "chai": "^4.2.0",
       "coveralls": "^3.0.3",
