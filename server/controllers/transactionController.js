@@ -2,6 +2,7 @@ import data from "./dbController";
 
 const logic = (action, req, res) => {
   const accounts = data.findTransactionByAccountNumber(parseInt(req.params.accountNumber));
+  const accountStatus = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
   if (!accounts) {
     return res.status(400).json({
       status: 400,
@@ -20,7 +21,7 @@ const logic = (action, req, res) => {
       error: "Amount is Invalid",
     });
   }
-  if (accounts.status === "dormant") {
+  if (accountStatus.status === "dormant") {
     return res.status(400).json({
       status: 400,
       error: "Account is Inactive",

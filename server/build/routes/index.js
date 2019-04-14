@@ -1,15 +1,22 @@
 "use strict";
 
-var _express = _interopRequireDefault(require("express"));
+var _express = require("express");
 
-var _userController = _interopRequireDefault(require("../controllers/userController"));
+var _express2 = _interopRequireDefault(_express);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { "default": obj };
-}
+var _userController = require("../controllers/userController");
 
-var router = _express["default"].Router();
+var _userController2 = _interopRequireDefault(_userController);
 
-router.post("/auth/signup", _userController["default"].signup);
-router.post("/auth/signin", _userController["default"].signin);
+var _authorization = require("../middleware/authorization");
+
+var _authorization2 = _interopRequireDefault(_authorization);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var router = _express2.default.Router();
+
+router.post("/auth/signup", _userController2.default.signup);
+router.post("/auth/signin", _authorization2.default, _userController2.default.signin);
+
 module.exports = router;

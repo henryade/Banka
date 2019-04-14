@@ -46,9 +46,7 @@ var UserController = function () {
           error: "password is required"
         });
       }
-      var User = _dbController2.default.getUsers().find(function (userField) {
-        return userField.email === req.body.email;
-      });
+      var User = _dbController2.default.findOneUser("email", req.body.email);
       if (!User) {
         return res.status(401).json({
           status: 401,
@@ -56,12 +54,6 @@ var UserController = function () {
         });
       }
       _bcryptjs2.default.compare(req.body.password, User.password, function (err, response) {
-        if (err) {
-          return res.status(401).json({
-            status: 401,
-            error: "Auth failed"
-          });
-        }
         if (response) {
           var token = _jsonwebtoken2.default.sign({
             email: User.email,
@@ -70,9 +62,7 @@ var UserController = function () {
             lastName: User.lastName,
             type: User.type,
             isAdmin: User.isAdmin
-          }, _config.JWT_KEY, {
-            expiresIn: "1h"
-          });
+          }, _config.JWT_KEY);
           return res.status(200).json({
             status: 200,
             data: {
@@ -134,11 +124,6 @@ var UserController = function () {
       }
 
       _bcryptjs2.default.hash(req.body.password, salt, function (err, hash) {
-        if (err) {
-          return res.status(500).json({
-            error: err
-          });
-        }
         var allUser = _dbController2.default.getUsers().map(function (x) {
           return x.id;
         }).sort();
@@ -151,9 +136,7 @@ var UserController = function () {
           lastName: req.body.lastName,
           type: "client",
           isAdmin: false
-        }, _config.JWT_KEY, {
-          expiresIn: "1h"
-        });
+        }, _config.JWT_KEY);
         _dbController2.default.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash, "client", false);
         var newUser = _dbController2.default.findOneUser("id", id);
 

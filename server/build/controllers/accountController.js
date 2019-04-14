@@ -14,28 +14,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var logic = function logic(action, req, res) {
-  var accounts = _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-  if (!accounts) {
-
-    return res.status(400).json({
-      status: 400,
-      error: "Invalid account number"
-    });
-  }
-  if (accounts.status === action) {
-    return res.status(400).json({
-      status: 400,
-      error: "Account is " + action
-    });
-  }
-  accounts.status = action;
-  return res.status(200).json({
-    status: 200,
-    data: accounts
-  });
-};
-
 var AccountController = function () {
   function AccountController() {
     _classCallCheck(this, AccountController);
@@ -108,15 +86,20 @@ var AccountController = function () {
       });
     }
   }, {
-    key: "activateAccount",
-    value: function activateAccount(req, res) {
-      logic("active", req, res);
-    }
-  }, {
-    key: "deactivateAccount",
-    value: function deactivateAccount(req, res) {
-      // eslint-disable-next-line radix
-      logic("dormant", req, res);
+    key: "changeAccountStatus",
+    value: function changeAccountStatus(req, res) {
+      var accounts = _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
+      if (!accounts) {
+        return res.status(400).json({
+          status: 400,
+          error: "Invalid account number"
+        });
+      }
+      accounts.status = accounts.status === "active" ? "dormant" : "active";
+      return res.status(200).json({
+        status: 200,
+        data: accounts
+      });
     }
   }, {
     key: "deleteAccount",
@@ -137,10 +120,6 @@ var AccountController = function () {
           message: "Account Successfully Delete"
         });
       }
-      return res.status(400).json({
-        status: 400,
-        message: "Account still exist"
-      });
     }
   }]);
 

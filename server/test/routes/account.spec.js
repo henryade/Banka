@@ -200,20 +200,9 @@ const dormantAccount = 9000134354;
 const wrongAccount = 900013432;
 
 describe("Activate account test", () => {
-  it("should do nothing if user account is active", () => {
-    chai.request(app)
-      .patch(`/api/v1/accounts/${activeAccount}/activate`)
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Account is active");
-      });
-  });
-
-
   it("should activate an user account if account is dormant", () => {
     chai.request(app)
-      .patch(`/api/v1/accounts/${dormantAccount}/activate`)
+      .patch(`/api/v1/accounts/${dormantAccount}`)
 
       .end((err, response) => {
         expect(response).to.have.status(200);
@@ -223,7 +212,7 @@ describe("Activate account test", () => {
 
   it("should not activate if account number is invalid", () => {
     chai.request(app)
-      .patch(`/api/v1/accounts/${wrongAccount}/activate`)
+      .patch(`/api/v1/accounts/${wrongAccount}`)
 
       .end((err, response) => {
         expect(response).to.have.status(400);
@@ -233,20 +222,9 @@ describe("Activate account test", () => {
 });
 
 describe("Deactivate account test", () => {
-  it("should not do nothing if user account is dormant", () => {
-    chai.request(app)
-      .patch(`/api/v1/accounts/${dormantAccount}/deactivate`)
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Account is dormant");
-      });
-  });
-
-
   it("should deactivate a user account if account is active", () => {
     chai.request(app)
-      .patch(`/api/v1/accounts/${activeAccount}/deactivate`)
+      .patch(`/api/v1/accounts/${activeAccount}`)
       .end((err, response) => {
         expect(response).to.have.status(200);
         expect(response.body.data.status).to.equal("dormant");
@@ -255,7 +233,7 @@ describe("Deactivate account test", () => {
 
   it("should not deactivate if account number is invalid", () => {
     chai.request(app)
-      .patch(`/api/v1/accounts/${wrongAccount}/deactivate`)
+      .patch(`/api/v1/accounts/${wrongAccount}`)
       .end((err, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Invalid account number");

@@ -14,11 +14,10 @@ router.post("/accounts", accountData.createAccount);
 // Activate/Deactivate Account //
 // //////////////////////////////
 
-router.patch("/accounts/:accountNumber/activate", accountData.activateAccount);
-router.patch("/accounts/:accountNumber/deactivate", accountData.deactivateAccount);
+router.patch("/accounts/:accountNumber", accountData.changeAccountStatus);
 
 // ////////////////////////
-// /// Delete Account ///
+ /// Delete Account ///
 // //////////////////////
 
 router.delete("/accounts/:accountNumber", accountData.deleteAccount);

@@ -112,6 +112,6 @@ module.exports = {
   deleteAccount(specificAccount) {
     const allAccount = db.ACCOUNTS;
     const index = allAccount.indexOf(specificAccount);
-     allAccount.splice(index, 1);
+    allAccount.splice(index, 1);
   },
 };

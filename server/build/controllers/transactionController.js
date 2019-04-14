@@ -16,6 +16,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var logic = function logic(action, req, res) {
   var accounts = _dbController2.default.findTransactionByAccountNumber(parseInt(req.params.accountNumber));
+  var accountStatus = _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
   if (!accounts) {
     return res.status(400).json({
       status: 400,
@@ -34,7 +35,7 @@ var logic = function logic(action, req, res) {
       error: "Amount is Invalid"
     });
   }
-  if (accounts.status === "dormant") {
+  if (accountStatus.status === "dormant") {
     return res.status(400).json({
       status: 400,
       error: "Account is Inactive"
