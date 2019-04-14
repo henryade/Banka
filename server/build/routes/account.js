@@ -6,7 +6,9 @@ var _accountController = _interopRequireDefault(require("../controllers/accountC
 
 var _authorization = _interopRequireDefault(require("../middleware/authorization"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { "default": obj };
+}
 
 var router = _express["default"].Router(); // ///////////////////
 // Create Account //
@@ -17,10 +19,10 @@ router.post("/accounts", _accountController["default"].createAccount); // //////
 // Activate/Deactivate Account //
 // //////////////////////////////
 
-router.put("/accounts/:accountNumber/activate", _accountController["default"].activateAccount);
-router.put("/accounts/:accountNumber/deactivate", _accountController["default"].deactivateAccount); // ////////////////////////
+router.patch("/accounts/:accountNumber/activate", _accountController["default"].activateAccount);
+router.patch("/accounts/:accountNumber/deactivate", _accountController["default"].deactivateAccount); // ////////////////////////
 // /// Delete Account ///
 // //////////////////////
 
-router["delete"]("/account/:accountNumber", _accountController["default"].deleteAccount);
+router["delete"]("/accounts/:accountNumber", _accountController["default"].deleteAccount);
 module.exports = router;

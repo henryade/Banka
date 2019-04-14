@@ -1,21 +1,23 @@
 "use strict";
 
-var _database = _interopRequireDefault(require("../models/database"));
+var _database = require("../models/database");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _database2 = _interopRequireDefault(_database);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
   getUsers: function getUsers() {
-    return JSON.parse(JSON.stringify(_database["default"].USERS));
+    return JSON.parse(JSON.stringify(_database2.default.USERS));
   },
   getAccounts: function getAccounts() {
-    return JSON.parse(JSON.stringify(_database["default"].ACCOUNTS));
+    return JSON.parse(JSON.stringify(_database2.default.ACCOUNTS));
   },
   getTransactions: function getTransactions() {
-    return JSON.parse(JSON.stringify(_database["default"].TRANSACTIONS));
+    return JSON.parse(JSON.stringify(_database2.default.TRANSACTIONS));
   },
   save: function save(obj, model) {
-    _database["default"][model].push(obj);
+    _database2.default[model].push(obj);
   },
   createUser: function createUser(token, id, firstName, lastName, email, password, type, isAdmin) {
     var user = {
@@ -50,6 +52,7 @@ module.exports = {
       dob: dob,
       address: address,
       type: type
+
     };
     this.save(userAccount, "ACCOUNTS");
   },
@@ -63,7 +66,8 @@ module.exports = {
       return field.accountNumber === accountNumber;
     });
   },
-  createTransaction: function createTransaction(id, createdOn, type, accountNumber, //cashier,
+  createTransaction: function createTransaction(id, createdOn, type, accountNumber,
+  //cashier,
   amount, oldBalance, newBalance, depositor, phoneNumber) {
     var userTransaction = {
       id: id,
@@ -90,7 +94,7 @@ module.exports = {
     });
   },
   deleteAccount: function deleteAccount(specificAccount) {
-    var allAccount = _database["default"].ACCOUNTS;
+    var allAccount = _database2.default.ACCOUNTS;
     var index = allAccount.indexOf(specificAccount);
     allAccount.splice(index, 1);
   }

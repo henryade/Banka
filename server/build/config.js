@@ -1,10 +1,12 @@
 "use strict";
 
-var _dotenv = _interopRequireDefault(require("dotenv"));
+var _dotenv = require("dotenv");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _dotenv2 = _interopRequireDefault(_dotenv);
 
-_dotenv["default"].config();
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_dotenv2.default.config();
 
 module.exports = {
   port: process.env.PORT,
