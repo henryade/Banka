@@ -56,21 +56,3 @@ describe("Other Route test", () => {
       });
   });
 });
-
-describe("authentication middleware", () => {
-  const { token } = data.findOneUser("email", "user5@gmail.com");
-  const mockReq = {
-    headers: { authorization: `Bearer ${token}` },
-  };
-  const mockRes = {
-    status() { return 200; },
-  };
-
-  let Called = false;
-  const next = () => { Called = true; };
-
-  it("should pass on right jwt", () => {
-    isLoggedIn(mockReq, mockRes, next);
-    expect(Called).to.be.true;
-  });
-});

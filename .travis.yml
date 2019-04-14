@@ -9,7 +9,7 @@ before_install:
   - npm i -g npm@6.4.1
 env: 
   global:
-  - CC_TEST_REPORTER_ID=1c8d69f82e2755971058ac9e50fc97b213cfd00119a1d9e902603c5173425f33
+  - CC_TEST_REPORTER_ID
 
 before_script:
   - cd server

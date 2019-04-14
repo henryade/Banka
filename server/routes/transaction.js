@@ -1,6 +1,6 @@
 import express from "express";
 import transactionData from "../controllers/transactionController";
-
+import isLoggedIn from "../middleware/authorization";
 const router = express.Router();
 
 // ///////////////////

@@ -7,7 +7,10 @@
       "lint": "eslint server/index.js --fix",
       "build": "babel server/build/index.js --out-dir build",
       "start": "node server/build/index.js",
-      "test": "nyc mocha server/build/test/**/*.spec.js"
+      "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov",
+      "test": "nyc mocha server/build/test/**/*.spec.js",
+      "test:coveralls": "mocha build/test/**/*.spec.js",
+      "coveralls": "nyc npm run test:coveralls && nyc report --reporter=text-lcov | coveralls"
     },
     "author": "Adeola Adeyemo",
     "license": "ISC",
