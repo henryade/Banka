@@ -8,7 +8,7 @@
     "build": "babel index.js --out-dir build",
     "start": "node build/index.js",
     "dev": "nodemon --exec babel-node index.js",
-    "test": "nyc mocha build/test/routes/**.spec.js -r @babel/register --exit -w",
+    "test": "nyc mocha build/test/routes/**.spec.js",
     "test-dev": "nyc --require babel-core/register ./node_modules/.bin/mocha test/routes/**.spec.js --exit -w",
     "coveralls": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "cover" : "nyc cover _mocha"
