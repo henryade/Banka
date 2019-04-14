@@ -1,7 +1,7 @@
 import data from "./dbController";
 
 const logic = (action, req, res) => {
-  const accounts = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
+  const accounts = data.findTransactionByAccountNumber(parseInt(req.params.accountNumber));
   if (!accounts) {
     return res.status(400).json({
       status: 400,
@@ -26,8 +26,7 @@ const logic = (action, req, res) => {
       error: "Account is Inactive",
     });
   }
-  console.log(req.params.amount)
-  const newBalance = accounts.balance + action * parseFloat(req.body.amount);
+  const newBalance = accounts.newBalance + parseFloat(req.body.amount) * action;
   const lengthOfTransactionId = 6;
   const id = Math.floor(Math.random() * lengthOfTransactionId);
   const createdOn = new Date(Date.now());
@@ -41,7 +40,7 @@ const logic = (action, req, res) => {
     req.params.accountNumber,
     // cashier,
     req.body.amount,
-    accounts.balance,
+    accounts.newBalance,
     newBalance,
     req.body.depositor || null,
     type === "debit" ? req.body.phoneNumber : null,
@@ -62,7 +61,7 @@ class TransactionController {
   }
 
   static debitAccount(req, res) {
-    const account = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
+    const account = data.findTransactionByAccountNumber(parseInt(req.params.accountNumber));
     const accountMoney = parseFloat(req.body.amount);
     if (!account) {
       return res.status(400).json({
@@ -70,7 +69,7 @@ class TransactionController {
         error: "Invalid account number",
       });
     }
-    if (account.balance - accountMoney <= 0) {
+    if (account.newBalance - accountMoney <= 0) {
       return res.status(400).json({
         status: 400,
         error: "Low Funds. Account cant be Debited",
