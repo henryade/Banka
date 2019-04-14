@@ -10,8 +10,8 @@
     "dev": "nodemon --exec babel-node index.js",
     "test": "nyc mocha build/test/**/*.spec.js",
     "test-dev": "nyc --require babel-core/register mocha test/**/*.js --exit",
-    "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc report --reporter=text-lcov"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
