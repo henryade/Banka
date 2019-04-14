@@ -1,27 +1,5 @@
 import data from "./dbController";
 
-const logic = (action, req, res) => {
-  const accounts = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-  if (!accounts) {
-
-    return res.status(400).json({
-      status: 400,
-      error: "Invalid account number",
-    });
-  }
-  if (accounts.status === action) {
-    return res.status(400).json({
-      status: 400,
-      error: `Account is ${action}`,
-    });
-  }
-  accounts.status = action;
-  return res.status(200).json({
-    status: 200,
-    data: accounts,
-  });
-};
-
 class AccountController {
   static createAccount(req, res) {
     if (!req.body.email) {
@@ -88,13 +66,19 @@ class AccountController {
     });
   }
 
-  static activateAccount(req, res) {
-    logic("active", req, res);
-  }
-
-  static deactivateAccount(req, res) {
-    // eslint-disable-next-line radix
-    logic("dormant", req, res);
+  static changeAccountStatus(req, res) {
+    const accounts = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
+    if (!accounts) {
+      return res.status(400).json({
+        status: 400,
+        error: "Invalid account number",
+      });
+    }
+    accounts.status = accounts.status === "active" ? "dormant" : "active";
+    return res.status(200).json({
+      status: 200,
+      data: accounts,
+    });
   }
 
   static deleteAccount(req, res) {
@@ -114,10 +98,6 @@ class AccountController {
         message: "Account Successfully Delete",
       });
     }
-    return res.status(400).json({
-      status: 400,
-      message: "Account still exist",
-    });
   }
 }
 

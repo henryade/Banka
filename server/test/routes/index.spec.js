@@ -1,14 +1,21 @@
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
+import data from "../../controllers/dbController";
 import app from "../../app";
 
+
 chai.use(chaiHttp);
+
+// eslint-disable-next-line no-global-assign
+
+
 
 describe("Sign in test", () => {
   const endpoint = "/api/v1/auth/signin";
   it("should not login a user when there are no parameters", () => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({})
       .end((err, response) => {
         expect(response).have.a.status(400);
@@ -18,6 +25,7 @@ describe("Sign in test", () => {
   it("should not login a user when the email is missing", () => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
         password: "password",
       })
@@ -31,8 +39,9 @@ describe("Sign in test", () => {
   it("should not login a user when the password is missing", () => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
-        email: "user1@gmail.com",
+        email: "user5@gmail.com",
       })
       .end((error, response) => {
         expect(response).have.a.status(400);
@@ -43,11 +52,13 @@ describe("Sign in test", () => {
   it("'should login a user when all the parameters are given", () => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
-        email: "user1@gmail.com",
+        email: "user5@gmail.com",
         password: "password",
       })
       .end((error, response) => {
+        
         expect(response).have.a.status(200);
         expect(response.body).to.have.property("data");
       });
@@ -55,6 +66,7 @@ describe("Sign in test", () => {
   it("should not login a user with wrong credentials-email", () => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
         email: "use@gmail.com",
         password: "password",
@@ -67,8 +79,9 @@ describe("Sign in test", () => {
   it("should not be able to login with wrong credentials-password", () => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
-        email: "user1@gmail.com",
+        email: "user5@gmail.com",
         password: "pasword",
       })
       .end((error, response) => {
@@ -79,8 +92,9 @@ describe("Sign in test", () => {
   it("should generate token", () => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
-        email: "user1@gmail.com",
+        email: "user5@gmail.com",
         password: "password",
       })
       .end((error, response) => {
@@ -124,7 +138,7 @@ describe("Sign up test", () => {
       .send({
         firstName: "Second",
         lastName: "Nme",
-        email: "user1@gmail.com",
+        email: "user5@gmail.com",
         password: "password",
         confirmPassword: "password",
       })

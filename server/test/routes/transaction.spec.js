@@ -1,6 +1,5 @@
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
-import assert from "assert";
 import app from "../../app";
 import Tdata from "../../controllers/dbController";
 
@@ -10,6 +9,7 @@ const testAccountNumber1 = 9000134322;
 const wrongAccountNumber = 8000134354;
 const testAccountNumber2 = 9000134354;
 const Account = Tdata.findTransactionByAccountNumber(testAccountNumber1);
+
 
 describe("Debit Account test", () => {
   it("should not debit account if there are no parameters", () => {
@@ -53,6 +53,35 @@ describe("Debit Account test", () => {
       });
   });
 
+  it("should not debit a user if the account status is dormant", () => {
+    chai.request(app)
+      .post(`/api/v1/transactions/9000134354/debit`)
+      .send({
+        amount: 70000,
+        depositor: "Name",
+        phoneNumber: "08064372423",
+      })
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Account is Inactive");
+      });
+  });
+
+
+  it("should not debit if a user types a wrong amount format  ", () => {
+    chai.request(app)
+      .post(`/api/v1/transactions/${testAccountNumber1}/debit`)
+      .send({
+        amount: "k00yu00",
+        depositor: "Name",
+        phoneNumber: "08064372423",
+      })
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Amount is Invalid");
+      });
+  });
+
   it("should not debit a user if the account balance is lower than the amount to be debited", () => {
     chai.request(app)
       .post(`/api/v1/transactions/${testAccountNumber1}/debit`)
@@ -89,7 +118,7 @@ describe("Credit Account test", () => {
 
       .end((error, response) => {
         expect(response).to.have.status(200);
-        expect(Account.newBalance).to.be.below(response.body.data.newBalance);
+        expect(Account.OldBalance).to.be.below(response.body.data.newBalance);
         expect(response.body.data).to.have.property("id");
         expect(response.body.data).to.have.property("createdOn");
         expect(response.body.data).to.have.property("type");
@@ -97,6 +126,33 @@ describe("Credit Account test", () => {
       });
   });
 
+  it("should not debit if a user types a wrong amount format  ", () => {
+    chai.request(app)
+      .post(`/api/v1/transactions/${testAccountNumber1}/credit`)
+      .send({
+        amount: "k00yu00",
+        depositor: "Name",
+        phoneNumber: "08064372423",
+      })
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Amount is Invalid");
+      });
+  });
+
+  it("should not debit a user if the account status is dormant", () => {
+    chai.request(app)
+      .post(`/api/v1/transactions/${testAccountNumber2}/credit`)
+      .send({
+        amount: 70000,
+        depositor: "Name",
+        phoneNumber: "08064372423",
+      })
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Account is Inactive");
+      });
+  });
 
   it("should not credit a user if the account number is invalid", () => {
     chai.request(app)

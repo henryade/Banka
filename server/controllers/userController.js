@@ -19,7 +19,7 @@ class UserController {
         error: "password is required",
       });
     }
-    const User = data.getUsers().find(userField => userField.email === req.body.email);
+    const User = data.findOneUser("email", req.body.email);
     if (!User) {
       return res.status(401).json({
         status: 401,
@@ -27,12 +27,6 @@ class UserController {
       });
     }
     bcrypt.compare(req.body.password, User.password, (err, response) => {
-      if (err) {
-        return res.status(401).json({
-          status: 401,
-          error: "Auth failed",
-        });
-      }
       if (response) {
         const token = jwt.sign({
           email: User.email,
@@ -41,10 +35,7 @@ class UserController {
           lastName: User.lastName,
           type: User.type,
           isAdmin: User.isAdmin,
-        }, JWT_KEY,
-        {
-          expiresIn: "1h",
-        });
+        }, JWT_KEY);
         return res.status(200).json({
           status: 200,
           data: {
@@ -106,12 +97,7 @@ class UserController {
 
 
     bcrypt.hash(req.body.password, salt, (err, hash) => {
-      if (err) {
-        return res.status(500).json({
-          error: err,
-        });
-      }
-      const allUser = data.getUsers().map(x => x.id).sort(); 
+      const allUser = data.getUsers().map(x => x.id).sort();
       const id = allUser[allUser.length - 1] + 1;
 
       const token = jwt.sign({
@@ -121,11 +107,8 @@ class UserController {
         lastName: req.body.lastName,
         type: "client",
         isAdmin: false,
-      }, JWT_KEY,
-      {
-        expiresIn: "1h",
-      });
-      data.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash,"client", false);
+      }, JWT_KEY);
+      data.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash, "client", false);
       const newUser = data.findOneUser("id", id);
 
       return res.status(201).json({

@@ -168,27 +168,20 @@ describe("Create Account test", function () {
   });
 });
 
-var activeAccount = 9000134322;
+var activeAccount = "9000134322";
 var dormantAccount = 9000134354;
-var wrongAccount = 800013432;
+var wrongAccount = 900013432;
 
 describe("Activate account test", function () {
-  it("should do nothing if user account is active", function () {
-    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + activeAccount + "/activate").end(function (err, response) {
-      (0, _chai.expect)(response).to.have.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("Account is active");
-    });
-  });
-
   it("should activate an user account if account is dormant", function () {
-    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + dormantAccount + "/activate").end(function (err, response) {
+    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + dormantAccount).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(200);
       (0, _chai.expect)(response.body.data.status).to.equal("active");
     });
   });
 
   it("should not activate if account number is invalid", function () {
-    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + wrongAccount + "/activate").end(function (err, response) {
+    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + wrongAccount).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
     });
@@ -196,22 +189,15 @@ describe("Activate account test", function () {
 });
 
 describe("Deactivate account test", function () {
-  it("should not do nothing if user account is dormant", function () {
-    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + dormantAccount + "/deactivate").end(function (err, response) {
-      (0, _chai.expect)(response).to.have.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("Account is dormant");
-    });
-  });
-
   it("should deactivate a user account if account is active", function () {
-    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + activeAccount + "/deactivate").end(function (err, response) {
+    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + activeAccount).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(200);
       (0, _chai.expect)(response.body.data.status).to.equal("dormant");
     });
   });
 
   it("should not deactivate if account number is invalid", function () {
-    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + wrongAccount + "/deactivate").end(function (err, response) {
+    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + wrongAccount).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
     });
