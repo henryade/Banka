@@ -88,7 +88,7 @@ describe("Credit Account test", function () {
       phoneNumber: "08064372423"
     }).end(function (error, response) {
       (0, _chai.expect)(response).to.have.status(200);
-      (0, _chai.expect)(Account.oldBalance).to.be.below(response.body.data.newBalance);
+      (0, _chai.expect)(Account.newBalance).to.be.below(response.body.data.newBalance);
       (0, _chai.expect)(response.body.data).to.have.property("id");
       (0, _chai.expect)(response.body.data).to.have.property("createdOn");
       (0, _chai.expect)(response.body.data).to.have.property("type");
