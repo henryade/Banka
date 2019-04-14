@@ -11,8 +11,7 @@
     "test": "nyc mocha build/test/**/*.spec.js",
     "test-dev": "nyc --require babel-core/register mocha test/**/*.js --exit",
     "coveralls": "nyc --reporter=lcov -reporter=text-lcov npm test",
-    "coverage": "nyc report --reporter=text-locov | coveralls",
-    "heroku-postbuild": "npm run build"
+    "coverage": "nyc report --reporter=text-locov | coveralls"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
