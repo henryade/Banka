@@ -9,9 +9,9 @@
     "start": "node build/index.js",
     "dev": "nodemon --exec babel-node index.js",
     "test": "nyc mocha build/test/**/*.spec.js",
+    "test:coveralls": "mocha build/test/**/*.spec.js",
     "test-dev": "nyc --require babel-core/register mocha test/**/*.js --exit",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "coverage": "nyc report --reporter=text-lcov"
+    "coveralls": "nyc npm test:coveralls && nyc report --reporter=text-lcov | coveralls"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",

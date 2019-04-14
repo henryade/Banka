@@ -5,6 +5,6 @@ import isLoggedIn from "../middleware/authorization";
 const router = express.Router();
 
 router.post("/auth/signup", userData.signup);
-router.post("/auth/signin", isLoggedIn, userData.signin);
+router.post("/auth/signin", userData.signin);
 
 module.exports = router;
