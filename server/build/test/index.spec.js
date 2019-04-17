@@ -31,34 +31,10 @@ describe("Other Route test", function () {
       (0, _chai.expect)(response.text).to.equal("Home Page");
     });
   });
-  it("should be able to see a home route", function () {
-    _chai2.default.request(_app2.default).get("/*").end(function (err, response) {
-      (0, _chai.expect)(response).have.a.status(200);
-      (0, _chai.expect)(response.text).to.equal("Banka - Invalid Route ");
-    });
-  });
-  it("should be able to see a home route", function () {
-    _chai2.default.request(_app2.default).post("/*").end(function (err, response) {
-      (0, _chai.expect)(response).have.a.status(200);
-      (0, _chai.expect)(response.text).to.equal("Banka - Invalid Route ");
-    });
-  });
-  it("should be able to see a home route", function () {
-    _chai2.default.request(_app2.default).put("/*").end(function (err, response) {
-      (0, _chai.expect)(response).have.a.status(200);
-      (0, _chai.expect)(response.text).to.equal("Banka - Invalid Route ");
-    });
-  });
-  it("should be able to see a home route", function () {
-    _chai2.default.request(_app2.default).patch("/*").end(function (err, response) {
-      (0, _chai.expect)(response).have.a.status(200);
-      (0, _chai.expect)(response.text).to.equal("Banka - Invalid Route ");
-    });
-  });
-  it("should be able to see a home route", function () {
-    _chai2.default.request(_app2.default).delete("/*").end(function (err, response) {
-      (0, _chai.expect)(response).have.a.status(200);
-      (0, _chai.expect)(response.text).to.equal("Banka - Invalid Route ");
+  it("should be throw flag on a wrong route", function () {
+    _chai2.default.request(_app2.default).get("/api/v3/reqee").end(function (err, response) {
+      (0, _chai.expect)(response).have.a.status(404);
+      (0, _chai.expect)(response.text).to.include("Page Not Found");
     });
   });
 });

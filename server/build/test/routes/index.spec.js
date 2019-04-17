@@ -36,7 +36,7 @@ describe("Sign in test", function () {
       password: "password"
     }).end(function (error, response) {
       (0, _chai.expect)(response).have.a.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("email is required");
+      (0, _chai.expect)(response.text).to.include("email is required");
     });
   });
 
@@ -45,7 +45,7 @@ describe("Sign in test", function () {
       email: "user5@gmail.com"
     }).end(function (error, response) {
       (0, _chai.expect)(response).have.a.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("password is required");
+      (0, _chai.expect)(response.text).to.include("password is required");
     });
   });
 
@@ -104,7 +104,7 @@ describe("Sign up test", function () {
       confirmPassword: "password"
     }).end(function (error, response) {
       (0, _chai.expect)(response).have.a.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("email is required");
+      (0, _chai.expect)(response.text).to.include("email is required");
     });
   });
 
@@ -129,7 +129,7 @@ describe("Sign up test", function () {
       confirmPassword: "password"
     }).end(function (error, response) {
       (0, _chai.expect)(response).have.a.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("password is required");
+      (0, _chai.expect)(response.text).to.include("password is required");
     });
   });
 
@@ -141,7 +141,7 @@ describe("Sign up test", function () {
       confirmPassword: "password"
     }).end(function (error, response) {
       (0, _chai.expect)(response).have.a.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("first name is required");
+      (0, _chai.expect)(response.text).to.include("first name is required");
     });
   });
 
@@ -153,7 +153,7 @@ describe("Sign up test", function () {
       confirmPassword: "password"
     }).end(function (error, response) {
       (0, _chai.expect)(response).have.a.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("last name is required");
+      (0, _chai.expect)(response.text).to.include("last name is required");
     });
   });
 
@@ -165,8 +165,8 @@ describe("Sign up test", function () {
       password: "password",
       confirmPassword: "pasword"
     }).end(function (error, response) {
-      (0, _chai.expect)(response).have.a.status(401);
-      (0, _chai.expect)(response.body.error).to.equal("passwords do not match");
+      (0, _chai.expect)(response).have.a.status(400);
+      (0, _chai.expect)(response.body.error).to.include("confirm password does not match expected value");
     });
   });
 
@@ -177,8 +177,8 @@ describe("Sign up test", function () {
       email: "user3@gmail.com",
       password: "password"
     }).end(function (error, response) {
-      (0, _chai.expect)(response).have.a.status(401);
-      (0, _chai.expect)(response.body.error).to.equal("passwords do not match");
+      (0, _chai.expect)(response).have.a.status(400);
+      (0, _chai.expect)(response.text).to.include("confirm password is required");
     });
   });
 

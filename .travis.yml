@@ -13,6 +13,7 @@ before_script:
   - cd server
   - yarn global add nyc
   - yarn global add mocha
+  - yarn global add joi
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build

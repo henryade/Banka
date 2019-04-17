@@ -1,51 +1,50 @@
-
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true,
+  value: true
 });
 
-let _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }());
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-let _jsonwebtoken = require("jsonwebtoken");
+var _jsonwebtoken = require("jsonwebtoken");
 
-let _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
-let _bcryptjs = require("bcryptjs");
+var _bcryptjs = require("bcryptjs");
 
-let _bcryptjs2 = _interopRequireDefault(_bcryptjs);
+var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
 
-let _config = require("../config");
+var _config = require("../config");
 
-let _dbController = require("./dbController");
+var _dbController = require("./dbController");
 
-let _dbController2 = _interopRequireDefault(_dbController);
+var _dbController2 = _interopRequireDefault(_dbController);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-let salt = 10;
+var salt = 10;
 
-let UserController = (function () {
+/**
+ * User Controller Class
+ */
+
+var UserController = function () {
   function UserController() {
     _classCallCheck(this, UserController);
   }
 
   _createClass(UserController, null, [{
     key: "signin",
+
+    /**
+    * @param {obj} req - request from body
+    * @param {obj} res - response to request from body
+    * @return {obj}    - returns response object
+    */
     value: function signin(req, res) {
-      if (!req.body.email) {
-        return res.status(400).json({
-          status: 400,
-          error: "email is required"
-        });
-      }
-      if (!req.body.password) {
-        return res.status(400).json({
-          status: 400,
-          error: "password is required"
-        });
-      }
+
       var User = _dbController2.default.findOneUser("email", req.body.email);
       if (!User) {
         return res.status(401).json({
@@ -82,39 +81,16 @@ let UserController = (function () {
         });
       });
     }
+
+    /**
+     * @param {obj} req - request from body
+     * @param {obj} res - response to request from body
+     * @return {obj}    - returns response object
+     */
+
   }, {
     key: "signup",
     value: function signup(req, res) {
-      if (!req.body.email) {
-        return res.status(400).json({
-          status: 400,
-          error: "email is required"
-        });
-      }
-      if (!req.body.password) {
-        return res.status(400).json({
-          status: 400,
-          error: "password is required"
-        });
-      }
-      if (!req.body.firstName) {
-        return res.status(400).json({
-          status: 400,
-          error: "first name is required"
-        });
-      }
-      if (!req.body.lastName) {
-        return res.status(400).json({
-          status: 400,
-          error: "last name is required"
-        });
-      }
-      if (!req.body.confirmPassword || req.body.password !== req.body.confirmPassword) {
-        return res.status(401).json({
-          status: 401,
-          error: "passwords do not match"
-        });
-      }
       var User = _dbController2.default.findOneUser("email", req.body.email);
       if (User) {
         return res.status(400).json({
@@ -124,10 +100,7 @@ let UserController = (function () {
       }
 
       _bcryptjs2.default.hash(req.body.password, salt, function (err, hash) {
-        var allUser = _dbController2.default.getUsers().map(function (x) {
-          return x.id;
-        }).sort();
-        var id = allUser[allUser.length - 1] + 1;
+        var id = Math.ceil(Math.random() * 6);
 
         var token = _jsonwebtoken2.default.sign({
           email: req.body.email,
@@ -157,6 +130,6 @@ let UserController = (function () {
   }]);
 
   return UserController;
-}());
+}();
 
 exports.default = UserController;

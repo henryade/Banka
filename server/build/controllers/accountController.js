@@ -21,70 +21,54 @@ var AccountController = function () {
 
   _createClass(AccountController, null, [{
     key: "createAccount",
+
+    /**
+     * Create a bank account
+     * @param {obj} req - request from body
+     * @param {obj} res - response to request from body
+     * @return {obj}    - returns response object
+     */
     value: function createAccount(req, res) {
-      if (!req.body.email) {
-        return res.status(400).json({
-          status: 400,
-          error: "email is required"
-        });
-      }
-      if (!req.body.phoneNumber) {
-        return res.status(400).json({
-          status: 400,
-          error: "phone number is required"
-        });
-      }
-      if (!req.body.firstName) {
-        return res.status(400).json({
-          status: 400,
-          error: "first name is required"
-        });
-      }
-      if (!req.body.lastName) {
-        return res.status(400).json({
-          status: 400,
-          error: "last name is required"
-        });
-      }
-      if (!req.body.dob) {
-        return res.status(400).json({
-          status: 400,
-          error: "date of birth is required"
-        });
-      }
-      if (!req.body.address) {
-        return res.status(400).json({
-          status: 400,
-          error: "address is required"
-        });
-      }
-      if (!req.body.type) {
-        return res.status(400).json({
-          status: 400,
-          error: "Account type is required"
-        });
-      }
-      if (!req.body.balance) {
-        return res.status(400).json({
-          status: 400,
-          error: "opening balance is required"
-        });
-      }
       var lengthOfAccountNumber = 6;
       var bankAccountNumberBranding = 9000000000;
-      var id = Math.floor(Math.random() * lengthOfAccountNumber);
+      var id = Math.ceil(Math.random() * lengthOfAccountNumber);
       var accountNumber = bankAccountNumberBranding + Math.floor(Math.random() * lengthOfAccountNumber);
       var createdOn = new Date(Date.now());
       var owner = _dbController2.default.findOneUser("email", req.body.email).id;
+      // if (!owner) {
+      //   return res.status(400).json({
+      //     status: 400,
+      //     error: "Must use the same email",
+      //   });
+      // }
 
-      _dbController2.default.createAccount(id, accountNumber, createdOn, owner, "active", req.body.firstName, req.body.lastName, req.body.email, req.body.type, req.body.balance, req.body.phoneNumber, req.body.dob, req.body.address);
-      var newAccount = _dbController2.default.findAccountById(owner);
+      if (_dbController2.default.findAccountById(owner)) {
+        if (_dbController2.default.findAccountById(owner).type === req.body.type) {
+          return res.status(400).json({
+            status: 400,
+            error: "Account Exists"
+          });
+        }
+      }
+      _dbController2.default.createAccount(id, accountNumber, createdOn, owner, req.body.gender, "active", req.body.firstName, req.body.lastName, req.body.email, req.body.type, req.body.balance, req.body.phoneNumber, req.body.dob, req.body.address);
+      var newAccount = _dbController2.default.findAccountById(owner).type === req.body.type ? _dbController2.default.findAccountById(owner) : res.status(404).json({
+        status: 404,
+        message: "Account Not Found"
+      });
 
       res.status(201).json({
         status: 201,
         data: newAccount
       });
     }
+
+    /**
+    * Activate or Deactivate an account
+    * @param {obj} req - request from body
+    * @param {obj} res - response to request from body
+    * @return {obj}    - returns response object
+    */
+
   }, {
     key: "changeAccountStatus",
     value: function changeAccountStatus(req, res) {
@@ -96,11 +80,20 @@ var AccountController = function () {
         });
       }
       accounts.status = accounts.status === "active" ? "dormant" : "active";
+      _dbController2.default.updateDB("ACCOUNTS", accounts, accounts.status, "status");
       return res.status(200).json({
         status: 200,
-        data: accounts
+        data: _dbController2.default.findAccountByAccountNumber(accounts.accountNumber)
       });
     }
+
+    /**
+    * Delete an account
+    * @param {obj} req - request from body
+    * @param {obj} res - response to request from body
+    * @return {obj}    - returns response object
+    */
+
   }, {
     key: "deleteAccount",
     value: function deleteAccount(req, res) {

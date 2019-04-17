@@ -24,34 +24,25 @@ var _index = require("./routes/index");
 
 var _index2 = _interopRequireDefault(_index);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
+
 app.use("/api/v1", _transaction2.default);
 app.use("/api/v1", _account2.default);
 app.use("/api/v1", _index2.default);
 
-app.get("/", (req, res) => {
+app.get("/", function (req, res) {
   res.send("Home Page");
 });
-app.get("*", (req, res) => {
-  res.send("Banka - Invalid Route ");
-});
-app.post("*", (req, res) => {
-  res.send("Banka - Invalid Route ");
-});
-app.delete("*", (req, res) => {
-  res.send("Banka - Invalid Route ");
-});
-app.put("*", (req, res) => {
-  res.send("Banka - Invalid Route ");
-});
-app.patch("*", (req, res) => {
-  res.send("Banka - Invalid Route ");
+app.use("*", function (req, res, next) {
+  var err = new Error("Page Not Found");
+  res.status(404).json({
+    status: 404,
+    message: "Page Not Found"
+  });
 });
 
 exports.default = app;
