@@ -15,44 +15,12 @@ describe("Other Route test", () => {
         expect(response.text).to.equal("Home Page");
       });
   });
-  it("should be able to see a home route", () => {
+  it("should be throw flag on a wrong route", () => {
     chai.request(app)
-      .get("/*")
+      .get("/api/v3/reqee")
       .end((err, response) => {
-        expect(response).have.a.status(200);
-        expect(response.text).to.equal("Banka - Invalid Route ");
-      });
-  });
-  it("should be able to see a home route", () => {
-    chai.request(app)
-      .post("/*")
-      .end((err, response) => {
-        expect(response).have.a.status(200);
-        expect(response.text).to.equal("Banka - Invalid Route ");
-      });
-  });
-  it("should be able to see a home route", () => {
-    chai.request(app)
-      .put("/*")
-      .end((err, response) => {
-        expect(response).have.a.status(200);
-        expect(response.text).to.equal("Banka - Invalid Route ");
-      });
-  });
-  it("should be able to see a home route", () => {
-    chai.request(app)
-      .patch("/*")
-      .end((err, response) => {
-        expect(response).have.a.status(200);
-        expect(response.text).to.equal("Banka - Invalid Route ");
-      });
-  });
-  it("should be able to see a home route", () => {
-    chai.request(app)
-      .delete("/*")
-      .end((err, response) => {
-        expect(response).have.a.status(200);
-        expect(response.text).to.equal("Banka - Invalid Route ");
+        expect(response).have.a.status(404);
+        expect(response.text).to.include("Page Not Found");
       });
   });
 });

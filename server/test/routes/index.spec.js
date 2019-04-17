@@ -31,7 +31,7 @@ describe("Sign in test", () => {
       })
       .end((error, response) => {
         expect(response).have.a.status(400);
-        expect(response.body.error).to.equal("email is required");
+        expect(response.text).to.include("email is required");
       });
   });
 
@@ -45,7 +45,7 @@ describe("Sign in test", () => {
       })
       .end((error, response) => {
         expect(response).have.a.status(400);
-        expect(response.body.error).to.equal("password is required");
+        expect(response.text).to.include("password is required");
       });
   });
 
@@ -128,7 +128,7 @@ describe("Sign up test", () => {
       })
       .end((error, response) => {
         expect(response).have.a.status(400);
-        expect(response.body.error).to.equal("email is required");
+        expect(response.text).to.include("email is required");
       });
   });
 
@@ -159,7 +159,7 @@ describe("Sign up test", () => {
       })
       .end((error, response) => {
         expect(response).have.a.status(400);
-        expect(response.body.error).to.equal("password is required");
+        expect(response.text).to.include("password is required");
       });
   });
 
@@ -174,7 +174,7 @@ describe("Sign up test", () => {
       })
       .end((error, response) => {
         expect(response).have.a.status(400);
-        expect(response.body.error).to.equal("first name is required");
+        expect(response.text).to.include("first name is required");
       });
   });
 
@@ -189,7 +189,7 @@ describe("Sign up test", () => {
       })
       .end((error, response) => {
         expect(response).have.a.status(400);
-        expect(response.body.error).to.equal("last name is required");
+        expect(response.text).to.include("last name is required");
       });
   });
 
@@ -204,8 +204,8 @@ describe("Sign up test", () => {
         confirmPassword: "pasword",
       })
       .end((error, response) => {
-        expect(response).have.a.status(401);
-        expect(response.body.error).to.equal("passwords do not match");
+        expect(response).have.a.status(400);
+        expect(response.body.error).to.include("confirm password does not match expected value");
       });
   });
 
@@ -219,8 +219,8 @@ describe("Sign up test", () => {
         password: "password",
       })
       .end((error, response) => {
-        expect(response).have.a.status(401);
-        expect(response.body.error).to.equal("passwords do not match");
+        expect(response).have.a.status(400);
+        expect(response.text).to.include("confirm password is required");
       });
   });
 
