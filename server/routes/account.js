@@ -1,6 +1,7 @@
 import express from "express";
 import accountData from "../controllers/accountController";
 import isLoggedIn from "../middleware/authorization";
+import validate from "../middleware/validation";
 
 const router = express.Router();
 
@@ -10,18 +11,18 @@ const router = express.Router();
 // Create Account //
 // /////////////////
 
-router.post("/accounts", accountData.createAccount);
+router.post("/accounts", validate.createAccount, accountData.createAccount);
 
 // ////////////////////////////////
 // Activate/Deactivate Account //
 // //////////////////////////////
 
-router.patch("/accounts/:accountNumber", accountData.changeAccountStatus);
+router.patch("/accounts/:accountNumber", validate.changeAccountStatus, accountData.changeAccountStatus);
 
 // ////////////////////////
  /// Delete Account ///
 // //////////////////////
 
-router.delete("/accounts/:accountNumber", accountData.deleteAccount);
+router.delete("/accounts/:accountNumber", validate.deleteAccount, accountData.deleteAccount);
 
 module.exports = router;

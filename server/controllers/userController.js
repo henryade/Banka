@@ -5,20 +5,18 @@ import data from "./dbController";
 
 const salt = 10;
 
+/**
+ * User Controller Class
+ */
+
 class UserController {
-  static signin(req, res) {
-    if (!req.body.email) {
-      return res.status(400).json({
-        status: 400,
-        error: "email is required",
-      });
-    }
-    if (!req.body.password) {
-      return res.status(400).json({
-        status: 400,
-        error: "password is required",
-      });
-    }
+ /**
+ * @param {obj} req - request from body
+ * @param {obj} res - response to request from body
+ * @return {obj}    - returns response object
+ */ 
+  static signin(req, res) { 
+
     const User = data.findOneUser("email", req.body.email);
     if (!User) {
       return res.status(401).json({
@@ -56,37 +54,13 @@ class UserController {
     });
   }
 
+  /**
+   * @param {obj} req - request from body
+   * @param {obj} res - response to request from body
+   * @return {obj}    - returns response object
+   */
+
   static signup(req, res) {
-    if (!req.body.email) {
-      return res.status(400).json({
-        status: 400,
-        error: "email is required",
-      });
-    }
-    if (!req.body.password) {
-      return res.status(400).json({
-        status: 400,
-        error: "password is required",
-      });
-    }
-    if (!req.body.firstName) {
-      return res.status(400).json({
-        status: 400,
-        error: "first name is required",
-      });
-    }
-    if (!req.body.lastName) {
-      return res.status(400).json({
-        status: 400,
-        error: "last name is required",
-      });
-    }
-    if (!req.body.confirmPassword || (req.body.password !== req.body.confirmPassword)) {
-      return res.status(401).json({
-        status: 401,
-        error: "passwords do not match",
-      });
-    }
     const User = data.findOneUser("email", req.body.email);
     if (User) {
       return res.status(400).json({
@@ -97,7 +71,7 @@ class UserController {
 
 
     bcrypt.hash(req.body.password, salt, (err, hash) => {
-      const id = Math.floor(Math.random() * 6);
+      const id = Math.ceil(Math.random() * 6);
 
       const token = jwt.sign({
         email: req.body.email,

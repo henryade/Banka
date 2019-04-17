@@ -9,9 +9,8 @@
     "start": "node build/index.js",
     "dev": "nodemon --exec babel-node index.js",
     "test": "nyc mocha build/test/**/*.spec.js",
-    "test:coveralls": "mocha build/test/**/*.spec.js",
     "test-dev": "nyc --require babel-core/register mocha test/**/*.js --exit",
-    "coveralls": "nyc report --reporter=text-lcov mocha build/test/**/*.spec.js"
+    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
@@ -22,7 +21,9 @@
     "dotenv": "^7.0.0",
     "eslint-config-airbnb": "^17.1.0",
     "express": "^4.16.4",
+    "express-validator": "^5.3.1",
     "jasmine": "^3.4.0",
+    "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-authentication": "^0.4.0",
     "request": "^2.88.0"

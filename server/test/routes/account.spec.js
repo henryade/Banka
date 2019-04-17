@@ -21,11 +21,11 @@ describe("Create Account test", () => {
       .send({
         firstName: "Second",
         lastName: "Nme",
-        phoneNumber: "08064372423",
+        phoneNumber: "2348064372423",
         dob: "1991-05-12",
         address: "11 Banka str., Andela, Lagos, Nigeria",
         type: "Savings",
-        balance: 400000.34,
+        openingBalance: 400000.34,
       })
 
       .end((err, response) => {
@@ -44,7 +44,7 @@ describe("Create Account test", () => {
         dob: "1991-05-12",
         address: "11 Banka str., Andela, Lagos, Nigeria",
         type: "Savings",
-        balance: 400000.34,
+        openingBalance: 400000.34,
       })
 
       .end((err, response) => {
@@ -59,11 +59,11 @@ describe("Create Account test", () => {
       .send({
         lastName: "Nme",
         email: "user1@gmail.com",
-        phoneNumber: "08064372423",
+        phoneNumber: "2348064372423",
         dob: "1991-05-12",
         address: "11 Banka str., Andela, Lagos, Nigeria",
         type: "Savings",
-        balance: 400000.34,
+        openingBalance: 400000.34,
       })
 
       .end((err, response) => {
@@ -78,11 +78,11 @@ describe("Create Account test", () => {
       .send({
         firstName: "Second",
         email: "user1@gmail.com",
-        phoneNumber: "08064372423",
+        phoneNumber: "2348064372423",
         dob: "1991-05-12",
         address: "11 Banka str., Andela, Lagos, Nigeria",
         type: "Savings",
-        balance: 400000.34,
+        openingBalance: 400000.34,
       })
 
       .end((err, response) => {
@@ -98,10 +98,10 @@ describe("Create Account test", () => {
         firstName: "Second",
         lastName: "Nme",
         email: "user1@gmail.com",
-        phoneNumber: "08064372423",
+        phoneNumber: "2348064372423",
         address: "11 Banka str., Andela, Lagos, Nigeria",
         type: "Savings",
-        balance: 400000.34,
+        openingBalance: 400000.34,
       })
 
       .end((err, response) => {
@@ -117,10 +117,10 @@ describe("Create Account test", () => {
         firstName: "Second",
         lastName: "Nme",
         email: "user1@gmail.com",
-        phoneNumber: "08064372423",
+        phoneNumber: "2348064372423",
         dob: "1991-05-12",
         type: "Savings",
-        balance: 400000.34,
+        openingBalance: 400000.34,
       })
 
       .end((err, response) => {
@@ -136,15 +136,15 @@ describe("Create Account test", () => {
         firstName: "Second",
         lastName: "Nme",
         email: "user1@gmail.com",
-        phoneNumber: "08064372423",
+        phoneNumber: "2348064372423",
         dob: "1991-05-12",
         address: "11 Banka str., Andela, Lagos, Nigeria",
-        balance: 400000.34,
+        openingBalance: 400000.34,
       })
 
       .end((err, response) => {
         expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Account type is required");
+        expect(response.body.error).to.equal("type is required");
       });
   });
 
@@ -155,7 +155,7 @@ describe("Create Account test", () => {
         firstName: "Second",
         lastName: "Nme",
         email: "user1@gmail.com",
-        phoneNumber: "08064372423",
+        phoneNumber: "2348064372423",
         dob: "1991-05-12",
         address: "11 Banka str., Andela, Lagos, Nigeria",
         type: "Savings",
@@ -171,11 +171,32 @@ describe("Create Account test", () => {
       firstName: "Second",
       lastName: "Nme",
       email: "user1@gmail.com",
-      balance: 400040.34,
-      phoneNumber: "08064372423",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
       dob: "1991-05-12",
       address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Savings",
+    };
+    chai.request(app)
+      .post(endpoint)
+      .send(payload)
+
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("gender is required");
+      });
+  });
+  it("should create a user account if all credentials are given", () => {
+    const payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "user1@gmail.com",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Savings",
+      gender: "M"
     };
     chai.request(app)
       .post(endpoint)
@@ -191,6 +212,7 @@ describe("Create Account test", () => {
         expect(response.body.data).to.have.property("id");
         expect(response.body.data).to.have.property("status");
         expect(response.body.data).to.have.property("createdOn");
+        expect(response.body.data).to.have.property("gender");
       });
   });
 });
@@ -247,8 +269,8 @@ describe("Delete account test", () => {
       .delete(`/api/v1/accounts/${wrongAccount}`)
 
       .end((err, response) => {
-        expect(response).to.have.status(404);
-        expect(response.body.message).to.equal("Account Not Found");
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Invalid account number");
       });
   });
 

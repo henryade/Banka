@@ -1,21 +1,31 @@
 import data from "./dbController";
 
+/**
+ * Debit or Credit controller
+ * @param {number} action - positve for credit, negative for debit
+ * @param {obj} req - request from body
+ * @param {obj} res - response to request from body
+ * @return {obj}    - returns response object
+ */
 const logic = (action, req, res) => {
   const accounts = data.findTransactionByAccountNumber(parseInt(req.params.accountNumber));
   const accountStatus = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-  if (!accounts) {
+  const amount = parseFloat(req.body.amount);
+
+  if (!accounts || !accountStatus) {
     return res.status(400).json({
       status: 400,
       error: "Invalid Account Number",
     });
   }
-  if (!req.body.amount) {
+  if (action === -1 && accounts.newBalance - amount <= 0) {
     return res.status(400).json({
       status: 400,
-      error: "Amount is required",
+      error: "Low Funds. Account cant be Debited",
     });
   }
-  if (Number.isNaN(parseFloat(req.body.amount))) {
+
+  if (Number.isNaN(amount)) {
     return res.status(400).json({
       status: 400,
       error: "Amount is Invalid",
@@ -27,55 +37,60 @@ const logic = (action, req, res) => {
       error: "Account is Inactive",
     });
   }
-  const newBalance = accounts.newBalance + parseFloat(req.body.amount) * action;
+  const newBalance = accounts.newBalance + amount * action;
   const lengthOfTransactionId = 6;
   const id = Math.floor(Math.random() * lengthOfTransactionId);
   const createdOn = new Date(Date.now());
   const type = action === 1 ? "credit" : "debit";
+  const depositor = req.body.depositor || null;
+  const phoneNumber = req.body.depositorPhoneNumber || null;
 
-
-  data.createTransaction(
-    id,
-    createdOn,
-    type,
-    req.params.accountNumber,
-    req.userData.id,
-    req.body.amount,
-    accounts.newBalance,
-    newBalance,
-    req.body.depositor || null,
-    type === "debit" ? req.body.phoneNumber : null,
-  );
+  // if (!data.findTransactionByAccountNumber(req.params.accountNumber)) {
+    data.createTransaction(
+      id,
+      createdOn,
+      type,
+      req.params.accountNumber,
+      // req.userData.id,
+      amount,
+      accounts.newBalance,
+      newBalance,
+      depositor,
+      phoneNumber,
+    );
+  // } else {
+  //   data.updateTransactionDB(req.params.accountNumber, {amount, newBalance: accounts.newBalance, newBalance });
+  //   if (type === "debit") data.updateTransactionDB(req.params.accountNumber, { depositor, phoneNumber });
+  // }
   const newTransaction = data.findTransactionById(id);
-
-
   return res.status(200).json({
     status: 200,
     data: newTransaction,
   });
 };
 
+/**
+ * Transaction Controller Class
+ */
 
 class TransactionController {
+  /**
+ * Credit an account
+ * @param {obj} req - request from body
+ * @param {obj} res - response to request from body
+ * @return {obj}    - returns response object
+ */
   static creditAccount(req, res) {
     return logic(1, req, res);
   }
 
+  /**
+ * Debit an Account
+ * @param {obj} req - request from body
+ * @param {obj} res - response to request from body
+ * @return {obj}    - returns response object
+ */
   static debitAccount(req, res) {
-    const account = data.findTransactionByAccountNumber(parseInt(req.params.accountNumber));
-    const accountMoney = parseFloat(req.body.amount);
-    if (!account) {
-      return res.status(400).json({
-        status: 400,
-        error: "Invalid account number",
-      });
-    }
-    if (account.newBalance - accountMoney <= 0) {
-      return res.status(400).json({
-        status: 400,
-        error: "Low Funds. Account cant be Debited",
-      });
-    }
     return logic(-1, req, res);
   }
 }

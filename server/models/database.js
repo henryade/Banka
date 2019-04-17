@@ -1,4 +1,4 @@
-let db = {
+const db = {
   USERS: {
     ADMIN: [
 
@@ -30,7 +30,7 @@ let db = {
       {
         token: "token002",
         id: 200001,
-        email: "user1@gmail.com",
+        email: "user4@gmail.com",
         firstName: "First",
         lastName: "User",
         password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
@@ -56,7 +56,7 @@ let db = {
       address: "11 Banka str., Andela, Lagos, Nigeria",
     },
     {
-      id: 285346,
+      id: 285346, 
       accountNumber: 9000134354,
       createdOn: "2019-04-05 19:11",
       owner: 100002,
@@ -71,7 +71,7 @@ let db = {
       address: "11 Banka str., Andela, Lagos, Nigeria",
     },
   ],
-  TRANSACTIONS:[
+  TRANSACTIONS: [
     {
       id: 349046,
       createdOn: "2019-04-06 19:11",
