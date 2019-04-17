@@ -4,6 +4,19 @@ import app from "../../app";
 
 chai.use(chaiHttp);
 
+describe("View all bank account test", () => {
+  it("should return all accounts in the database", () => {
+    chai.request(app)
+      .get(`/api/v1/accounts/`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.data).to.be.an("array");
+        expect(response.body.data[0]).to.be.an("object");
+      });
+  });
+});
+
 describe("Create Account test", () => {
   const endpoint = "/api/v1/accounts";
   it("should not create a user when there are no parameters", () => {

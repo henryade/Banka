@@ -1,7 +1,27 @@
 import data from "./dbController";
 
 class AccountController {
-/**
+  /**
+ * View all bank accounts
+ * @param {obj} req - request from body
+ * @param {obj} res - response to request from body
+ * @return {obj}    - returns response object
+ */
+  static viewAllAccount(req, res) {
+    if (data.getAccounts() !== undefined) {
+      return res.status(200).json({
+        status: 200,
+        data: data.getAccounts(),
+      });
+    }
+    res.status(404).json({
+      status:404,
+      error: "Empty Database",
+    })
+  }
+
+
+  /**
  * Create a bank account
  * @param {obj} req - request from body
  * @param {obj} res - response to request from body
