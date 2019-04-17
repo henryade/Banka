@@ -5,7 +5,12 @@ import validate from "../middleware/validation";
 
 const router = express.Router();
 
+// ///////////////////
+// View All Account //
+// /////////////////
 
+
+router.get("/accounts", accountData.viewAllAccount)
 
 // ///////////////////
 // Create Account //
