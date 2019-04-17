@@ -14,22 +14,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * Debit or Credit controller
+ * @param {number} action - positve for credit, negative for debit
+ * @param {obj} req - request from body
+ * @param {obj} res - response to request from body
+ * @return {obj}    - returns response object
+ */
 var logic = function logic(action, req, res) {
   var accounts = _dbController2.default.findTransactionByAccountNumber(parseInt(req.params.accountNumber));
   var accountStatus = _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-  if (!accounts) {
+  var amount = parseFloat(req.body.amount);
+
+  if (!accounts || !accountStatus) {
     return res.status(400).json({
       status: 400,
       error: "Invalid Account Number"
     });
   }
-  if (!req.body.amount) {
+  if (action === -1 && accounts.newBalance - amount <= 0) {
     return res.status(400).json({
       status: 400,
-      error: "Amount is required"
+      error: "Low Funds. Account cant be Debited"
     });
   }
-  if (Number.isNaN(parseFloat(req.body.amount))) {
+
+  if (Number.isNaN(amount)) {
     return res.status(400).json({
       status: 400,
       error: "Amount is Invalid"
@@ -41,22 +51,32 @@ var logic = function logic(action, req, res) {
       error: "Account is Inactive"
     });
   }
-  var newBalance = accounts.newBalance + parseFloat(req.body.amount) * action;
+  var newBalance = accounts.newBalance + amount * action;
   var lengthOfTransactionId = 6;
   var id = Math.floor(Math.random() * lengthOfTransactionId);
   var createdOn = new Date(Date.now());
   var type = action === 1 ? "credit" : "debit";
+  var depositor = req.body.depositor || null;
+  var phoneNumber = req.body.depositorPhoneNumber || null;
 
+  // if (!data.findTransactionByAccountNumber(req.params.accountNumber)) {
   _dbController2.default.createTransaction(id, createdOn, type, req.params.accountNumber,
-  // cashier,
-  req.body.amount, accounts.newBalance, newBalance, req.body.depositor || null, type === "debit" ? req.body.phoneNumber : null);
+  // req.userData.id,
+  amount, accounts.newBalance, newBalance, depositor, phoneNumber);
+  // } else {
+  //   data.updateTransactionDB(req.params.accountNumber, {amount, newBalance: accounts.newBalance, newBalance });
+  //   if (type === "debit") data.updateTransactionDB(req.params.accountNumber, { depositor, phoneNumber });
+  // }
   var newTransaction = _dbController2.default.findTransactionById(id);
-
   return res.status(200).json({
     status: 200,
     data: newTransaction
   });
 };
+
+/**
+ * Transaction Controller Class
+ */
 
 var TransactionController = function () {
   function TransactionController() {
@@ -65,26 +85,27 @@ var TransactionController = function () {
 
   _createClass(TransactionController, null, [{
     key: "creditAccount",
+
+    /**
+    * Credit an account
+    * @param {obj} req - request from body
+    * @param {obj} res - response to request from body
+    * @return {obj}    - returns response object
+    */
     value: function creditAccount(req, res) {
       return logic(1, req, res);
     }
+
+    /**
+    * Debit an Account
+    * @param {obj} req - request from body
+    * @param {obj} res - response to request from body
+    * @return {obj}    - returns response object
+    */
+
   }, {
     key: "debitAccount",
     value: function debitAccount(req, res) {
-      var account = _dbController2.default.findTransactionByAccountNumber(parseInt(req.params.accountNumber));
-      var accountMoney = parseFloat(req.body.amount);
-      if (!account) {
-        return res.status(400).json({
-          status: 400,
-          error: "Invalid account number"
-        });
-      }
-      if (account.newBalance - accountMoney <= 0) {
-        return res.status(400).json({
-          status: 400,
-          error: "Low Funds. Account cant be Debited"
-        });
-      }
       return logic(-1, req, res);
     }
   }]);

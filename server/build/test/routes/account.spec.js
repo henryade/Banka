@@ -28,11 +28,11 @@ describe("Create Account test", function () {
     _chai2.default.request(_app2.default).post(endpoint).send({
       firstName: "Second",
       lastName: "Nme",
-      phoneNumber: "08064372423",
+      phoneNumber: "2348064372423",
       dob: "1991-05-12",
       address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Savings",
-      balance: 400000.34
+      openingBalance: 400000.34
     }).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("email is required");
@@ -47,7 +47,7 @@ describe("Create Account test", function () {
       dob: "1991-05-12",
       address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Savings",
-      balance: 400000.34
+      openingBalance: 400000.34
     }).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("phone number is required");
@@ -58,11 +58,11 @@ describe("Create Account test", function () {
     _chai2.default.request(_app2.default).post(endpoint).send({
       lastName: "Nme",
       email: "user1@gmail.com",
-      phoneNumber: "08064372423",
+      phoneNumber: "2348064372423",
       dob: "1991-05-12",
       address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Savings",
-      balance: 400000.34
+      openingBalance: 400000.34
     }).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("first name is required");
@@ -73,11 +73,11 @@ describe("Create Account test", function () {
     _chai2.default.request(_app2.default).post(endpoint).send({
       firstName: "Second",
       email: "user1@gmail.com",
-      phoneNumber: "08064372423",
+      phoneNumber: "2348064372423",
       dob: "1991-05-12",
       address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Savings",
-      balance: 400000.34
+      openingBalance: 400000.34
     }).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("last name is required");
@@ -89,10 +89,10 @@ describe("Create Account test", function () {
       firstName: "Second",
       lastName: "Nme",
       email: "user1@gmail.com",
-      phoneNumber: "08064372423",
+      phoneNumber: "2348064372423",
       address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Savings",
-      balance: 400000.34
+      openingBalance: 400000.34
     }).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("date of birth is required");
@@ -104,10 +104,10 @@ describe("Create Account test", function () {
       firstName: "Second",
       lastName: "Nme",
       email: "user1@gmail.com",
-      phoneNumber: "08064372423",
+      phoneNumber: "2348064372423",
       dob: "1991-05-12",
       type: "Savings",
-      balance: 400000.34
+      openingBalance: 400000.34
     }).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("address is required");
@@ -119,13 +119,13 @@ describe("Create Account test", function () {
       firstName: "Second",
       lastName: "Nme",
       email: "user1@gmail.com",
-      phoneNumber: "08064372423",
+      phoneNumber: "2348064372423",
       dob: "1991-05-12",
       address: "11 Banka str., Andela, Lagos, Nigeria",
-      balance: 400000.34
+      openingBalance: 400000.34
     }).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("Account type is required");
+      (0, _chai.expect)(response.body.error).to.equal("type is required");
     });
   });
 
@@ -134,7 +134,7 @@ describe("Create Account test", function () {
       firstName: "Second",
       lastName: "Nme",
       email: "user1@gmail.com",
-      phoneNumber: "08064372423",
+      phoneNumber: "2348064372423",
       dob: "1991-05-12",
       address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Savings"
@@ -148,11 +148,28 @@ describe("Create Account test", function () {
       firstName: "Second",
       lastName: "Nme",
       email: "user1@gmail.com",
-      balance: 400040.34,
-      phoneNumber: "08064372423",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
       dob: "1991-05-12",
       address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Savings"
+    };
+    _chai2.default.request(_app2.default).post(endpoint).send(payload).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("gender is required");
+    });
+  });
+  it("should create a user account if all credentials are given", function () {
+    var payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "user1@gmail.com",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Savings",
+      gender: "M"
     };
     _chai2.default.request(_app2.default).post(endpoint).send(payload).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(201);
@@ -164,6 +181,7 @@ describe("Create Account test", function () {
       (0, _chai.expect)(response.body.data).to.have.property("id");
       (0, _chai.expect)(response.body.data).to.have.property("status");
       (0, _chai.expect)(response.body.data).to.have.property("createdOn");
+      (0, _chai.expect)(response.body.data).to.have.property("gender");
     });
   });
 });
@@ -207,8 +225,8 @@ describe("Deactivate account test", function () {
 describe("Delete account test", function () {
   it("should do nothing if user account is not found", function () {
     _chai2.default.request(_app2.default).delete("/api/v1/accounts/" + wrongAccount).end(function (err, response) {
-      (0, _chai.expect)(response).to.have.status(404);
-      (0, _chai.expect)(response.body.message).to.equal("Account Not Found");
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
     });
   });
 

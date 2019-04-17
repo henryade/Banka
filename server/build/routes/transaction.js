@@ -8,6 +8,10 @@ var _transactionController = require("../controllers/transactionController");
 
 var _transactionController2 = _interopRequireDefault(_transactionController);
 
+var _authorization = require("../middleware/authorization");
+
+var _authorization2 = _interopRequireDefault(_authorization);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = _express2.default.Router();

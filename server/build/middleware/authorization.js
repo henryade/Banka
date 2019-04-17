@@ -14,7 +14,7 @@ module.exports = function (req, res, next) {
   _jsonwebtoken2.default.verify(token, _config.JWT_KEY, function (err, decoded) {
     if (err) {
       return res.status(401).json({
-        message: "Not Authorized",
+        message: "Not Authorized"
       });
     }
     req.userData = decoded;

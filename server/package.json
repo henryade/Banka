@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js --fix",
-    "build": "babel . --ignore node_modules -d build",
+    "build": "babel . --ignore node_modules --out-dir ./build",
     "start": "node build/index.js",
     "dev": "nodemon --exec babel-node index.js",
     "test": "nyc mocha build/test/**/*.spec.js",
