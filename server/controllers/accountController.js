@@ -1,7 +1,7 @@
 import data from "./dbController";
 
 class AccountController {
-  /**
+/**
  * View all bank accounts
  * @param {obj} req - request from body
  * @param {obj} res - response to request from body
@@ -19,6 +19,27 @@ class AccountController {
       error: "Empty Database",
     })
   }
+
+/**
+ * View specific bank accounts
+ * @param {obj} req - request from body
+ * @param {obj} res - response to request from body
+ * @return {obj}    - returns response object
+ */
+static viewSpecificAccount(req, res) {
+  const account = data.findAccountByAccountNumber(Number(req.params.accountNumber))
+  if (account !== undefined) {
+    return res.status(200).json({
+      status: 200,
+      data: account,
+    });
+  }
+  res.status(404).json({
+    status:404,
+    error: "Account Not Found",
+  })
+}
+
 
 
   /**

@@ -9,8 +9,13 @@ const router = express.Router();
 // View All Account //
 // /////////////////
 
-
 router.get("/accounts", accountData.viewAllAccount)
+
+// /////////////////////////
+// View specific Account //
+// ///////////////////////
+
+router.get("/accounts/:accountNumber", accountData.viewSpecificAccount)
 
 // ///////////////////
 // Create Account //

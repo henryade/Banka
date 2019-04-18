@@ -4,6 +4,10 @@ import app from "../../app";
 
 chai.use(chaiHttp);
 
+const activeAccount = "9000134322";
+const dormantAccount = 9000134354;
+const wrongAccount = 900013432;
+
 describe("View all bank account test", () => {
   it("should return all accounts in the database", () => {
     chai.request(app)
@@ -13,6 +17,34 @@ describe("View all bank account test", () => {
         expect(response).to.have.status(200);
         expect(response.body.data).to.be.an("array");
         expect(response.body.data[0]).to.be.an("object");
+      });
+  });
+});
+
+describe("View specific bank account test", () => {
+  it("should return a specific account in the database", () => {
+    chai.request(app)
+      .get(`/api/v1/accounts/${activeAccount}`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.data).to.be.an("object");
+        expect(response.body.data).to.have.property("accountNumber");
+        expect(response.body.data).to.have.property("email");
+        expect(response.body.data).to.have.property("type");
+        expect(response.body.data).to.have.property("status");
+        expect(response.body.data).to.have.property("createdOn");
+        expect(response.body.data).to.have.property("balance");
+      });
+  });
+
+  it("should throw an error if the account isnt in the database", () => {
+    chai.request(app)
+      .get(`/api/v1/accounts/${wrongAccount}`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body.error).to.equal("Account Not Found");
       });
   });
 });
@@ -229,10 +261,6 @@ describe("Create Account test", () => {
       });
   });
 });
-
-const activeAccount = "9000134322";
-const dormantAccount = 9000134354;
-const wrongAccount = 900013432;
 
 describe("Activate account test", () => {
   it("should activate an user account if account is dormant", () => {
