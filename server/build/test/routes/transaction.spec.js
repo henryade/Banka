@@ -25,6 +25,28 @@ var wrongAccountNumber = 8000134354;
 var testAccountNumber2 = 9000134354;
 var Account = _dbController2.default.findTransactionByAccountNumber(testAccountNumber1);
 
+describe("View specific transaction test", function () {
+  it("should display a transaction if id is valid", function () {
+    _chai2.default.request(_app2.default).post("/api/v1/transactions/349046").end(function (error, response) {
+      (0, _chai.expect)(response).to.have.status(200);
+      (0, _chai.expect)(response.body.data).to.have.property("id");
+      (0, _chai.expect)(response.body.data).to.have.property("createdOn");
+      (0, _chai.expect)(response.body.data).to.have.property("type");
+      (0, _chai.expect)(response.body.data).to.have.property("accountNumber");
+      (0, _chai.expect)(response.body.data).to.have.property("amount");
+      (0, _chai.expect)(response.body.data).to.have.property("oldBalance");
+      (0, _chai.expect)(response.body.data).to.have.property("newBalance");
+    });
+  });
+
+  it("should not display a transaction if id is invalid", function () {
+    _chai2.default.request(_app2.default).post("/api/v1/transactions/4387483").end(function (error, response) {
+      (0, _chai.expect)(response).to.have.status(404);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid Transaction Id");
+    });
+  });
+});
+
 describe("Debit Account test", function () {
   it("should not debit account if there are no parameters", function () {
     _chai2.default.request(_app2.default).post("/api/v1/transactions/" + testAccountNumber1 + "/debit").send({}).end(function (error, response) {

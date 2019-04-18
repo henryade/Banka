@@ -20,14 +20,59 @@ var AccountController = function () {
   }
 
   _createClass(AccountController, null, [{
-    key: "createAccount",
+    key: "viewAllAccount",
 
     /**
-     * Create a bank account
+     * View all bank accounts
      * @param {obj} req - request from body
      * @param {obj} res - response to request from body
      * @return {obj}    - returns response object
      */
+    value: function viewAllAccount(req, res) {
+      if (_dbController2.default.getAccounts() !== undefined) {
+        return res.status(200).json({
+          status: 200,
+          data: _dbController2.default.getAccounts()
+        });
+      }
+      res.status(404).json({
+        status: 404,
+        error: "Empty Database"
+      });
+    }
+
+    /**
+     * View specific bank accounts
+     * @param {obj} req - request from body
+     * @param {obj} res - response to request from body
+     * @return {obj}    - returns response object
+     */
+
+  }, {
+    key: "viewSpecificAccount",
+    value: function viewSpecificAccount(req, res) {
+      var account = _dbController2.default.findAccountByAccountNumber(Number(req.params.accountNumber));
+      if (account !== undefined) {
+        return res.status(200).json({
+          status: 200,
+          data: account
+        });
+      }
+      res.status(404).json({
+        status: 404,
+        error: "Account Not Found"
+      });
+    }
+
+    /**
+    * Create a bank account
+    * @param {obj} req - request from body
+    * @param {obj} res - response to request from body
+    * @return {obj}    - returns response object
+    */
+
+  }, {
+    key: "createAccount",
     value: function createAccount(req, res) {
       var lengthOfAccountNumber = 6;
       var bankAccountNumberBranding = 9000000000;
