@@ -10,6 +10,33 @@ const wrongAccountNumber = 8000134354;
 const testAccountNumber2 = 9000134354;
 const Account = Tdata.findTransactionByAccountNumber(testAccountNumber1);
 
+describe("View specific transaction test", () => {
+  it("should display a transaction if id is valid", () => {
+    chai.request(app)
+      .post(`/api/v1/transactions/349046`)
+      .end((error, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.data).to.have.property("id");
+        expect(response.body.data).to.have.property("createdOn");
+        expect(response.body.data).to.have.property("type");
+        expect(response.body.data).to.have.property("accountNumber");
+        expect(response.body.data).to.have.property("amount");
+        expect(response.body.data).to.have.property("oldBalance");
+        expect(response.body.data).to.have.property("newBalance");
+
+      });
+  });
+
+  it("should not display a transaction if id is invalid", () => {
+    chai.request(app)
+      .post(`/api/v1/transactions/4387483`)
+
+      .end((error, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body.error).to.equal("Invalid Transaction Id");
+      });
+  });
+});
 
 describe("Debit Account test", () => {
   it("should not debit account if there are no parameters", () => {

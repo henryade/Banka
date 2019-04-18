@@ -46,18 +46,18 @@ const logic = (action, req, res) => {
   const phoneNumber = req.body.depositorPhoneNumber || null;
 
   // if (!data.findTransactionByAccountNumber(req.params.accountNumber)) {
-    data.createTransaction(
-      id,
-      createdOn,
-      type,
-      req.params.accountNumber,
-      // req.userData.id,
-      amount,
-      accounts.newBalance,
-      newBalance,
-      depositor,
-      phoneNumber,
-    );
+  data.createTransaction(
+    id,
+    createdOn,
+    type,
+    req.params.accountNumber,
+    // req.userData.id,
+    amount,
+    accounts.newBalance,
+    newBalance,
+    depositor,
+    phoneNumber,
+  );
   // } else {
   //   data.updateTransactionDB(req.params.accountNumber, {amount, newBalance: accounts.newBalance, newBalance });
   //   if (type === "debit") data.updateTransactionDB(req.params.accountNumber, { depositor, phoneNumber });
@@ -74,6 +74,26 @@ const logic = (action, req, res) => {
  */
 
 class TransactionController {
+  /**
+ * View specific transaction
+ * @param {obj} req - request from body
+ * @param {obj} res - response to request from body
+ * @return {obj}    - returns response object
+ */
+  static viewSpecificTransaction(req, res) {
+    const transaction = data.findTransactionById(Number(req.params.transactionId));
+    if (transaction !== undefined) {
+      return res.status(200).json({
+        status: 200,
+        data: transaction,
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      error: "Invalid Transaction Id",
+    });
+  }
+
   /**
  * Credit an account
  * @param {obj} req - request from body
