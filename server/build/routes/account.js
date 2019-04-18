@@ -21,6 +21,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var router = _express2.default.Router();
 
 // ///////////////////
+// View All Account //
+// /////////////////
+
+router.get("/accounts", _accountController2.default.viewAllAccount);
+
+// /////////////////////////
+// View specific Account //
+// ///////////////////////
+
+router.get("/accounts/:accountNumber", _accountController2.default.viewSpecificAccount);
+
+// ///////////////////
 // Create Account //
 // /////////////////
 

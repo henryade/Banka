@@ -72,9 +72,9 @@ var db = {
     accountNumber: 9000134322,
     cashier: 200002,
     amount: 37000.34,
-    OldBalance: 400000.34,
+    oldBalance: 400000.34,
     newBalance: 363000.34,
-    Depositor: "self",
+    depositor: "self",
     phoneNumber: "080245724321"
   }, {
     id: 349066,
@@ -83,9 +83,9 @@ var db = {
     accountNumber: 9000134354,
     cashier: 200002,
     amount: 37000.34,
-    OldBalance: 400000.34,
+    oldBalance: 400000.34,
     newBalance: 363000.34,
-    Depositor: "self",
+    depositor: "self",
     phoneNumber: "080205724321"
   }]
 };

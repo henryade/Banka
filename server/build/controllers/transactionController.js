@@ -84,7 +84,27 @@ var TransactionController = function () {
   }
 
   _createClass(TransactionController, null, [{
-    key: "creditAccount",
+    key: "viewSpecificTransaction",
+
+    /**
+    * View specific transaction
+    * @param {obj} req - request from body
+    * @param {obj} res - response to request from body
+    * @return {obj}    - returns response object
+    */
+    value: function viewSpecificTransaction(req, res) {
+      var transaction = _dbController2.default.findTransactionById(Number(req.params.transactionId));
+      if (transaction !== undefined) {
+        return res.status(200).json({
+          status: 200,
+          data: transaction
+        });
+      }
+      return res.status(404).json({
+        status: 404,
+        error: "Invalid Transaction Id"
+      });
+    }
 
     /**
     * Credit an account
@@ -92,6 +112,9 @@ var TransactionController = function () {
     * @param {obj} res - response to request from body
     * @return {obj}    - returns response object
     */
+
+  }, {
+    key: "creditAccount",
     value: function creditAccount(req, res) {
       return logic(1, req, res);
     }

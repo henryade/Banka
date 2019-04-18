@@ -16,6 +16,42 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _chai2.default.use(_chaiHttp2.default);
 
+var activeAccount = "9000134322";
+var dormantAccount = 9000134354;
+var wrongAccount = 900013432;
+
+describe("View all bank account test", function () {
+  it("should return all accounts in the database", function () {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts/").end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(200);
+      (0, _chai.expect)(response.body.data).to.be.an("array");
+      (0, _chai.expect)(response.body.data[0]).to.be.an("object");
+    });
+  });
+});
+
+describe("View specific bank account test", function () {
+  it("should return a specific account in the database", function () {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts/" + activeAccount).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(200);
+      (0, _chai.expect)(response.body.data).to.be.an("object");
+      (0, _chai.expect)(response.body.data).to.have.property("accountNumber");
+      (0, _chai.expect)(response.body.data).to.have.property("email");
+      (0, _chai.expect)(response.body.data).to.have.property("type");
+      (0, _chai.expect)(response.body.data).to.have.property("status");
+      (0, _chai.expect)(response.body.data).to.have.property("createdOn");
+      (0, _chai.expect)(response.body.data).to.have.property("balance");
+    });
+  });
+
+  it("should throw an error if the account isnt in the database", function () {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts/" + wrongAccount).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(404);
+      (0, _chai.expect)(response.body.error).to.equal("Account Not Found");
+    });
+  });
+});
+
 describe("Create Account test", function () {
   var endpoint = "/api/v1/accounts";
   it("should not create a user when there are no parameters", function () {
@@ -185,10 +221,6 @@ describe("Create Account test", function () {
     });
   });
 });
-
-var activeAccount = "9000134322";
-var dormantAccount = 9000134354;
-var wrongAccount = 900013432;
 
 describe("Activate account test", function () {
   it("should activate an user account if account is dormant", function () {
