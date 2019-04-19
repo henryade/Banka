@@ -51,22 +51,20 @@ const errors = (res, error, fieldString) => {
         error: `Invalid ${field}`,
       });
     case "number.min":
-      const msg = field === "account number" ? "Invalid account number" : `${field} should be at least ${error.context.limit} characters long.`;
+      
       return res.status(400).json({
         status: 400,
-        error: msg,
+        error: `Invalid ${field}`,
       });
     case "number.max":
-      const msg1 = field === "account number" ? "Invalid account number" : `${field} should be at most ${error.context.limit} characters long.`;
       return res.status(400).json({
         status: 400,
-        error: msg1,
+        error: `Invalid ${field}`,
       });
     case "number.base":
-      const msg2 = field === "account number" ? "Invalid account number" : `${field} should be at most ${error.context.limit} characters long.`;
       return res.status(400).json({
         status: 400,
-        error: msg2,
+        error: `Invalid ${field}`,
       });
     case "any.allowOnly":
       return res.status(400).json({

@@ -29,6 +29,12 @@ var AccountController = function () {
      * @return {obj}    - returns response object
      */
     value: function viewAllAccount(req, res) {
+      if (_dbController2.default.getAccounts() !== undefined && req.query.status) {
+        return res.status(200).json({
+          status: 200,
+          data: _dbController2.default.findAllAccountByStatus(req.query.status)
+        });
+      }
       if (_dbController2.default.getAccounts() !== undefined) {
         return res.status(200).json({
           status: 200,
@@ -42,11 +48,11 @@ var AccountController = function () {
     }
 
     /**
-     * View specific bank accounts
-     * @param {obj} req - request from body
-     * @param {obj} res - response to request from body
-     * @return {obj}    - returns response object
-     */
+    * View specific bank accounts
+    * @param {obj} req - request from body
+    * @param {obj} res - response to request from body
+    * @return {obj}    - returns response object
+    */
 
   }, {
     key: "viewSpecificAccount",

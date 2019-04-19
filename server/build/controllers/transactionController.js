@@ -22,51 +22,42 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @return {obj}    - returns response object
  */
 var logic = function logic(action, req, res) {
-  var accounts = _dbController2.default.findTransactionByAccountNumber(parseInt(req.params.accountNumber));
-  var accountStatus = _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
+  var account = _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
   var amount = parseFloat(req.body.amount);
 
-  if (!accounts || !accountStatus) {
+  if (!account) {
     return res.status(400).json({
       status: 400,
       error: "Invalid Account Number"
     });
   }
-  if (action === -1 && accounts.newBalance - amount <= 0) {
+
+  if (account.status === "dormant") {
+    return res.status(400).json({
+      status: 400,
+      error: "Account is Inactive"
+    });
+  }
+  if (action === -1 && account.balance - amount <= 0) {
     return res.status(400).json({
       status: 400,
       error: "Low Funds. Account cant be Debited"
     });
   }
 
-  if (Number.isNaN(amount)) {
-    return res.status(400).json({
-      status: 400,
-      error: "Amount is Invalid"
-    });
-  }
-  if (accountStatus.status === "dormant") {
-    return res.status(400).json({
-      status: 400,
-      error: "Account is Inactive"
-    });
-  }
-  var newBalance = accounts.newBalance + amount * action;
+  var newBalance = account.balance + amount * action;
   var lengthOfTransactionId = 6;
   var id = Math.floor(Math.random() * lengthOfTransactionId);
   var createdOn = new Date(Date.now());
   var type = action === 1 ? "credit" : "debit";
-  var depositor = req.body.depositor || null;
-  var phoneNumber = req.body.depositorPhoneNumber || null;
+  var depositor = req.body.depositor || "self";
+  var phoneNumber = req.body.depositorPhoneNumber || "self";
+  _dbController2.default.updateAccountDB(parseInt(req.params.accountNumber), "balance", newBalance);
 
-  // if (!data.findTransactionByAccountNumber(req.params.accountNumber)) {
   _dbController2.default.createTransaction(id, createdOn, type, req.params.accountNumber,
   // req.userData.id,
-  amount, accounts.newBalance, newBalance, depositor, phoneNumber);
-  // } else {
-  //   data.updateTransactionDB(req.params.accountNumber, {amount, newBalance: accounts.newBalance, newBalance });
-  //   if (type === "debit") data.updateTransactionDB(req.params.accountNumber, { depositor, phoneNumber });
-  // }
+  amount, account.balance, newBalance, depositor, phoneNumber);
+
   var newTransaction = _dbController2.default.findTransactionById(id);
   return res.status(200).json({
     status: 200,
@@ -84,7 +75,7 @@ var TransactionController = function () {
   }
 
   _createClass(TransactionController, null, [{
-    key: "viewSpecificTransaction",
+    key: "viewSpecificAccountTransaction",
 
     /**
     * View specific transaction
@@ -92,6 +83,29 @@ var TransactionController = function () {
     * @param {obj} res - response to request from body
     * @return {obj}    - returns response object
     */
+    value: function viewSpecificAccountTransaction(req, res) {
+      var transactions = _dbController2.default.findAllAccountTransactionsByAccountNumber(parseFloat(req.params.accountNumber));
+      if (transactions !== undefined) {
+        return res.status(200).json({
+          status: 200,
+          data: transactions
+        });
+      }
+      return res.status(404).json({
+        status: 404,
+        error: "Invalid Account Number"
+      });
+    }
+
+    /**
+    * View specific transaction
+    * @param {obj} req - request from body
+    * @param {obj} res - response to request from body
+    * @return {obj}    - returns response object
+    */
+
+  }, {
+    key: "viewSpecificTransaction",
     value: function viewSpecificTransaction(req, res) {
       var transaction = _dbController2.default.findTransactionById(Number(req.params.transactionId));
       if (transaction !== undefined) {

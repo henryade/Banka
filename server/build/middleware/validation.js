@@ -36,6 +36,7 @@ var logic = function logic(req, res, next) {
 
 var transactionLogic = function transactionLogic(req, res, next) {
   var schema = _joi2.default.object().keys({
+    amount: _validationSchema2.default.amount,
     depositor: _validationSchema2.default.name,
     depositorPhoneNumber: _validationSchema2.default.phoneNumber
   });
@@ -82,11 +83,9 @@ module.exports = {
     logic(req, res, next);
   },
   creditAccount: function creditAccount(req, res, next) {
-    logic(req, res, next);
     transactionLogic(req, res, next);
   },
   debitAccount: function debitAccount(req, res, next) {
-    logic(req, res, next);
     transactionLogic(req, res, next);
   }
 };

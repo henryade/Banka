@@ -24,6 +24,7 @@ const logic = (req, res, next) => {
 
 const transactionLogic = (req, res, next) => {
   const schema = Joi.object().keys({
+    amount: check.amount,
     depositor: check.name,
     depositorPhoneNumber: check.phoneNumber,
   });
@@ -74,11 +75,9 @@ module.exports = {
     logic(req, res, next);
   },
   creditAccount(req, res, next) {
-    logic(req, res, next);
     transactionLogic(req, res, next);
   },
   debitAccount(req, res, next) {
-    logic(req, res, next);
     transactionLogic(req, res, next);
   },
 
