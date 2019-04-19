@@ -78,20 +78,27 @@ select{
 	border-radius: 3px;
 }
 .authInput{
-	min-height: 33px;
+	min-height: 40px;
 	padding:4px;
-	border: 1px solid magenta;
+	border: 1px solid green;
 	outline: none;
 	background-color: #F8F8FF;
 }
 
+.authInput:hover{
+	border: 1.5px solid green;
+}
+
+.authInput:active{
+	border: 1.5px solid green;
+}
 
 input[type="checkbox"],input[type="radio"]{
 	transform:scale(1.5);
 }
 
 .btn{
-	min-height: 33px;
+	min-height: 40px;
 	background-color: #09BC8A;
 	border: none;
 	color: #FFFAFA;

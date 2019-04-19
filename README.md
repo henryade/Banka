@@ -59,26 +59,37 @@ An Admin can solely perform the following
 
 ### Routes Testing Endpoints
 
-* Sign up for an account - POST /auth/signup
-* Sign into created account - POST /auth/signin
-* Create a bank account - POST /accounts
-* View previous account transactions - GET /accounts/:account-number/transactions
-* View a specific account transaction - GET /transactions/:transaction-id
+* View previous account transactions ----------- GET /accounts/:account-number/transactions
+* View a specific account transaction ---------- GET /transactions/:transaction-id
+* View all active user account ----------------- GET /accounts?status=active
+* View all dormant user account ---------------- GET /accounts?status=dormant
+* View a list of all bank accounts ------------- GET /accounts
+* View accounts owned by a specific user ------- GET /user/:user-email-address/accounts
+* View a specific user account ----------------- GET /accounts/:account-number
 
-* Credit a user account - POST /transactions/:account-number/credit
-* Debit a user account - POST /transactions/:account-number/debit
 
-* View all active user account - GET /accounts?status=active
-* View all dormant user account - GET /accounts?status=dormant
-* View a list of all bank accounts - GET /accounts
-* View accounts owned by a specific user - GET /user/:user-email-address/accounts
-* View a specific user account - GET /accounts/:account-number
-* Delete a specific user account - DELETE /accounts/:account-number
-* Activate a user account - PATCH /accounts/:account-number
-* Deactivate a user account - PATCH /accounts/:account-number
+* Sign up for an account ----------------------- POST /auth/signup
+* Sign into created account -------------------- POST /auth/signin
+* Create a bank account ------------------------ POST /accounts
+* Credit a user account ------------------------ POST /transactions/:account-number/credit
+* Debit a user account ------------------------- POST /transactions/:account-number/debit
+* Create a staff account ----------------------- POST /user
+* Create an admin account ---------------------- POST /user  
 
-* Create a staff account - POST /user
-* Create an admin account - POST /user
+
+* Activate a user account ---------------------- PATCH /accounts/:account-number
+* Deactivate a user account -------------------- PATCH /accounts/:account-number
+
+
+* Delete a specific user account --------------- DELETE /accounts/:account-number
+
+## Technologies Used
+
+*   Nodejs
+*   Express
+*   joi - validation
+*   Eslint - airbnb style
+*   Babel 
 
 ## Links
 
@@ -91,6 +102,7 @@ Project links:
 - Helpful links:
   - https://youtu.be/0D5EEKH97NA
   - https://github.com/hapijs/joi/blob/v14.3.1/API.md
+  - https://stackoverflow.com/questions/48720942/node-js-joi-how-to-display-a-custom-error-messages
 
 ## Licensing
 
