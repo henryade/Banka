@@ -27,7 +27,9 @@ var Account = _dbController2.default.findTransactionByAccountNumber(testAccountN
 
 describe("View specific transaction test", function () {
   it("should display a transaction if id is valid", function () {
+
     _chai2.default.request(_app2.default).get("/api/v1/transactions/349046").end(function (error, response) {
+
       (0, _chai.expect)(response).to.have.status(200);
       (0, _chai.expect)(response.body.data).to.have.property("id");
       (0, _chai.expect)(response.body.data).to.have.property("createdOn");

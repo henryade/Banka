@@ -75,6 +75,7 @@ var TransactionController = function () {
   }
 
   _createClass(TransactionController, null, [{
+
     key: "viewSpecificAccountTransaction",
 
     /**
