@@ -9,7 +9,7 @@
     "start": "node build/index.js",
     "dev": "nodemon --exec babel-node index.js",
     "test": "nyc mocha build/test/**/*.spec.js",
-    "test-dev": "nyc --require babel-core/register mocha test/**/*.js --exit",
+    "test-dev": "nyc --require @babel/register mocha test/**/*.js --exit",
     "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "author": "Adeola Adeyemo",
@@ -35,6 +35,7 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/register": "^7.4.0",
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-watch": "^7.0.0",
     "chai": "^4.2.0",
