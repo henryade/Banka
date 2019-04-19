@@ -52,13 +52,12 @@ describe("Sign in test", () => {
   it("'should login a user when all the parameters are given", () => {
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
+      .set("authorization", `Bearer ${data.findOneUser("email", "user1@gmail.com").token}`)
       .send({
-        email: "user5@gmail.com",
+        email: "user1@gmail.com",
         password: "password",
       })
       .end((error, response) => {
-        
         expect(response).have.a.status(200);
         expect(response.body).to.have.property("data");
       });
@@ -229,7 +228,7 @@ describe("Sign up test", () => {
       .post(endpoint)
       .send({
         firstName: "Forth",
-        lastName: "Desth",
+        lastName: "Desth", 
         email: "user3@gmail.com",
         password: "password",
         confirmPassword: "password",

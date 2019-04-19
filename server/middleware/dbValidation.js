@@ -33,12 +33,12 @@ module.exports = {
     const User = data.findOneUser("email", req.body.email);
     if (staff) {
       req.body.User = staff;
-      next();
     } else if (User) {
       req.body.User = User;
-      next();
+    } else {
+      return error(res, 401, "Auth failed");
     }
-    return error(res, 401, "Auth failed");
+    next();
   },
   db(req, res, next) {
     req.body.datafield = data.getAccounts();
