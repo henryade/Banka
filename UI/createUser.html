@@ -24,18 +24,17 @@
 			</div>
 		</header>
 		<section class="dashboard dashboard-full overlay">
-			<div class="wrapper">
-				<div id="dashboard-admin-create">
+			<div class="center">
+				<div class="col-header">
 					<div class="tab-tran-acc">
 						<a  class="index-link" href="createUser.html">Create User</a>
 					</div>				
 				</div>
-				<div>
+				<div class="movedown">
 					<form action="Dashboard-admin.html" >
 						<div id="createAccountForm">
-							<div class="sec-A">
-								<h3>Account Information</h3>
-								<div class="sec-B">
+							<div class="wrapper">
+								<div id="createUser" class="sec-B">
 									<p>
 										<select>
 										<option value="">--Choose User Type--</option>
@@ -44,11 +43,9 @@
 										</select>
 									</p>
 									<p>
-										<input type="text" id="firstName" placeholder="First name" name="firstName" class="authInput input-sd" required />
-														
-										<input type="text" id="middleName" placeholder="Middle name" name="middleName" class="authInput input-sd" />
-				
-										<input type="text" id="lastName" placeholder="Last name" name="lastName" class="authInput input-sd" required />
+										<input type="text" id="firstName" placeholder="First name" name="firstName" class="authInput input-ms" required />
+																		
+										<input type="text" id="lastName" placeholder="Last name" name="lastName" class="authInput input-ms" required />
 									</p>
 								
 									<p>				
@@ -66,7 +63,7 @@
 								</div>
 							</div>
 						</div>
-						<button id="createbtn" class="btn form-btn">Submit</button>
+						<button class="btn btn-ms">Submit</button>
 				    </form>
 				</div>
 			</div>
