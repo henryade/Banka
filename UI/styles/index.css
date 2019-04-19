@@ -8,6 +8,11 @@ body{
 	src: url("../fonts/ZCOOLXiaoWei-Regular.ttf");
 }
 
+@font-face{
+	font-family: "Slabo27px-Regular";
+	src: url("../fonts/Slabo27px-Regular.ttf");
+}
+
 body, html{
 	height: 100%;
 	width: 100%;
@@ -25,7 +30,7 @@ textarea {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	height: 50px;
-	border: 1px solid magenta;
+	border: 1px solid green;
 	outline: none;
 	background-color: #F8F8FF;
 	padding-left: 10px;
@@ -55,10 +60,14 @@ select{
 	width: 200px;
 	height: 30px;
 	padding: 0 0 0 10px;
-	border: 1px solid magenta;
+	border: 1px solid green;
 	outline: none;
 	border-radius: 3px;
 	background-color: #F8F8FF;
+}
+
+.profilePic .capitalize{
+	text-transform: capitalize;
 }
 
 .container{
@@ -85,11 +94,11 @@ select{
 	background-color: #F8F8FF;
 }
 
-.authInput:hover{
+textarea:hover, .authInput:hover, select:hover{
 	border: 1.5px solid green;
 }
 
-.authInput:active{
+textarea:focus, .authInput:focus, select:focus{
 	border: 1.5px solid green;
 }
 
@@ -129,6 +138,10 @@ input[type="checkbox"],input[type="radio"]{
 
 .btn-md{
 	width: 50%;
+}
+.btn-ms{
+	margin-left: 0.5%;
+	width: 32.5%;
 }
 .btn-sm{
 	width: 25%;
@@ -190,6 +203,17 @@ input[type="checkbox"],input[type="radio"]{
 	transition: all 2s ease-out;
 }
 
+.pop-upBody2{
+	background-color: white;
+	margin: 1% auto 0 auto;
+	padding: 15px 22px;
+	border-radius: 10px;
+	width: 35%;
+	box-sizing: border-box;
+	position: relative;
+	transition: all 2s ease-out;
+}
+
 #pop-up11 .pop-upBody{
 	width: 50%;
 }
@@ -216,7 +240,6 @@ input[type="checkbox"],input[type="radio"]{
 
 .sign-up-link{
 	color: blue;
-	font-size: px;
 }
 
 .normal-link{
@@ -528,9 +551,13 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	width: 75%;
 	display: block;
 	text-align: left;
+	font-family: "Slabo27px-Regular";
+	font-weight: 500;
+	box-shadow: -1px 0px 15px 5px rgba(0,0,0,0.3);
 }
 .eachDetail span{
 	float: right;
+	font-weight: 600;
 }
 
 /*Create Account*/
@@ -543,12 +570,12 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	
 }
 .wrapper{
-	width: 97%;
+	width: 65%;
 	margin: 0 auto;
-	box-shadow: -1px 0px 15px 5px rgba(0,0,0,0.75);
+	/* border: 1px solid green; */
 }
 .wrapper h1{
-	width: 100%;
+	/* width: 100%; */
 	text-align: center;
 	color: black;
 	padding-top: 2%;
@@ -587,6 +614,10 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	margin-left: 1.5%;
 	margin-top: 4%;
 	width: 80%;
+}
+#createUser{
+	width: 100%;
+	margin: 0 auto;
 }
 
 .secB p input,.sec-B p input, textarea{
@@ -826,6 +857,10 @@ br{
 	display: block;
 	margin: 5px 0;
 	content: " ";
+}
+
+.movedown{
+	margin-top: 3.5%;
 }
 
 .adjust-footer{

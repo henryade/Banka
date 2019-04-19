@@ -31,57 +31,51 @@ npm install
 
 ## Features
 
-A User can solely perform the following functionalities:
-* Sign up for an account
-* Sign into created account
-* Create a bank account
-* View previous account transactions
-* View a specific account transaction
+Route Testing prefix = localhost:(portname)api/v1
+***
+### A User can solely perform the following functionalities:                               
+|Functionalities                         | Route Testing                                |
+|:--------------------------------------:|:--------------------------------------------:|
+| Sign up for an account                 |POST /auth/signup                             |
+| Sign into created account              |POST /auth/signin                             |
+| Create a bank account                  |POST /accounts                                |
+| View previous account transactions     |GET /accounts/:account-number/transactions    |
+| View a specific account transaction    |GET /transactions/:transaction-id             |
   
-A Staff can solely perform the following functionalities:
-* Credit a user account
-* Debit a user account
+### A Staff can solely perform the following functionalities:
+|Functionalities                         | Route Testing                                |
+|:--------------------------------------:|:--------------------------------------------:|
+| Credit a user account                  |POST /transactions/:account-number/credit     |
+| Debit a user account                   |POST /transactions/:account-number/debit      |
 
-An/A Admin/Staff has the shared access of performing the following functionalities:
-* View all active user account
-* View all dormant user account
-* View accounts owned by a specific user
-* View a specific user account
-* Delete a specific user account
-* Activate a user account
-* Deactivate a user account
+### An/A Admin/Staff has the shared access of performing the following functionalities:
+|Functionalities                         | Route Testing                                |
+|:--------------------------------------:|:--------------------------------------------:|
+|View a list of all bank accounts        |GET /accounts                                 |
+|View all active user account            |GET /accounts?status=active                   |
+|View all dormant user account           |GET /accounts?status=dormant                  |
+|View accounts owned by a specific user  |GET /user/:user-email-address/accounts        |
+|View a specific user account            |GET /accounts/:account-number                 |
+|Delete a specific user account          |DELETE /accounts/:account-number              |
+|Activate a user account                 |PATCH /accounts/:account-number               |
+|Deactivate a user account               |PATCH /accounts/:account-number               |
 
-An Admin can solely perform the following
-* Create a staff account
-* Create an admin account
+### An Admin can solely perform the following
+|Functionalities                         | Route Testing                                |
+|:--------------------------------------:|:--------------------------------------------:|
+| Create a staff account                 |POST /user                                    |
+| Create an admin account                |POST /user                                    |
 
 ## Configuration
 
-### Routes Testing Endpoints
+```
+npm run dev   ------ To run app in development
+npm run test-dev --- To run development testing
 
-* View previous account transactions ----------- GET /accounts/:account-number/transactions
-* View a specific account transaction ---------- GET /transactions/:transaction-id
-* View all active user account ----------------- GET /accounts?status=active
-* View all dormant user account ---------------- GET /accounts?status=dormant
-* View a list of all bank accounts ------------- GET /accounts
-* View accounts owned by a specific user ------- GET /user/:user-email-address/accounts
-* View a specific user account ----------------- GET /accounts/:account-number
-
-
-* Sign up for an account ----------------------- POST /auth/signup
-* Sign into created account -------------------- POST /auth/signin
-* Create a bank account ------------------------ POST /accounts
-* Credit a user account ------------------------ POST /transactions/:account-number/credit
-* Debit a user account ------------------------- POST /transactions/:account-number/debit
-* Create a staff account ----------------------- POST /user
-* Create an admin account ---------------------- POST /user  
-
-
-* Activate a user account ---------------------- PATCH /accounts/:account-number
-* Deactivate a user account -------------------- PATCH /accounts/:account-number
-
-
-* Delete a specific user account --------------- DELETE /accounts/:account-number
+npm run build ------ To build production folder
+npm test ----------- To test production ready app
+npm start -----------To run production ready app
+```
 
 ## Technologies Used
 
