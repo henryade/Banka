@@ -7,16 +7,61 @@ chai.use(chaiHttp);
 const activeAccount = "9000134322";
 const dormantAccount = 9000134354;
 const wrongAccount = 900013432;
+const wrongAccount2 = 9000134392;
 
 describe("View all bank account test", () => {
   it("should return all accounts in the database", () => {
     chai.request(app)
-      .get(`/api/v1/accounts/`)
+      .get(`/api/v1/accounts`)
 
       .end((err, response) => {
         expect(response).to.have.status(200);
         expect(response.body.data).to.be.an("array");
         expect(response.body.data[0]).to.be.an("object");
+      });
+  });
+});
+
+describe("View all bank account query test", () => {
+  it("should return all active accounts in the database", () => {
+    chai.request(app)
+      .get(`/api/v1/accounts?status=active`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.data).to.be.an("array");
+        expect(response.body.data[0]).to.be.an("object");
+      });
+  });
+
+  it("should return all dormant accounts in the database", () => {
+    chai.request(app)
+      .get(`/api/v1/accounts?status=dormant`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.data).to.be.an("array");
+        expect(response.body.data[0]).to.be.an("object");
+      });
+  });
+
+  it("should throw error", () => {
+    chai.request(app)
+      .get(`/api/v1/accounts?status=acive`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body.error).to.equal("Invalid status");
+      });
+  });
+
+  it("should throw error", () => {
+    chai.request(app)
+      .get(`/api/v1/accounts?id=active`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("id is not allowed");
       });
   });
 });
@@ -43,8 +88,18 @@ describe("View specific bank account test", () => {
       .get(`/api/v1/accounts/${wrongAccount}`)
 
       .end((err, response) => {
-        expect(response).to.have.status(404);
-        expect(response.body.error).to.equal("Account Not Found");
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Invalid account number");
+      });
+  });
+
+  it("should throw an error if the account isnt in the database", () => {
+    chai.request(app)
+      .get(`/api/v1/accounts/${wrongAccount2}`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Invalid account number");
       });
   });
 });
@@ -231,6 +286,27 @@ describe("Create Account test", () => {
         expect(response.body.error).to.equal("gender is required");
       });
   });
+  it("should not create accounts wtih same type", () => {
+    const payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "user1@gmail.com",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Current",
+      gender: "M"
+    };
+    chai.request(app)
+      .post(endpoint)
+      .send(payload)
+
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Account Exists");
+  });
+});
   it("should create a user account if all credentials are given", () => {
     const payload = {
       firstName: "Second",
@@ -241,7 +317,7 @@ describe("Create Account test", () => {
       dob: "1991-05-12",
       address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Savings",
-      gender: "M"
+      gender: "M",
     };
     chai.request(app)
       .post(endpoint)
@@ -282,6 +358,16 @@ describe("Activate account test", () => {
         expect(response.body.error).to.equal("Invalid account number");
       });
   });
+
+  it("should not activate if account number is invalid", () => {
+    chai.request(app)
+      .patch(`/api/v1/accounts/${wrongAccount2}`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Invalid account number");
+      });
+  });
 });
 
 describe("Deactivate account test", () => {
@@ -297,6 +383,15 @@ describe("Deactivate account test", () => {
   it("should not deactivate if account number is invalid", () => {
     chai.request(app)
       .patch(`/api/v1/accounts/${wrongAccount}`)
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Invalid account number");
+      });
+  });
+
+  it("should not deactivate if account number is invalid", () => {
+    chai.request(app)
+      .patch(`/api/v1/accounts/${wrongAccount2}`)
       .end((err, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Invalid account number");

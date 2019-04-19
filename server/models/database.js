@@ -1,8 +1,5 @@
 const db = {
   USERS: {
-    ADMIN: [
-
-    ],
     STAFF: [
 
     ],
@@ -59,11 +56,11 @@ const db = {
       id: 285346, 
       accountNumber: 9000134354,
       createdOn: "2019-04-05 19:11",
-      owner: 100002,
+      owner: 100001,
       status: "dormant",
       firstName: "Third",
       lastName: "Nme",
-      email: "user5@gmail.com",
+      email: "user1@gmail.com",
       type: "Current",
       balance: 400000.34,
       phoneNumber: "08064372423",

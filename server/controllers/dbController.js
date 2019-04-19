@@ -29,13 +29,9 @@ module.exports = {
  * @return {obj}    - returns a copy of all staff
  */
 
-  // getStaff() {
-  //   return JSON.parse(JSON.stringify(db.USERS.STAFF));
-  // },
-
-  // getAdmin() {
-  //   return JSON.parse(JSON.stringify(db.USERS.ADMIN));
-  // },
+  getStaff() {
+    return JSON.parse(JSON.stringify(db.USERS.STAFF));
+  },
 
   /**
  * Saves object to database
@@ -44,7 +40,6 @@ module.exports = {
  */
 
   save(obj, model) {
-    if (model.toUpperCase() === "USER") db.USERS.USER.push(obj);
     db[model].push(obj);
   },
 
@@ -54,8 +49,7 @@ module.exports = {
  */
 
   saveUser(obj) {
-    if (obj.isAdmin === true) db.USERS.ADMIN.push(obj);
-    else if (obj.isAdmin === false && obj.type.toLowerCase() === "staff") db.USERS.STAFF.push(obj);
+    if (obj.type.toLowerCase() === "staff") db.USERS.STAFF.push(obj);
     else db.USERS.USER.push(obj);
   },
 
@@ -94,6 +88,9 @@ module.exports = {
  */
   findOneUser(Key, Value) {
     return this.getUsers().find(field => field[Key] === Value);
+  },
+  findStaff(Key, Value) {
+    return this.getStaff().find(field => field[Key] === Value);
   },
 
   /**
@@ -144,6 +141,27 @@ module.exports = {
   findAccountById(Value) {
     return this.getAccounts().find(field => field.owner === Value);
   },
+
+  /**
+ * Find object from database
+ * @param {string} value - the value to be matched
+ * @return {array}    - returns an array of account that meets the pararmeters specified
+ */
+findAccountByEmail(Value) {
+  return this.getAccounts().filter(field => field.email === Value);
+},
+
+/**
+ * Find object from database
+ * @param {string} key - the value to be matched
+ * @param {any} value - the value to be matched
+ * @param {string} key1 - the value to be matched
+ * @param {any} value1 - the value to be matched
+ * @return {obj}    - returns a account obj that meets the pararmeters specified
+ */
+findAccount(key, value, key1, value1) {
+  return this.getAccounts().find(field => field[key] === value && field[key1] === value1);
+},
 
   /**
  * Find object from database
@@ -206,7 +224,7 @@ module.exports = {
   /**
  * Find objects from database
  * @param {number} value - the value to be matched
- * @return {obj}    - returns a account obj that meets the pararmeters specified
+ * @return {array}    - returns an array of accounts that meets the pararmeters specified
  */
   findAllAccountTransactionsByAccountNumber(Value) {
     return this.getTransactions().filter(obj => obj.accountNumber === Value);
@@ -215,7 +233,7 @@ module.exports = {
   /**
  * Find objects from database
  * @param {number} value - the value to be matched
- * @return {obj}    - returns a account obj that meets the pararmeters specified
+ * @return {array}    - returns an array of account that meets the pararmeters specified
  */
   findAllAccountByStatus(Value) {
     return this.getAccounts().filter(obj => obj.status === Value);

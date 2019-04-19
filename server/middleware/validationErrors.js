@@ -51,7 +51,7 @@ const errors = (res, error, fieldString) => {
         error: `Invalid ${field}`,
       });
     case "number.min":
-      
+
       return res.status(400).json({
         status: 400,
         error: `Invalid ${field}`,
@@ -67,6 +67,12 @@ const errors = (res, error, fieldString) => {
         error: `Invalid ${field}`,
       });
     case "any.allowOnly":
+      if (field === "status") {
+        return res.status(404).json({
+          status: 404,
+          error: `Invalid ${field}`,
+        });
+      }
       return res.status(400).json({
         status: 400,
         error: `${field} does not match expected value.`,
