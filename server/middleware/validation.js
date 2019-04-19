@@ -16,7 +16,6 @@ const logic = (req, res, next) => {
   });
   const result = Joi.validate(req.params, schema);
   if (result.error) {
-    // console.log(result.error.details[0].context)
     return customErrors(res, result.error.details[0], result.error.details[0].context.label);
   }
   next();
@@ -80,5 +79,28 @@ module.exports = {
   debitAccount(req, res, next) {
     transactionLogic(req, res, next);
   },
+  allAccount(req, res, next) {
+    const schema = Joi.object().keys({
+      status: check.status,
+    });
+    const result = Joi.validate(req.query, schema);
+    if (result.error) {
+      return customErrors(res, result.error.details[0], result.error.details[0].context.label);
+    }
+    next();
+  },
+  checkStaff(req, res, next) {
+    const schema = Joi.object().keys({
+      firstName: check.name,
+      lastName: check.name,
+      email: check.email,
+      userType: check.userType,
+    });
+    const result = Joi.validate(req.body, schema);
+    if (result.error) {
+      return customErrors(res, result.error.details[0], result.error.details[0].context.label);
+    }
+    next();
+  }
 
 };

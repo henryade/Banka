@@ -8,21 +8,9 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static viewAllAccount(req, res) {
-    if (data.getAccounts() !== undefined && req.query.status) {
-      return res.status(200).json({
-        status: 200,
-        data: data.findAllAccountByStatus(req.query.status),
-      });
-    }
-    if (data.getAccounts() !== undefined) {
-      return res.status(200).json({
-        status: 200,
-        data: data.getAccounts(),
-      });
-    }
-    res.status(404).json({
-      status: 404,
-      error: "Empty Database",
+    return res.status(200).json({
+      status: 200,
+      data: req.body.datafield,
     });
   }
 
@@ -33,16 +21,9 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static viewSpecificAccount(req, res) {
-    const account = data.findAccountByAccountNumber(Number(req.params.accountNumber));
-    if (account !== undefined) {
-      return res.status(200).json({
-        status: 200,
-        data: account,
-      });
-    }
-    res.status(404).json({
-      status: 404,
-      error: "Account Not Found",
+    return res.status(200).json({
+      status: 200,
+      data: req.account,
     });
   }
 
@@ -60,31 +41,20 @@ class AccountController {
     const accountNumber = bankAccountNumberBranding + Math.floor(Math.random() * lengthOfAccountNumber);
     const createdOn = new Date(Date.now());
     const owner = data.findOneUser("email", req.body.email).id;
-    // if (!owner) {
-    //   return res.status(400).json({
-    //     status: 400,
-    //     error: "Must use the same email",
-    //   });
-    // }
 
-    if (data.findAccountById(owner)) {
-      if (data.findAccountById(owner).type === req.body.type) {
-        return res.status(400).json({
-          status: 400,
-          error: "Account Exists",
-        });
-      }
+
+    if (data.findAccount("owner", owner, "type", req.body.type)) {
+      return res.status(400).json({
+        status: 400,
+        error: "Account Exists",
+      });
     }
     data.createAccount(id, accountNumber, createdOn, owner, req.body.gender, "active", req.body.firstName, req.body.lastName, req.body.email, req.body.type, req.body.balance, req.body.phoneNumber, req.body.dob, req.body.address);
-    const newAccount = data.findAccountById(owner).type === req.body.type ? data.findAccountById(owner) : res.status(404).json({
-      status: 404,
-      message: "Account Not Found",
-    });
 
 
     res.status(201).json({
       status: 201,
-      data: newAccount,
+      data: data.findAccount("owner", owner, "type", req.body.type),
     });
   }
 
@@ -95,13 +65,7 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static changeAccountStatus(req, res) {
-    const accounts = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-    if (!accounts) {
-      return res.status(400).json({
-        status: 400,
-        error: "Invalid account number",
-      });
-    }
+    const accounts = req.account;
     accounts.status = accounts.status === "active" ? "dormant" : "active";
     data.updateDB("ACCOUNTS", accounts, accounts.status, "status");
     return res.status(200).json({
@@ -117,13 +81,7 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static deleteAccount(req, res) {
-    const specificAccount = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-    if (!specificAccount) {
-      return res.status(404).json({
-        status: 404,
-        message: "Account Not Found",
-      });
-    }
+    const specificAccount = req.account;
 
     data.deleteAccount(specificAccount);
     const checkAccountData = data.findAccountByAccountNumber(specificAccount);

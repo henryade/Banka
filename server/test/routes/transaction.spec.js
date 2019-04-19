@@ -153,7 +153,7 @@ describe("Credit Account test", () => {
       });
   });
 
-  it("should not debit if a user types a wrong amount format  ", () => {
+  it("should not credit if a user types a wrong amount format  ", () => {
     chai.request(app)
       .post(`/api/v1/transactions/${testAccountNumber2}/credit`)
       .send({
@@ -167,7 +167,7 @@ describe("Credit Account test", () => {
       });
   });
 
-  it("should not debit a user if the account status is dormant", () => {
+  it("should not credit a user if the account status is dormant", () => {
     chai.request(app)
       .post(`/api/v1/transactions/${testAccountNumber1}/credit`)
       .send({
