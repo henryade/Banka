@@ -13,7 +13,7 @@ const Account = Tdata.findTransactionByAccountNumber(testAccountNumber1);
 describe("View specific transaction test", () => {
   it("should display a transaction if id is valid", () => {
     chai.request(app)
-      .post(`/api/v1/transactions/349046`)
+      .get(`/api/v1/transactions/349046`)
       .end((error, response) => {
         expect(response).to.have.status(200);
         expect(response.body.data).to.have.property("id");
@@ -29,7 +29,7 @@ describe("View specific transaction test", () => {
 
   it("should not display a transaction if id is invalid", () => {
     chai.request(app)
-      .post(`/api/v1/transactions/4387483`)
+      .get(`/api/v1/transactions/4387483`)
 
       .end((error, response) => {
         expect(response).to.have.status(404);
@@ -52,9 +52,9 @@ describe("Debit Account test", () => {
     chai.request(app)
       .post(`/api/v1/transactions/${testAccountNumber2}/debit`)
       .send({
-        amount: 50000.00,
+        amount: 50000,
         depositor: "Hail",
-        phoneNumber: "2348064372423",
+        depositorPhoneNumber: "2348064372423",
       })
       .end((error, response) => {
         expect(response).to.have.status(200);
@@ -72,7 +72,7 @@ describe("Debit Account test", () => {
       .send({
         amount: 70000,
         depositor: "Name",
-        phoneNumber: "2348064372423",
+        depositorPhoneNumber: "2348064372423",
       })
       .end((error, response) => {
         expect(response).to.have.status(400);
@@ -86,7 +86,7 @@ describe("Debit Account test", () => {
       .send({
         amount: 70000,
         depositor: "Name",
-        phoneNumber: "2348064372423",
+        depositorPhoneNumber: "2348064372423",
       })
       .end((error, response) => {
         expect(response).to.have.status(400);
@@ -101,11 +101,11 @@ describe("Debit Account test", () => {
       .send({
         amount: "k00yu00",
         depositor: "Name",
-        phoneNumber: "2348064372423",
+        depositorPhoneNumber: "2348064372423",
       })
       .end((error, response) => {
         expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Amount is Invalid");
+        expect(response.body.error).to.equal("Invalid amount");
       });
   });
 
@@ -115,7 +115,7 @@ describe("Debit Account test", () => {
       .send({
         amount: 700000,
         depositor: "Nme",
-        phoneNumber: "2348064372423",
+        depositorPhoneNumber: "2348064372423",
       })
       .end((error, response) => {
         expect(response).to.have.status(400);
@@ -140,7 +140,7 @@ describe("Credit Account test", () => {
       .send({
         amount: 600000,
         depositor: "Ben",
-        phoneNumber: "2348064372423",
+        depositorPhoneNumber: "2348064372423",
       })
 
       .end((error, response) => {
@@ -159,11 +159,11 @@ describe("Credit Account test", () => {
       .send({
         amount: "k00yu00",
         depositor: "Name",
-        phoneNumber: "2348064372423",
+        depositorPhoneNumber: "2348064372423",
       })
       .end((error, response) => {
         expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Amount is Invalid");
+        expect(response.body.error).to.equal("Invalid amount");
       });
   });
 
@@ -173,7 +173,7 @@ describe("Credit Account test", () => {
       .send({
         amount: 70000,
         depositor: "Name",
-        phoneNumber: "2348064372423",
+        depositorPhoneNumber: "2348064372423",
       })
       .end((error, response) => {
         expect(response).to.have.status(400);
@@ -187,7 +187,7 @@ describe("Credit Account test", () => {
       .send({
         amount: 700,
         depositor: "Simon",
-        phoneNumber: "2348064372423",
+        depositorPhoneNumber: "2348064372423",
       })
 
       .end((error, response) => {

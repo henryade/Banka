@@ -8,6 +8,12 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static viewAllAccount(req, res) {
+    if (data.getAccounts() !== undefined && req.query.status) {
+      return res.status(200).json({
+        status: 200,
+        data: data.findAllAccountByStatus(req.query.status),
+      });
+    }
     if (data.getAccounts() !== undefined) {
       return res.status(200).json({
         status: 200,
@@ -15,31 +21,30 @@ class AccountController {
       });
     }
     res.status(404).json({
-      status:404,
+      status: 404,
       error: "Empty Database",
-    })
+    });
   }
 
-/**
+  /**
  * View specific bank accounts
  * @param {obj} req - request from body
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-static viewSpecificAccount(req, res) {
-  const account = data.findAccountByAccountNumber(Number(req.params.accountNumber))
-  if (account !== undefined) {
-    return res.status(200).json({
-      status: 200,
-      data: account,
+  static viewSpecificAccount(req, res) {
+    const account = data.findAccountByAccountNumber(Number(req.params.accountNumber));
+    if (account !== undefined) {
+      return res.status(200).json({
+        status: 200,
+        data: account,
+      });
+    }
+    res.status(404).json({
+      status: 404,
+      error: "Account Not Found",
     });
   }
-  res.status(404).json({
-    status:404,
-    error: "Account Not Found",
-  })
-}
-
 
 
   /**

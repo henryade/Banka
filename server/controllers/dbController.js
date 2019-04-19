@@ -8,7 +8,7 @@ module.exports = {
   getUsers() {
     return JSON.parse(JSON.stringify(db.USERS.USER));
   },
-/**
+  /**
  * Gets all accounts
  * @return {obj}    - returns a copy of all accounts
  */
@@ -16,7 +16,7 @@ module.exports = {
     return JSON.parse(JSON.stringify(db.ACCOUNTS));
   },
 
-/**
+  /**
  * Gets all transactions
  * @return {obj}    - returns a copy of all transactions.
  */
@@ -24,7 +24,7 @@ module.exports = {
     return JSON.parse(JSON.stringify(db.TRANSACTIONS));
   },
 
-/**
+  /**
  * Gets all staff
  * @return {obj}    - returns a copy of all staff
  */
@@ -37,18 +37,18 @@ module.exports = {
   //   return JSON.parse(JSON.stringify(db.USERS.ADMIN));
   // },
 
- /**
+  /**
  * Saves object to database
  * @param {obj} obj - object to be saved
  * @param {string} model - the dictionary name the object is to be saved
  */
-  
+
   save(obj, model) {
     if (model.toUpperCase() === "USER") db.USERS.USER.push(obj);
     db[model].push(obj);
   },
 
- /**
+  /**
  * Saves object to user array-object in database
  * @param {obj} obj - object to be saved
  */
@@ -59,7 +59,7 @@ module.exports = {
     else db.USERS.USER.push(obj);
   },
 
-/**
+  /**
  * Create a User
  * @param {obj} obj - object to be saved
  */
@@ -86,7 +86,7 @@ module.exports = {
     this.saveUser(user);
   },
 
-/**
+  /**
  * find object from database
  * @param {string} key - the key reference to be checked
  * @param {string} value - the value to be matched
@@ -96,7 +96,7 @@ module.exports = {
     return this.getUsers().find(field => field[Key] === Value);
   },
 
-/**
+  /**
  * Create a Account
  * @param {obj} obj - object to be saved
  */
@@ -136,7 +136,7 @@ module.exports = {
     this.save(userAccount, "ACCOUNTS");
   },
 
-/**
+  /**
  * Find object from database
  * @param {number} value - the value to be matched
  * @return {obj}    - returns a account obj that meets the pararmeters specified
@@ -145,7 +145,7 @@ module.exports = {
     return this.getAccounts().find(field => field.owner === Value);
   },
 
-/**
+  /**
  * Find object from database
  * @param {number} accountNumber - the value to be matched
  * @return {obj}    - returns a account obj that meets the pararmeters specified
@@ -154,7 +154,7 @@ module.exports = {
     return this.getAccounts().find(field => field.accountNumber === accountNumber);
   },
 
-/**
+  /**
  * Create a Transaction
  * @param {obj} obj - object to be saved
  */
@@ -185,7 +185,7 @@ module.exports = {
     this.save(userTransaction, "TRANSACTIONS");
   },
 
-/**
+  /**
  * Find object from database
  * @param {number} value - the value to be matched
  * @return {obj}    - returns a account obj that meets the pararmeters specified
@@ -194,7 +194,7 @@ module.exports = {
     return this.getTransactions().find(field => field.id === Value);
   },
 
-/**
+  /**
  * Find object from database
  * @param {number} value - the value to be matched
  * @return {obj}    - returns a account obj that meets the pararmeters specified
@@ -202,6 +202,25 @@ module.exports = {
   findTransactionByAccountNumber(Value) {
     return this.getTransactions().find(field => field.accountNumber === Value);
   },
+
+  /**
+ * Find objects from database
+ * @param {number} value - the value to be matched
+ * @return {obj}    - returns a account obj that meets the pararmeters specified
+ */
+  findAllAccountTransactionsByAccountNumber(Value) {
+    return this.getTransactions().filter(obj => obj.accountNumber === Value);
+  },
+
+  /**
+ * Find objects from database
+ * @param {number} value - the value to be matched
+ * @return {obj}    - returns a account obj that meets the pararmeters specified
+ */
+  findAllAccountByStatus(Value) {
+    return this.getAccounts().filter(obj => obj.status === Value);
+  },
+
   /**
  * Delete object from database
  * @param {obj} specificAccount - the account obj to be deleted
@@ -212,7 +231,7 @@ module.exports = {
     allAccount.splice(index, 1);
   },
 
-/**
+  /**
  * Find object from database
  * @param {string} type - the array-object to be updated
  * @param {obj} account - the aqccount to be updated
@@ -224,7 +243,19 @@ module.exports = {
     accountToChange[key] = value;
   },
 
-/**
+  /**
+ * Find object from database
+ * @param {string} type - the array-object to be updated
+ * @param {obj} account - the aqccount to be updated
+ * @param {any} value - the value to be changed
+ * @param {string} key - the key to be matched
+ */
+  updateAccountDB(accountNumber, key, value) {
+    const accountToChange = db.ACCOUNTS.find(acc => acc.accountNumber === accountNumber);
+    accountToChange[key] = value;
+  },
+
+  /**
  * Find object from database
  * @param {number} accountNumber - the value to be matched
  * @param {obj} obj - the list of fields to be changed
@@ -233,7 +264,7 @@ module.exports = {
   //   const accountToChange = this.getTransactions().find(acc => acc.accountNumber === accountNumber);
   //   const account = this.getAccounts().find(acc => acc.accountNumber === parseInt(accountNumber));
   //   const changes = Object.entries(obj);
-    
+
   //   for (let i = 0; i < changes.length; i += 1) {
   //     const [first, last] = changes[i];
   //     accountToChange[first] = last;
