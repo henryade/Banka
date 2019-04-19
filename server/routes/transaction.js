@@ -6,10 +6,10 @@ import validate from "../middleware/validation";
 const router = express.Router();
 
 // /////////////////////////////
-// View a  Specific Account's Transactions //
+// View a  all Account's Transactions //
 // ///////////////////////////
 
-router.get("/accounts/:accountNumber/transactions", transactionData.viewSpecificAccountTransaction);
+router.get("/accounts/:accountNumber/transactions", transactionData.viewAllAccountTransaction);
 
 // /////////////////////////////
 // View Specific Transaction //

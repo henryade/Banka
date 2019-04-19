@@ -86,7 +86,7 @@ const removeAcc = () => {
 }
 
 const checkUser = (a) => {
-	a.href = `dashboard-${localStorage.getItem("user").toLowerCase()}.html`;
+	a.href = `Dashboard-${localStorage.getItem("user").toLowerCase()}.html`;
 }
 
 if(fileName === "SignIn.html"){
