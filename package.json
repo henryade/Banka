@@ -7,7 +7,7 @@
       "lint": "eslint server/index.js --fix",
       "build": "babel server/build/index.js --out-dir build",
       "start": "node server/build/index.js",
-      "test": "nyc mocha build/test/**/*.spec.js --exit",
+      "test": "nyc mocha server/build/test/**/*.spec.js --exit",
       "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
     },
     "author": "Adeola Adeyemo",
