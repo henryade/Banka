@@ -13,7 +13,7 @@ class TransactionController {
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-  static viewSpecificAccountTransaction(req, res) {
+  static viewAllAccountTransaction(req, res) {
     const transactions = data.findAllAccountTransactionsByAccountNumber(parseFloat(req.params.accountNumber));
     if (transactions.length !== 0) {
       return res.status(200).json({

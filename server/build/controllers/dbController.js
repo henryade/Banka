@@ -38,13 +38,10 @@ module.exports = {
   * @return {obj}    - returns a copy of all staff
   */
 
-  // getStaff() {
-  //   return JSON.parse(JSON.stringify(db.USERS.STAFF));
-  // },
+  getStaff: function getStaff() {
+    return JSON.parse(JSON.stringify(_database2.default.USERS.STAFF));
+  },
 
-  // getAdmin() {
-  //   return JSON.parse(JSON.stringify(db.USERS.ADMIN));
-  // },
 
   /**
   * Saves object to database
@@ -53,7 +50,6 @@ module.exports = {
   */
 
   save: function save(obj, model) {
-    if (model.toUpperCase() === "USER") _database2.default.USERS.USER.push(obj);
     _database2.default[model].push(obj);
   },
 
@@ -64,7 +60,7 @@ module.exports = {
   */
 
   saveUser: function saveUser(obj) {
-    if (obj.isAdmin === true) _database2.default.USERS.ADMIN.push(obj);else if (obj.isAdmin === false && obj.type.toLowerCase() === "staff") _database2.default.USERS.STAFF.push(obj);else _database2.default.USERS.USER.push(obj);
+    if (obj.type.toLowerCase() === "staff") _database2.default.USERS.STAFF.push(obj);else _database2.default.USERS.USER.push(obj);
   },
 
 
@@ -98,6 +94,11 @@ module.exports = {
       return field[Key] === Value;
     });
   },
+  findStaff: function findStaff(Key, Value) {
+    return this.getStaff().find(function (field) {
+      return field[Key] === Value;
+    });
+  },
 
 
   /**
@@ -128,12 +129,27 @@ module.exports = {
 
   /**
   * Find object from database
-  * @param {number} value - the value to be matched
-  * @return {obj}    - returns a account obj that meets the pararmeters specified
+  * @param {string} value - the value to be matched
+  * @return {array}    - returns an array of account that meets the pararmeters specified
   */
-  findAccountById: function findAccountById(Value) {
+  findAccountByEmail: function findAccountByEmail(Value) {
+    return this.getAccounts().filter(function (field) {
+      return field.email === Value;
+    });
+  },
+
+
+  /**
+   * Find object from database
+   * @param {string} key - the value to be matched
+   * @param {any} value - the value to be matched
+   * @param {string} key1 - the value to be matched
+   * @param {any} value1 - the value to be matched
+   * @return {obj}    - returns a account obj that meets the pararmeters specified
+   */
+  findAccount: function findAccount(key, value, key1, value1) {
     return this.getAccounts().find(function (field) {
-      return field.owner === Value;
+      return field[key] === value && field[key1] === value1;
     });
   },
 
@@ -200,7 +216,7 @@ module.exports = {
   /**
   * Find objects from database
   * @param {number} value - the value to be matched
-  * @return {obj}    - returns a account obj that meets the pararmeters specified
+  * @return {array}    - returns an array of accounts that meets the pararmeters specified
   */
   findAllAccountTransactionsByAccountNumber: function findAllAccountTransactionsByAccountNumber(Value) {
     return this.getTransactions().filter(function (obj) {
@@ -212,7 +228,7 @@ module.exports = {
   /**
   * Find objects from database
   * @param {number} value - the value to be matched
-  * @return {obj}    - returns a account obj that meets the pararmeters specified
+  * @return {array}    - returns an array of account that meets the pararmeters specified
   */
   findAllAccountByStatus: function findAllAccountByStatus(Value) {
     return this.getAccounts().filter(function (obj) {

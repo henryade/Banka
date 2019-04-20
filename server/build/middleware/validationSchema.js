@@ -13,7 +13,7 @@ var month = 12;
 var year = currentDate.getFullYear() - minimumAge;
 
 module.exports = {
-  name: _joi2.default.string().regex(/^[A-Za-z][^0-9]+$/).min(2).max(15).required(),
+  name: _joi2.default.string().regex(/^[A-Za-z][^0-9]+$/).min(3).max(15).required(),
   email: _joi2.default.string().email().regex(/^.+[.]\w{2,3}$/).required(),
   password: _joi2.default.string().regex(/^[a-zA-Z0-9]{7,15}$/).required(),
   confirmPassword: _joi2.default.any().valid(_joi2.default.ref("password")).required(),
@@ -25,5 +25,7 @@ module.exports = {
   accountNumber: _joi2.default.number().integer().positive().min(9000000001).max(9999999999).required(),
   amount: _joi2.default.number().positive().min(10).max(2000000).required(),
   type: _joi2.default.string().valid(["savings", "current", "fixed", "fixed deposit", "joint"]).lowercase().required(),
+  userType: _joi2.default.string().valid(["admin", "staff"]).lowercase().required(),
+  status: _joi2.default.string().valid(["active", "dormant", ""]).lowercase(),
   gender: _joi2.default.string().valid(["M", "F", "MALE", "FEMALE"]).uppercase().required()
 };

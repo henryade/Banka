@@ -1,12 +1,20 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
 
-var _accountController = require("../controllers/accountController");
+var _userController = require("../controllers/userController");
 
-var _accountController2 = _interopRequireDefault(_accountController);
+var _userController2 = _interopRequireDefault(_userController);
+
+var _dbValidation = require("../middleware/dbValidation");
+
+var _dbValidation2 = _interopRequireDefault(_dbValidation);
 
 var _authorization = require("../middleware/authorization");
 
@@ -20,8 +28,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var router = _express2.default.Router();
 
-// /////////////////////////
-// View all User Account //
-// ///////////////////////
+// /////////////////////////////////////////////
+// View all Account Owned by a Specific User //
+// ///////////////////////////////////////////
 
-router.get("/userId/accounts");
+router.get("/user/:email/accounts", _dbValidation2.default.email, _userController2.default.getAccounts);
+
+// ////////////////
+// Create Staff //
+// //////////////
+
+router.post("/users", _validation2.default.checkStaff, _dbValidation2.default.checkStaff, _userController2.default.createUser);
+
+exports.default = router;

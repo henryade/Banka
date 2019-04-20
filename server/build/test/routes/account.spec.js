@@ -19,13 +19,48 @@ _chai2.default.use(_chaiHttp2.default);
 var activeAccount = "9000134322";
 var dormantAccount = 9000134354;
 var wrongAccount = 900013432;
+var wrongAccount2 = 9000134392;
+var wrongAccount1 = 900013439201;
 
 describe("View all bank account test", function () {
   it("should return all accounts in the database", function () {
-    _chai2.default.request(_app2.default).get("/api/v1/accounts/").end(function (err, response) {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts").end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(200);
       (0, _chai.expect)(response.body.data).to.be.an("array");
       (0, _chai.expect)(response.body.data[0]).to.be.an("object");
+    });
+  });
+});
+
+describe("View all bank account query test", function () {
+  it("should return all active accounts in the database", function () {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts?status=active").end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(200);
+      (0, _chai.expect)(response.body.data).to.be.an("array");
+      (0, _chai.expect)(response.body.data[0]).to.be.an("object");
+      (0, _chai.expect)(response.body.data[0].status).to.equal("active");
+    });
+  });
+
+  it("should return all dormant accounts in the database", function () {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts?status=dormant").end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(200);
+      (0, _chai.expect)(response.body.data).to.be.an("array");
+      (0, _chai.expect)(response.body.data[0]).to.be.an("object");
+    });
+  });
+
+  it("should throw error", function () {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts?status=acive").end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(404);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid status");
+    });
+  });
+
+  it("should throw error", function () {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts?id=active").end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("id is not allowed");
     });
   });
 });
@@ -46,8 +81,22 @@ describe("View specific bank account test", function () {
 
   it("should throw an error if the account isnt in the database", function () {
     _chai2.default.request(_app2.default).get("/api/v1/accounts/" + wrongAccount).end(function (err, response) {
-      (0, _chai.expect)(response).to.have.status(404);
-      (0, _chai.expect)(response.body.error).to.equal("Account Not Found");
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
+    });
+  });
+
+  it("should throw an error if the account isnt in the database", function () {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts/" + wrongAccount2).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
+    });
+  });
+
+  it("should throw an error if the account isnt in the database", function () {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts/" + wrongAccount1).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
     });
   });
 });
@@ -195,6 +244,78 @@ describe("Create Account test", function () {
       (0, _chai.expect)(response.body.error).to.equal("gender is required");
     });
   });
+
+  it("should not create accounts if gender is empty", function () {
+    var payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "uebek@jntgrj.com",
+      openingBalance: 40000040.34,
+      phoneNumber: "2348067870423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Current",
+      gender: ""
+    };
+    _chai2.default.request(_app2.default).post(endpoint).send(payload).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid opening balance");
+    });
+  });
+
+  it("should not create accounts if gender is empty", function () {
+    var payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "uebek@jntgrj.com",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Current",
+      gender: ""
+    };
+    _chai2.default.request(_app2.default).post(endpoint).send(payload).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("gender should not be empty");
+    });
+  });
+
+  it("should not create accounts if email is invalid", function () {
+    var payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "hyrgms.com",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Current",
+      gender: "M"
+    };
+    _chai2.default.request(_app2.default).post(endpoint).send(payload).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid email");
+    });
+  });
+
+  it("should not create accounts with same type", function () {
+    var payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "user1@gmail.com",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Current",
+      gender: "M"
+    };
+    _chai2.default.request(_app2.default).post(endpoint).send(payload).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Account Exists");
+    });
+  });
   it("should create a user account if all credentials are given", function () {
     var payload = {
       firstName: "Second",
@@ -236,6 +357,13 @@ describe("Activate account test", function () {
       (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
     });
   });
+
+  it("should not activate if account number is invalid", function () {
+    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + wrongAccount2).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
+    });
+  });
 });
 
 describe("Deactivate account test", function () {
@@ -248,6 +376,13 @@ describe("Deactivate account test", function () {
 
   it("should not deactivate if account number is invalid", function () {
     _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + wrongAccount).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
+    });
+  });
+
+  it("should not deactivate if account number is invalid", function () {
+    _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + wrongAccount2).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("Invalid account number");
     });

@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js --fix",
-    "build": "babel . --ignore node_modules --out-dir ./build",
+    "build": "babel . --ignore node_modules,build --out-dir ./build",
     "start": "node build/index.js",
     "dev": "nodemon --exec babel-node index.js",
-    "test": "nyc mocha build/test/**/*.spec.js",
+    "test": "npm run build && nyc mocha build/test/**/*.spec.js --exit",
     "test-dev": "nyc --require @babel/register mocha test/**/*.js --exit",
     "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
