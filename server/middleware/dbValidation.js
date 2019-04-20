@@ -33,20 +33,27 @@ module.exports = {
     const User = data.findOneUser("email", req.body.email);
     if (staff) {
       req.body.User = staff;
-      next();
     } else if (User) {
       req.body.User = User;
-      next();
+    } else {
+      return error(res, 401, "Auth failed");
     }
-    return error(res, 401, "Auth failed");
+    next();
   },
   db(req, res, next) {
     req.body.datafield = data.getAccounts();
-    if (req.body.datafield.length === 0) {
-      return error(res, 404, "Database Error");
-    }
+    // if (req.body.datafield.length === 0) {
+    //   return error(res, 404, "Database Error");
+    // }
     if (req.query.status) {
       req.body.datafield = data.findAllAccountByStatus(req.query.status);
+    }
+    next();
+  },
+  email(req, res, next) {
+    if (data.findAccountByEmail(req.params.email).length === 0) {
+
+      return error(res, 400, "Email not found");
     }
     next();
   },

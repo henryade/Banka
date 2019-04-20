@@ -1,7 +1,16 @@
 const db = {
   USERS: {
     STAFF: [
-
+      {
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsImlkIjoyMDAwMDIsImZpcnN0TmFtZSI6ImFkZSIsImxhc3ROYW1lIjoiYWRlIiwidHlwZSI6ImNsaWVudCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTUyNDYzNzEsImV4cCI6MTU1NTI0OTk3MX0.jeQR87wJFw4zaAwT9-G1CaH_7k1Kanrj8I84N9DFq5A",
+        email: "staff5@gmail.com",
+        id: 100002,
+        firstName: "ade",
+        lastName: "ade",
+        password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
+        type: "staff",
+        isAdmin: true,
+      }
     ],
     USER: [
       {

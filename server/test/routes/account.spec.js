@@ -8,6 +8,7 @@ const activeAccount = "9000134322";
 const dormantAccount = 9000134354;
 const wrongAccount = 900013432;
 const wrongAccount2 = 9000134392;
+const wrongAccount1 = 900013439201;
 
 describe("View all bank account test", () => {
   it("should return all accounts in the database", () => {
@@ -31,6 +32,7 @@ describe("View all bank account query test", () => {
         expect(response).to.have.status(200);
         expect(response.body.data).to.be.an("array");
         expect(response.body.data[0]).to.be.an("object");
+        expect(response.body.data[0].status).to.equal("active");
       });
   });
 
@@ -96,6 +98,16 @@ describe("View specific bank account test", () => {
   it("should throw an error if the account isnt in the database", () => {
     chai.request(app)
       .get(`/api/v1/accounts/${wrongAccount2}`)
+
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Invalid account number");
+      });
+  });
+
+  it("should throw an error if the account isnt in the database", () => {
+    chai.request(app)
+      .get(`/api/v1/accounts/${wrongAccount1}`)
 
       .end((err, response) => {
         expect(response).to.have.status(400);
@@ -286,7 +298,74 @@ describe("Create Account test", () => {
         expect(response.body.error).to.equal("gender is required");
       });
   });
-  it("should not create accounts wtih same type", () => {
+
+  it("should not create accounts if gender is empty", () => {
+    const payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "uebek@jntgrj.com",
+      openingBalance: 40000040.34,
+      phoneNumber: "2348067870423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Current",
+      gender: ""
+    };
+    chai.request(app)
+      .post(endpoint)
+      .send(payload)
+
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Invalid opening balance");
+  });
+});
+
+  it("should not create accounts if gender is empty", () => {
+    const payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "uebek@jntgrj.com",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Current",
+      gender: ""
+    };
+    chai.request(app)
+      .post(endpoint)
+      .send(payload)
+
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("gender should not be empty");
+  });
+});
+
+  it("should not create accounts if email is invalid", () => {
+    const payload = {
+      firstName: "Second",
+      lastName: "Nme",
+      email: "hyrgms.com",
+      openingBalance: 400040.34,
+      phoneNumber: "2348064372423",
+      dob: "1991-05-12",
+      address: "11 Banka str., Andela, Lagos, Nigeria",
+      type: "Current",
+      gender: "M"
+    };
+    chai.request(app)
+      .post(endpoint)
+      .send(payload)
+
+      .end((err, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("Invalid email");
+  });
+});
+
+  it("should not create accounts with same type", () => {
     const payload = {
       firstName: "Second",
       lastName: "Nme",
