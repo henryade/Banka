@@ -3,6 +3,7 @@ import userData from "../controllers/userController";
 import checks from "../middleware/dbValidation";
 import isLoggedIn from "../middleware/authorization";
 import validate from "../middleware/validation";
+import UserController from "../controllers/userController";
 
 const router = express.Router();
 

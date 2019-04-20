@@ -89,6 +89,7 @@ module.exports = {
   findOneUser(Key, Value) {
     return this.getUsers().find(field => field[Key] === Value);
   },
+  
   findStaff(Key, Value) {
     return this.getStaff().find(field => field[Key] === Value);
   },

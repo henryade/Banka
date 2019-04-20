@@ -20,6 +20,7 @@ class UserController {
     const { User } = req.body;
     bcrypt.compare(req.body.password, User.password, (err, response) => {
       if (response) {
+        
         const token = jwt.sign({
           email: User.email,
           id: User.id,
@@ -41,10 +42,10 @@ class UserController {
           },
         });
       }
-      return res.status(401).json({
-        status: 401,
-        error: "Auth failed",
-      });
+      // return res.status(401).json({
+      //   status: 401, 
+      //   error: "Auth failed",
+      // });
     });
   }
 
