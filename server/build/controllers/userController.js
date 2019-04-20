@@ -22,6 +22,8 @@ var _dbController2 = _interopRequireDefault(_dbController);
 
 var _auth = require("../utils/auth");
 
+var JWT_KEY = "andela";
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -58,7 +60,7 @@ var UserController = function () {
             lastName: User.lastName,
             type: User.type,
             isAdmin: User.isAdmin
-          }, _config.JWT_KEY);
+          }, JWT_KEY);
           return res.status(200).json({
             status: 200,
             data: {
@@ -98,7 +100,7 @@ var UserController = function () {
           lastName: req.body.lastName,
           type: "client",
           isAdmin: false
-        }, _config.JWT_KEY);
+        }, JWT_KEY);
         _dbController2.default.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash, "client", false);
         var newUser = _dbController2.default.findOneUser("id", id);
 
@@ -131,7 +133,7 @@ var UserController = function () {
           lastName: req.body.lastName,
           type: "staff",
           isAdmin: isAdmin
-        }, _config.JWT_KEY);
+        }, JWT_KEY);
         _dbController2.default.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash, "staff", isAdmin);
 
         var newStaff = _dbController2.default.findStaff("id", id);
