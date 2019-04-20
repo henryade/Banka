@@ -49,7 +49,7 @@ exclude_patterns:
 
 - "models/"
 - "features/"
-- "**/node_modules/"
+- "server/node_modules/"
 - "script/"
 - "**/test/"
 

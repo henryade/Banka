@@ -39,11 +39,6 @@ var errors = function errors(res, error, fieldString) {
         status: 400,
         error: error.message.replace(/[^\w|\s]/g, "")
       });
-    case "string.length":
-      return res.status(400).json({
-        status: 400,
-        error: error.message.replace(/[^\w|\s]/g, "")
-      });
 
     case "string.min":
       return res.status(400).json({
@@ -72,6 +67,12 @@ var errors = function errors(res, error, fieldString) {
         error: "Invalid " + field
       });
     case "any.allowOnly":
+      if (field === "status") {
+        return res.status(404).json({
+          status: 404,
+          error: "Invalid " + field
+        });
+      }
       return res.status(400).json({
         status: 400,
         error: field + " does not match expected value."

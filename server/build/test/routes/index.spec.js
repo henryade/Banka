@@ -20,9 +20,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _chai2.default.use(_chaiHttp2.default);
 
-// eslint-disable-next-line no-global-assign
-
-
 describe("Sign in test", function () {
   var endpoint = "/api/v1/auth/signin";
   it("should not login a user when there are no parameters", function () {
@@ -50,15 +47,26 @@ describe("Sign in test", function () {
   });
 
   it("'should login a user when all the parameters are given", function () {
-    _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + _dbController2.default.findOneUser("email", "user5@gmail.com").token).send({
-      email: "user5@gmail.com",
+    _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + _dbController2.default.findOneUser("email", "user1@gmail.com").token).send({
+      email: "user1@gmail.com",
       password: "password"
     }).end(function (error, response) {
-
       (0, _chai.expect)(response).have.a.status(200);
       (0, _chai.expect)(response.body).to.have.property("data");
     });
   });
+
+  it("should not login a user with wrong credentials", function () {
+    _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + _dbController2.default.findOneUser("email", "user5@gmail.com").token).send({
+      email: "user5@gmail.com",
+      password: "password",
+      name: "fdkjnjn"
+    }).end(function (error, response) {
+      (0, _chai.expect)(response).have.a.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("name is not allowed");
+    });
+  });
+
   it("should not login a user with wrong credentials-email", function () {
     _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + _dbController2.default.findOneUser("email", "user5@gmail.com").token).send({
       email: "use@gmail.com",
@@ -80,6 +88,17 @@ describe("Sign in test", function () {
   it("should generate token", function () {
     _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + _dbController2.default.findOneUser("email", "user5@gmail.com").token).send({
       email: "user5@gmail.com",
+      password: "password"
+    }).end(function (error, response) {
+      (0, _chai.expect)(response).have.a.status(200);
+      (0, _chai.expect)(response.body.data).to.have.property("token");
+    });
+  });
+  it("should signin staff", function () {
+    _chai2.default.request(_app2.default).post(endpoint)
+    // .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
+    .send({
+      email: "staff5@gmail.com",
       password: "password"
     }).end(function (error, response) {
       (0, _chai.expect)(response).have.a.status(200);
@@ -133,6 +152,31 @@ describe("Sign up test", function () {
     });
   });
 
+  it("should not register a user when the first name is invalid", function () {
+    _chai2.default.request(_app2.default).post(endpoint).send({
+      firstName: "SThdfghdbjdkhbfjdhsjhbsjhvsbjhbvdjslshbjkdhbskhbvdkjbvfdhbjdird",
+      lastName: "Gone",
+      email: "user2@gmail.com",
+      password: "password",
+      confirmPassword: "password"
+    }).end(function (error, response) {
+      (0, _chai.expect)(response).have.a.status(400);
+      (0, _chai.expect)(response.text).to.include("Invalid first name");
+    });
+  });
+
+  it("should not register a user when the last name is invalid", function () {
+    _chai2.default.request(_app2.default).post(endpoint).send({
+      firstName: "SThird",
+      lastName: "iS",
+      email: "sdf@gmail.com",
+      password: "password",
+      confirmPassword: "password"
+    }).end(function (error, response) {
+      (0, _chai.expect)(response).have.a.status(400);
+      (0, _chai.expect)(response.text).to.include("Invalid last name");
+    });
+  });
   it("should not register a user when the first name is missing", function () {
     _chai2.default.request(_app2.default).post(endpoint).send({
       lastName: "Gone",

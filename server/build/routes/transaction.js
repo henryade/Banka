@@ -21,10 +21,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var router = _express2.default.Router();
 
 // /////////////////////////////
-// View a  Specific Account's Transactions //
+// View a  all Account's Transactions //
 // ///////////////////////////
 
-router.get("/accounts/:accountNumber/transactions", _transactionController2.default.viewSpecificAccountTransaction);
+router.get("/accounts/:accountNumber/transactions", _transactionController2.default.viewAllAccountTransaction);
 
 // /////////////////////////////
 // View Specific Transaction //

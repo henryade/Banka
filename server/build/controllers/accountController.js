@@ -29,21 +29,9 @@ var AccountController = function () {
      * @return {obj}    - returns response object
      */
     value: function viewAllAccount(req, res) {
-      if (_dbController2.default.getAccounts() !== undefined && req.query.status) {
-        return res.status(200).json({
-          status: 200,
-          data: _dbController2.default.findAllAccountByStatus(req.query.status)
-        });
-      }
-      if (_dbController2.default.getAccounts() !== undefined) {
-        return res.status(200).json({
-          status: 200,
-          data: _dbController2.default.getAccounts()
-        });
-      }
-      res.status(404).json({
-        status: 404,
-        error: "Empty Database"
+      return res.status(200).json({
+        status: 200,
+        data: req.body.datafield
       });
     }
 
@@ -57,16 +45,9 @@ var AccountController = function () {
   }, {
     key: "viewSpecificAccount",
     value: function viewSpecificAccount(req, res) {
-      var account = _dbController2.default.findAccountByAccountNumber(Number(req.params.accountNumber));
-      if (account !== undefined) {
-        return res.status(200).json({
-          status: 200,
-          data: account
-        });
-      }
-      res.status(404).json({
-        status: 404,
-        error: "Account Not Found"
+      return res.status(200).json({
+        status: 200,
+        data: req.account
       });
     }
 
@@ -86,30 +67,18 @@ var AccountController = function () {
       var accountNumber = bankAccountNumberBranding + Math.floor(Math.random() * lengthOfAccountNumber);
       var createdOn = new Date(Date.now());
       var owner = _dbController2.default.findOneUser("email", req.body.email).id;
-      // if (!owner) {
-      //   return res.status(400).json({
-      //     status: 400,
-      //     error: "Must use the same email",
-      //   });
-      // }
 
-      if (_dbController2.default.findAccountById(owner)) {
-        if (_dbController2.default.findAccountById(owner).type === req.body.type) {
-          return res.status(400).json({
-            status: 400,
-            error: "Account Exists"
-          });
-        }
+      if (_dbController2.default.findAccount("owner", owner, "type", req.body.type)) {
+        return res.status(400).json({
+          status: 400,
+          error: "Account Exists"
+        });
       }
       _dbController2.default.createAccount(id, accountNumber, createdOn, owner, req.body.gender, "active", req.body.firstName, req.body.lastName, req.body.email, req.body.type, req.body.balance, req.body.phoneNumber, req.body.dob, req.body.address);
-      var newAccount = _dbController2.default.findAccountById(owner).type === req.body.type ? _dbController2.default.findAccountById(owner) : res.status(404).json({
-        status: 404,
-        message: "Account Not Found"
-      });
 
       res.status(201).json({
         status: 201,
-        data: newAccount
+        data: _dbController2.default.findAccount("owner", owner, "type", req.body.type)
       });
     }
 
@@ -123,13 +92,7 @@ var AccountController = function () {
   }, {
     key: "changeAccountStatus",
     value: function changeAccountStatus(req, res) {
-      var accounts = _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-      if (!accounts) {
-        return res.status(400).json({
-          status: 400,
-          error: "Invalid account number"
-        });
-      }
+      var accounts = req.account;
       accounts.status = accounts.status === "active" ? "dormant" : "active";
       _dbController2.default.updateDB("ACCOUNTS", accounts, accounts.status, "status");
       return res.status(200).json({
@@ -148,13 +111,7 @@ var AccountController = function () {
   }, {
     key: "deleteAccount",
     value: function deleteAccount(req, res) {
-      var specificAccount = _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-      if (!specificAccount) {
-        return res.status(404).json({
-          status: 404,
-          message: "Account Not Found"
-        });
-      }
+      var specificAccount = req.account;
 
       _dbController2.default.deleteAccount(specificAccount);
       var checkAccountData = _dbController2.default.findAccountByAccountNumber(specificAccount);

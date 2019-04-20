@@ -20,6 +20,10 @@ var _dbController = require("./dbController");
 
 var _dbController2 = _interopRequireDefault(_dbController);
 
+var _auth = require("../utils/auth");
+
+var JWT_KEY = "andela";
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39,21 +43,16 @@ var UserController = function () {
     key: "signin",
 
     /**
-    * @param {obj} req - request from body
-    * @param {obj} res - response to request from body
-    * @return {obj}    - returns response object
-    */
+     * @param {obj} req - request from body
+     * @param {obj} res - response to request from body
+     * @return {obj}    - returns response object
+     */
     value: function signin(req, res) {
+      var User = req.body.User;
 
-      var User = _dbController2.default.findOneUser("email", req.body.email);
-      if (!User) {
-        return res.status(401).json({
-          status: 401,
-          error: "Auth failed"
-        });
-      }
       _bcryptjs2.default.compare(req.body.password, User.password, function (err, response) {
         if (response) {
+
           var token = _jsonwebtoken2.default.sign({
             email: User.email,
             id: User.id,
@@ -61,7 +60,7 @@ var UserController = function () {
             lastName: User.lastName,
             type: User.type,
             isAdmin: User.isAdmin
-          }, _config.JWT_KEY);
+          }, JWT_KEY);
           return res.status(200).json({
             status: 200,
             data: {
@@ -75,10 +74,10 @@ var UserController = function () {
             }
           });
         }
-        return res.status(401).json({
-          status: 401,
-          error: "Auth failed"
-        });
+        // return res.status(401).json({
+        //   status: 401, 
+        //   error: "Auth failed",
+        // });
       });
     }
 
@@ -91,16 +90,8 @@ var UserController = function () {
   }, {
     key: "signup",
     value: function signup(req, res) {
-      var User = _dbController2.default.findOneUser("email", req.body.email);
-      if (User) {
-        return res.status(400).json({
-          status: 400,
-          error: "email already exist"
-        });
-      }
-
       _bcryptjs2.default.hash(req.body.password, salt, function (err, hash) {
-        var id = Math.ceil(Math.random() * 6);
+        var id = (0, _auth.generateId)("client");
 
         var token = _jsonwebtoken2.default.sign({
           email: req.body.email,
@@ -109,7 +100,7 @@ var UserController = function () {
           lastName: req.body.lastName,
           type: "client",
           isAdmin: false
-        }, _config.JWT_KEY);
+        }, JWT_KEY);
         _dbController2.default.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash, "client", false);
         var newUser = _dbController2.default.findOneUser("id", id);
 
@@ -125,6 +116,41 @@ var UserController = function () {
             isAdmin: newUser.isAdmin
           }
         });
+      });
+    }
+  }, {
+    key: "createUser",
+    value: function createUser(req, res) {
+      var plainPassword = (0, _auth.generateRandomPassword)();
+      var id = req.body.userType === "admin" ? (0, _auth.generateId)() : (0, _auth.generateId)("staff");
+      var isAdmin = req.body.userType === "admin";
+
+      _bcryptjs2.default.hash(plainPassword, salt, function (err, hash) {
+        var token = _jsonwebtoken2.default.sign({
+          email: req.body.email,
+          id: id,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          type: "staff",
+          isAdmin: isAdmin
+        }, JWT_KEY);
+        _dbController2.default.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash, "staff", isAdmin);
+
+        var newStaff = _dbController2.default.findStaff("id", id);
+
+        return res.status(201).json({
+          status: 201,
+          plainPassword: plainPassword,
+          data: newStaff
+        });
+      });
+    }
+  }, {
+    key: "getAccounts",
+    value: function getAccounts(req, res) {
+      return res.status(200).json({
+        status: 200,
+        data: _dbController2.default.findAccountByEmail(req.params.email)
       });
     }
   }]);

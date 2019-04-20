@@ -24,6 +24,10 @@ var _index = require("./routes/index");
 
 var _index2 = _interopRequireDefault(_index);
 
+var _user = require("./routes/user");
+
+var _user2 = _interopRequireDefault(_user);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
@@ -33,12 +37,12 @@ app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use("/api/v1", _transaction2.default);
 app.use("/api/v1", _account2.default);
 app.use("/api/v1", _index2.default);
+app.use("/api/v1", _user2.default);
 
 app.get("/", function (req, res) {
   res.send("Home Page");
 });
-app.use("*", function (req, res, next) {
-  var err = new Error("Page Not Found");
+app.use("*", function (req, res) {
   res.status(404).json({
     status: 404,
     message: "Page Not Found"

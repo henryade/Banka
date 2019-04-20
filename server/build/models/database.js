@@ -5,33 +5,41 @@ Object.defineProperty(exports, "__esModule", {
 });
 var db = {
   USERS: {
-    ADMIN: [],
-    STAFF: [],
+    STAFF: [{
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsImlkIjoyMDAwMDIsImZpcnN0TmFtZSI6ImFkZSIsImxhc3ROYW1lIjoiYWRlIiwidHlwZSI6ImNsaWVudCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTUyNDYzNzEsImV4cCI6MTU1NTI0OTk3MX0.jeQR87wJFw4zaAwT9-G1CaH_7k1Kanrj8I84N9DFq5A",
+      email: "staff5@gmail.com",
+      id: 100002,
+      firstName: "ade",
+      lastName: "ade",
+      password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
+      type: "staff",
+      isAdmin: true
+    }],
     USER: [{
       token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsImlkIjoyMDAwMDIsImZpcnN0TmFtZSI6ImtzbmRma2QiLCJsYXN0TmFtZSI6ImRmamRmbGZuIiwidHlwZSI6ImNsaWVudCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTUyMzM3MjcsImV4cCI6MTU1NTIzNzU4NSwianRpIjoiYjA5NTM2MTMtMTkwMy00N2M3LWJjMTMtZTYzOGNiYzgyNGJkIn0.2FHaotY9jKFFXHpHlu42lpx-HIGWMVAnZOzn-WUDA",
-      id: 100001,
+      id: 300001,
       email: "user1@gmail.com",
       firstName: "First",
       lastName: "User",
-      password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
+      password: "$2a$10$fXHs1J0EhQkefA75weD70Onxvl.pZkF6SEJw02JrI85An7GRGipL.",
       type: "client",
       isAdmin: false
     }, {
       token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsImlkIjoyMDAwMDIsImZpcnN0TmFtZSI6ImFkZSIsImxhc3ROYW1lIjoiYWRlIiwidHlwZSI6ImNsaWVudCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTUyNDYzNzEsImV4cCI6MTU1NTI0OTk3MX0.jeQR87wJFw4zaAwT9-G1CaH_7k1Kanrj8I84N9DFq5A",
       email: "user5@gmail.com",
-      id: 200002,
+      id: 300002,
       firstName: "ade",
       lastName: "ade",
-      password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
+      password: "$2a$10$fXHs1J0EhQkefA75weD70Onxvl.pZkF6SEJw02JrI85An7GRGipL.",
       type: "client",
       isAdmin: false
     }, {
       token: "token002",
-      id: 200001,
+      id: 300013,
       email: "user4@gmail.com",
       firstName: "First",
       lastName: "User",
-      password: "$2y$10$a0MwiU52OXxY2heoXj/WUOZ0tIdpL1i180SHna6jjGlsVrHdAUjn2",
+      password: "$2a$10$fXHs1J0EhQkefA75weD70Onxvl.pZkF6SEJw02JrI85An7GRGipL.",
       type: "client",
       isAdmin: false
     }]
@@ -40,7 +48,7 @@ var db = {
     id: 345346,
     accountNumber: 9000134322,
     createdOn: "2019-04-05 19:11",
-    owner: 100002,
+    owner: 300002,
     status: "active",
     firstName: "Second",
     lastName: "Nme",
@@ -54,11 +62,11 @@ var db = {
     id: 285346,
     accountNumber: 9000134354,
     createdOn: "2019-04-05 19:11",
-    owner: 100002,
+    owner: 300001,
     status: "dormant",
     firstName: "Third",
     lastName: "Nme",
-    email: "user5@gmail.com",
+    email: "user1@gmail.com",
     type: "Current",
     balance: 400000.34,
     phoneNumber: "08064372423",
@@ -90,4 +98,4 @@ var db = {
   }]
 };
 
-exports.default = JSON.parse(JSON.stringify(db));
+exports.default = db;
