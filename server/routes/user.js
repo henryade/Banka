@@ -11,7 +11,7 @@ const router = express.Router();
 // View all Account Owned by a Specific User //
 // ///////////////////////////////////////////
 
-router.get("/user/:email/accounts", userData.getAccounts);
+router.get("/user/:email/accounts", checks.email, userData.getAccounts);
 
 // ////////////////
 // Create Staff //

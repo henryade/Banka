@@ -3,7 +3,8 @@ import bodyParser from "body-parser";
 import accountRoutes from "./routes/account";
 import transactionRoutes from "./routes/transaction";
 import authRoutes from "./routes/index";
-import userRoutes from "./routes/user"
+import userRoutes from "./routes/user";
+
 
 const app = express();
 app.use(bodyParser.json());

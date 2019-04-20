@@ -101,7 +101,7 @@ class UserController {
       }, JWT_KEY);
       data.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash, "staff", isAdmin);
 
-      const { password, ...newStaff } = data.findStaff("id", id);
+      const newStaff = data.findStaff("id", id);
 
       return res.status(201).json({
         status: 201,

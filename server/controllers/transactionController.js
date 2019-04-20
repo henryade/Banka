@@ -1,5 +1,6 @@
 import data from "./dbController";
-import { logic } from "../utils/debit-creditLogic";
+import { logic } from "../utils/transactionLogic";
+
 
 /**
  * Transaction Controller Class
@@ -14,14 +15,14 @@ class TransactionController {
  */
   static viewSpecificAccountTransaction(req, res) {
     const transactions = data.findAllAccountTransactionsByAccountNumber(parseFloat(req.params.accountNumber));
-    if (transactions !== undefined) {
+    if (transactions.length !== 0) {
       return res.status(200).json({
         status: 200,
         data: transactions,
       });
     }
-    return res.status(404).json({
-      status: 404,
+    return res.status(400).json({
+      status: 400,
       error: "Invalid Account Number",
     });
   }

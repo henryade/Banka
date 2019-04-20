@@ -34,11 +34,6 @@ const errors = (res, error, fieldString) => {
         status: 400,
         error: error.message.replace(/[^\w|\s]/g, ""),
       });
-    case "string.length":
-      return res.status(400).json({
-        status: 400,
-        error: error.message.replace(/[^\w|\s]/g, ""),
-      });
 
     case "string.min":
       return res.status(400).json({

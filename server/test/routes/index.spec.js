@@ -6,10 +6,6 @@ import app from "../../app";
 
 chai.use(chaiHttp);
 
-// eslint-disable-next-line no-global-assign
-
-
-
 describe("Sign in test", () => {
   const endpoint = "/api/v1/auth/signin";
   it("should not login a user when there are no parameters", () => {
@@ -62,6 +58,22 @@ describe("Sign in test", () => {
         expect(response.body).to.have.property("data");
       });
   });
+
+  it("should not login a user with wrong credentials", () => {
+    chai.request(app)
+      .post(endpoint)
+      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
+      .send({
+        email: "user5@gmail.com",
+        password: "password",
+        name: "fdkjnjn"
+      })
+      .end((error, response) => {
+        expect(response).have.a.status(400);
+        expect(response.body.error).to.equal("name is not allowed");
+      });
+  });
+
   it("should not login a user with wrong credentials-email", () => {
     chai.request(app)
       .post(endpoint)
@@ -94,6 +106,19 @@ describe("Sign in test", () => {
       .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
         email: "user5@gmail.com",
+        password: "password",
+      })
+      .end((error, response) => {
+        expect(response).have.a.status(200);
+        expect(response.body.data).to.have.property("token");
+      });
+  });
+  it("should signin staff", () => {
+    chai.request(app)
+      .post(endpoint)
+      // .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
+      .send({
+        email: "staff5@gmail.com",
         password: "password",
       })
       .end((error, response) => {
@@ -162,6 +187,37 @@ describe("Sign up test", () => {
       });
   });
 
+  it("should not register a user when the first name is invalid", () => {
+    chai.request(app)
+      .post(endpoint)
+      .send({
+        firstName: "SThdfghdbjdkhbfjdhsjhbsjhvsbjhbvdjslshbjkdhbskhbvdkjbvfdhbjdird",
+        lastName: "Gone",
+        email: "user2@gmail.com",
+        password: "password",
+        confirmPassword: "password",
+      })
+      .end((error, response) => {
+        expect(response).have.a.status(400);
+        expect(response.text).to.include("Invalid first name");
+      });
+  });
+
+  it("should not register a user when the last name is invalid", () => {
+    chai.request(app)
+      .post(endpoint)
+      .send({
+        firstName: "SThird",
+        lastName: "iS",
+        email: "sdf@gmail.com",
+        password: "password",
+        confirmPassword: "password",
+      })
+      .end((error, response) => {
+        expect(response).have.a.status(400);
+        expect(response.text).to.include("Invalid last name");
+      });
+  });
   it("should not register a user when the first name is missing", () => {
     chai.request(app)
       .post(endpoint)

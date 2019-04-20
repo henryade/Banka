@@ -8,7 +8,7 @@ const year = currentDate.getFullYear() - minimumAge;
 
 
 module.exports = {
-  name: Joi.string().regex(/^[A-Za-z][^0-9]+$/).min(2).max(15)
+  name: Joi.string().regex(/^[A-Za-z][^0-9]+$/).min(3).max(15)
     .required(),
   email: Joi.string().email().regex(/^.+[.]\w{2,3}$/).required(),
   password: Joi.string().regex(/^[a-zA-Z0-9]{7,15}$/).required(),

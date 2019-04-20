@@ -136,15 +136,6 @@ module.exports = {
 
   /**
  * Find object from database
- * @param {number} value - the value to be matched
- * @return {obj}    - returns a account obj that meets the pararmeters specified
- */
-  findAccountById(Value) {
-    return this.getAccounts().find(field => field.owner === Value);
-  },
-
-  /**
- * Find object from database
  * @param {string} value - the value to be matched
  * @return {array}    - returns an array of account that meets the pararmeters specified
  */

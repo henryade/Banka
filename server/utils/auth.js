@@ -9,7 +9,7 @@ export const generateRandomPassword = () => {
 
 export const generateId = (type) => {
   if (type === "client") {
-    return Math.ceil(Math.random() * 200) + 30000;
+    return Math.ceil(Math.random() * 2000) + 30000;
   }
   if (type === "staff") {
     return Math.ceil(Math.random() * 200) + 20000;
