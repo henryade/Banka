@@ -1,4 +1,6 @@
 import data from "../controllers/dbController";
+import { generateId } from "./auth";
+
 /**
  * Debit or Credit controller
  * @param {number} action - positve for credit, negative for debit
@@ -6,10 +8,11 @@ import data from "../controllers/dbController";
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-export const logic = (action, req, res) => {
-  const account = data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
+ const logic = async (action, req, res) => {
+  const account = await data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
   const amount = parseFloat(req.body.amount);
 
+  console.log(account)
   if (!account) {
     return res.status(400).json({
       status: 400,
@@ -30,32 +33,43 @@ export const logic = (action, req, res) => {
     });
   }
 
-  const newBalance = account.balance + amount * action;
-  const lengthOfTransactionId = 6;
-  const id = Math.floor(Math.random() * lengthOfTransactionId);
-  const createdOn = new Date(Date.now());
+  const newBalance = parseFloat(account.balance) + amount * action;
+  const id = generateId();
+  const createdOn = new Date(Date.now());  
   const type = action === 1 ? "credit" : "debit";
   const depositor = req.body.depositor || "self";
   const phoneNumber = req.body.depositorPhoneNumber || "self";
-  data.updateAccountDB(parseInt(req.params.accountNumber), "balance", newBalance);
+  const cashier = 30594;
 
-  data.createTransaction(
-    id,
-    createdOn,
-    type,
-    req.params.accountNumber,
-    // req.userData.id,
-    amount,
-    account.balance,
-    newBalance,
-    depositor,
-    phoneNumber,
-  );
+  data.updateBalance(newBalance, parseInt(req.params.accountNumber));
+  // console.log(balance);
 
-  const newTransaction = data.findTransactionById(id);
+  let newTransaction = {};
+
+  try {
+    newTransaction = await data.createTransaction(
+      id,
+      createdOn,
+      type,
+      req.params.accountNumber,
+      cashier,
+      amount,
+      parseFloat(account.balance),
+      parseFloat(newBalance),
+      depositor,
+      phoneNumber,
+    );
+  } catch (error) {
+    return res.status(400).json({
+      status: 400,
+      error,
+    })
+  }
+
   return res.status(200).json({
     status: 200,
     data: newTransaction,
   });
 };
 
+export default logic;

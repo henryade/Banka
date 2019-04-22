@@ -61,7 +61,7 @@ module.exports = {
       phoneNumber: check.phoneNumber,
       openingBalance: check.balance,
       type: check.type,
-      gender: check.gender,
+      // gender: check.gender,
     });
     footer(req, res, schema, next);
   },

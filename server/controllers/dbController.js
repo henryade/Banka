@@ -1,4 +1,6 @@
-import db from "../models/database";
+import db from "../models/jsObject/database";
+import dbs from "../models/db/db";
+import { DBQUERY } from "../models/controller";
 
 module.exports = {
 /**
@@ -12,8 +14,9 @@ module.exports = {
  * Gets all accounts
  * @return {obj}    - returns a copy of all accounts
  */
-  getAccounts() {
-    return JSON.parse(JSON.stringify(db.ACCOUNTS));
+  async getAccounts() {
+    return await dbs.getAll(DBQUERY.GETALL.ACCOUNT());
+    // return JSON.parse(JSON.stringify(db.ACCOUNTS));
   },
 
   /**
@@ -57,9 +60,8 @@ module.exports = {
  * Create a User
  * @param {obj} obj - object to be saved
  */
-  createUser(
-    token,
-    id,
+  async createUser(
+    // token,
     firstName,
     lastName,
     email,
@@ -67,17 +69,17 @@ module.exports = {
     type,
     isAdmin,
   ) {
-    const user = {
-      token,
-      id,
+    const user = [
+      // token,
       firstName,
       lastName,
       email,
       password,
       type,
       isAdmin,
-    };
-    this.saveUser(user);
+    ];
+    const res = await dbs.insertTable(DBQUERY.INSERT.USER(user));
+    return res;
   },
 
   /**
@@ -89,7 +91,13 @@ module.exports = {
   findOneUser(Key, Value) {
     return this.getUsers().find(field => field[Key] === Value);
   },
-  
+  async findOwner(email) {
+    const result = await dbs.queryDb(DBQUERY.SELECT.USER.OWNER([email]));
+    if (result) {
+      return result.id;
+    }
+  },
+
   findStaff(Key, Value) {
     return this.getStaff().find(field => field[Key] === Value);
   },
@@ -98,7 +106,7 @@ module.exports = {
  * Create a Account
  * @param {obj} obj - object to be saved
  */
-  createAccount(
+  async createAccount(
     id,
     accountNumber,
     createdOn,
@@ -114,24 +122,26 @@ module.exports = {
     dob,
     address,
   ) {
-    const userAccount = {
+    const userAccount = [
       id,
       accountNumber,
-      createdOn,
       owner,
-      gender,
-      status,
-      firstName,
-      lastName,
-      email,
-      balance,
-      phoneNumber,
-      dob,
-      address,
       type,
-
-    };
-    this.save(userAccount, "ACCOUNTS");
+      createdOn,
+      status,
+      // gender,
+      // firstName,
+      // lastName,
+      // email,
+      balance,
+    // phoneNumber,
+    // dob,
+    // address,
+    ];
+    // [id,accountNumber,owner,type,createdOn,status,balance]
+    const res = await dbs.insertTable(DBQUERY.INSERT.ACCOUNT(userAccount));
+    return res;
+  // this.save(userAccount, "ACCOUNTS");
   },
 
   /**
@@ -139,11 +149,11 @@ module.exports = {
  * @param {string} value - the value to be matched
  * @return {array}    - returns an array of account that meets the pararmeters specified
  */
-findAccountByEmail(Value) {
-  return this.getAccounts().filter(field => field.email === Value);
-},
+  findAccountByEmail(Value) {
+    return this.getAccounts().filter(field => field.email === Value);
+  },
 
-/**
+  /**
  * Find object from database
  * @param {string} key - the value to be matched
  * @param {any} value - the value to be matched
@@ -151,48 +161,54 @@ findAccountByEmail(Value) {
  * @param {any} value1 - the value to be matched
  * @return {obj}    - returns a account obj that meets the pararmeters specified
  */
-findAccount(key, value, key1, value1) {
-  return this.getAccounts().find(field => field[key] === value && field[key1] === value1);
-},
-
+  async findAccount(value1) {
+    const res = await dbs.modifyDb(DBQUERY.SELECT.ACCOUNT.TYPE([value1]));
+    return res;
+    // return this.getAccounts().find(field => field[key] === value && field[key1] === value1);
+  },
   /**
  * Find object from database
  * @param {number} accountNumber - the value to be matched
  * @return {obj}    - returns a account obj that meets the pararmeters specified
  */
-  findAccountByAccountNumber(accountNumber) {
-    return this.getAccounts().find(field => field.accountNumber === accountNumber);
+  async findAccountByAccountNumber(accountNumber) {
+    const response = await dbs.queryDb(DBQUERY.SELECT.ACCOUNT.ACCOUNTNUMBER([accountNumber]));
+    return response;
+    // return this.getAccounts().find(field => field.accountNumber === accountNumber);
   },
 
   /**
  * Create a Transaction
  * @param {obj} obj - object to be saved
  */
-  createTransaction(
+  async createTransaction(
     id,
     createdOn,
     type,
     accountNumber,
-    // cashier,
+    cashier,
     amount,
     oldBalance,
     newBalance,
     depositor,
     phoneNumber,
   ) {
-    const userTransaction = {
+    const userTransaction = [
       id,
-      createdOn,
       type,
       accountNumber,
-      // cashier,
+      cashier,
       amount,
       oldBalance,
       newBalance,
+      createdOn,
       depositor,
       phoneNumber,
-    };
-    this.save(userTransaction, "TRANSACTIONS");
+    ];
+    // [id,type,accountNumber,cashier,amount,oldbalance,newbalance,created_date,depositor_name,depositor_phone_number]
+    const res = await dbs.insertTable(DBQUERY.INSERT.TRANSACTION(userTransaction));
+    return res;
+    // this.save(userTransaction, "TRANSACTIONS");
   },
 
   /**
@@ -200,26 +216,30 @@ findAccount(key, value, key1, value1) {
  * @param {number} value - the value to be matched
  * @return {obj}    - returns a account obj that meets the pararmeters specified
  */
-  findTransactionById(Value) {
-    return this.getTransactions().find(field => field.id === Value);
+  async findTransactionById(id) {
+    const res = await dbs.query(DBQUERY.SELECT.TRANSACTION.ID([id]));
+    return res;
+    // return this.getTransactions().find(field => field.id === Value);
   },
 
-  /**
- * Find object from database
- * @param {number} value - the value to be matched
- * @return {obj}    - returns a account obj that meets the pararmeters specified
- */
-  findTransactionByAccountNumber(Value) {
-    return this.getTransactions().find(field => field.accountNumber === Value);
-  },
+  //   /**
+  //  * Find object from database
+  //  * @param {number} value - the value to be matched
+  //  * @return {obj}    - returns a account obj that meets the pararmeters specified
+  //  */
+  //   findTransactionByAccountNumber(Value) {
+  //     return this.getTransactions().find(field => field.accountNumber === Value);
+  //   },
 
   /**
  * Find objects from database
  * @param {number} value - the value to be matched
  * @return {array}    - returns an array of accounts that meets the pararmeters specified
  */
-  findAllAccountTransactionsByAccountNumber(Value) {
-    return this.getTransactions().filter(obj => obj.accountNumber === Value);
+  async findAllAccountTransactionsByAccountNumber(accountNumber) {
+    const result = await dbs.getAll(DBQUERY.SELECT.TRANSACTION.ACCOUNTNUMBER([accountNumber]));
+    return result;
+    // return this.getTransactions().filter(obj => obj.accountNumber === Value);
   },
 
   /**
@@ -230,15 +250,28 @@ findAccount(key, value, key1, value1) {
   findAllAccountByStatus(Value) {
     return this.getAccounts().filter(obj => obj.status === Value);
   },
+  /**
+ * Find objects from database
+ * @param {string} status - the status to be assigned
+ * @param {number} value - the value to be matched
+ * @return {array}    - returns an array of account that meets the pararmeters specified
+ */
+  async findAccountByStatus(status, accountNumber) {
+    const res = await dbs.modifyDb(DBQUERY.UPDATE.ACCOUNT([status, accountNumber]));
+    return res;
+    // return this.getAccounts().filter(obj => obj.status === Value);
+  },
 
   /**
  * Delete object from database
  * @param {obj} specificAccount - the account obj to be deleted
  */
-  deleteAccount(specificAccount) {
-    const allAccount = db.ACCOUNTS;
-    const index = allAccount.indexOf(specificAccount);
-    allAccount.splice(index, 1);
+  async deleteAccount(specificAccountNumber) {
+    const response = await dbs.modifyDb(DBQUERY.DELETE.ACCOUNT([specificAccountNumber]));
+    return response;
+    // const allAccount = db.ACCOUNTS;
+    // const index = allAccount.indexOf(specificAccount);
+    // allAccount.splice(index, 1);
   },
 
   /**
@@ -264,21 +297,26 @@ findAccount(key, value, key1, value1) {
     const accountToChange = db.ACCOUNTS.find(acc => acc.accountNumber === accountNumber);
     accountToChange[key] = value;
   },
-
   /**
  * Find object from database
- * @param {number} accountNumber - the value to be matched
- * @param {obj} obj - the list of fields to be changed
+ * @param {string} type - the array-object to be updated
+ * @param {obj} account - the aqccount to be updated
+ * @param {any} value - the value to be changed
+ * @param {string} key - the key to be matched
  */
-  // updateTransactionDB(accountNumber, obj) {
-  //   const accountToChange = this.getTransactions().find(acc => acc.accountNumber === accountNumber);
-  //   const account = this.getAccounts().find(acc => acc.accountNumber === parseInt(accountNumber));
-  //   const changes = Object.entries(obj);
-
-  //   for (let i = 0; i < changes.length; i += 1) {
-  //     const [first, last] = changes[i];
-  //     accountToChange[first] = last;
-  //     // if (first === "newBalance") this.updateDB("accounts", account, last, "balance")
-  //   }
+  // updateAccountDB(accountNumber, key, value) {
+  //   const accountToChange = db.ACCOUNTS.find(acc => acc.accountNumber === accountNumber);
+  //   accountToChange[key] = value;
   // },
+  /**
+ * Find object from database
+ * @param {obj} number - the account number of the account to be updated
+ * @param {number} balance - the value to be changed
+ * @param {string} key - the key to be matched
+ */
+  async updateBalance(balance, accountNumber) {
+    const res = await dbs.queryDb(DBQUERY.UPDATE.BALANCE([balance, accountNumber]));
+    return res;
+    // accountToChange[key] = value;
+  },
 };

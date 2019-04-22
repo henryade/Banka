@@ -1,5 +1,5 @@
 import data from "./dbController";
-import { logic } from "../utils/transactionLogic";
+import logic  from "../utils/transactionLogic";
 
 
 /**
@@ -13,8 +13,8 @@ class TransactionController {
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-  static viewAllAccountTransaction(req, res) {
-    const transactions = data.findAllAccountTransactionsByAccountNumber(parseFloat(req.params.accountNumber));
+  static async viewAllAccountTransaction(req, res) {
+    const transactions = await data.findAllAccountTransactionsByAccountNumber(parseInt(req.params.accountNumber));
     if (transactions.length !== 0) {
       return res.status(200).json({
         status: 200,
@@ -33,8 +33,8 @@ class TransactionController {
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-  static viewSpecificTransaction(req, res) {
-    const transaction = data.findTransactionById(Number(req.params.transactionId));
+  static async viewSpecificTransaction(req, res) {
+    const transaction = await data.findTransactionById(Number(req.params.transactionId));
     if (transaction !== undefined) {
       return res.status(200).json({
         status: 200,

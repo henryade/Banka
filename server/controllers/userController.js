@@ -16,11 +16,10 @@ class UserController {
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-  static signin(req, res) {
-    const { User } = req.body;
+  static async signin(req, res) {
+    const { User } = await req.body;
     bcrypt.compare(req.body.password, User.password, (err, response) => {
       if (response) {
-        
         const token = jwt.sign({
           email: User.email,
           id: User.id,
@@ -29,21 +28,15 @@ class UserController {
           type: User.type,
           isAdmin: User.isAdmin,
         }, JWT_KEY);
+        let { password, ...user } = User;
+        user = { token, ...user };
         return res.status(200).json({
           status: 200,
-          data: {
-            token,
-            id: User.id,
-            firstName: User.firstName,
-            lastName: User.lastName,
-            password: User.password,
-            type: User.type,
-            isAdmin: User.isAdmin,
-          },
+          data: user,
         });
       }
       // return res.status(401).json({
-      //   status: 401, 
+      //   status: 401,
       //   error: "Auth failed",
       // });
     });
@@ -56,34 +49,37 @@ class UserController {
    */
 
   static signup(req, res) {
-    bcrypt.hash(req.body.password, salt, (err, hash) => {
-      const id = generateId("client");
-
+    bcrypt.hash(req.body.password, salt, async (err, hash) => {
       const token = jwt.sign({
         email: req.body.email,
-        id,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         type: "client",
         isAdmin: false,
       }, JWT_KEY);
-      data.createUser(token, id, req.body.firstName, req.body.lastName, req.body.email, hash, "client", false);
-      const newUser = data.findOneUser("id", id);
 
-      return res.status(201).json({
-        status: 201,
-        data: {
-          token: newUser.token,
-          id: newUser.id,
-          firstName: newUser.firstName,
-          lastName: newUser.lastName,
-          email: newUser.email,
-          type: newUser.type,
-          isAdmin: newUser.isAdmin,
-        },
-      });
+      let newUser = {};
+      try {
+        newUser = await data.createUser(req.body.firstName, req.body.lastName, req.body.email, hash, "client", false);
+        return res.status(201).json({
+          status: 201,
+          data: newUser,
+        });
+      } catch (error) {
+        // const error = errorr;
+        return res.status(400).json({
+          status: 400,
+          error,
+        });
+      }
     });
   }
+  //     return res.status(201).json({
+  //       status: 201,
+  //       data: newUser,
+  //     });
+  //   });
+  // }
 
   static createUser(req, res) {
     const plainPassword = generateRandomPassword();
