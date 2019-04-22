@@ -1,4 +1,5 @@
 import data from "./dbController";
+import { generateId, generateAccountNumber } from "../utils/auth";
 
 class AccountController {
 /**
@@ -34,27 +35,34 @@ class AccountController {
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-  static createAccount(req, res) {
-    const lengthOfAccountNumber = 6;
-    const bankAccountNumberBranding = 9000000000;
-    const id = Math.ceil(Math.random() * lengthOfAccountNumber);
-    const accountNumber = bankAccountNumberBranding + Math.floor(Math.random() * lengthOfAccountNumber);
+  static async createAccount(req, res) {
+    const id = generateId();
+    const accountNumber = generateAccountNumber();
     const createdOn = new Date(Date.now());
-    const owner = data.findOneUser("email", req.body.email).id;
+    const owner = await data.findOwner(req.body.email);
+    const balance = req.body.openingBalance;
 
-
-    if (data.findAccount("owner", owner, "type", req.body.type)) {
+    if (await data.findAccount(req.body.type)) {
       return res.status(400).json({
         status: 400,
         error: "Account Exists",
       });
     }
-    data.createAccount(id, accountNumber, createdOn, owner, req.body.gender, "active", req.body.firstName, req.body.lastName, req.body.email, req.body.type, req.body.balance, req.body.phoneNumber, req.body.dob, req.body.address);
+    let newAccount = {};
+    try {
+      newAccount = await data.createAccount(id, accountNumber, createdOn, owner, req.body.gender, "active", req.body.firstName, req.body.lastName, req.body.email, req.body.type, balance, req.body.phoneNumber, req.body.dob, req.body.address);
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        error,
+      });
+    }
 
-
+    // data.findAccount("owner", owner, "type", req.body.type)
     res.status(201).json({
       status: 201,
-      data: data.findAccount("owner", owner, "type", req.body.type),
+      // data: await data.findAccount(req.body.type),
+      data: newAccount,
     });
   }
 
@@ -64,13 +72,14 @@ class AccountController {
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-  static changeAccountStatus(req, res) {
+  static async changeAccountStatus(req, res) {
     const accounts = req.account;
+ 
     accounts.status = accounts.status === "active" ? "dormant" : "active";
-    data.updateDB("ACCOUNTS", accounts, accounts.status, "status");
+    const accountUpdate = await data.findAccountByStatus(accounts.status, parseInt(req.params.accountNumber));
     return res.status(200).json({
       status: 200,
-      data: data.findAccountByAccountNumber(accounts.accountNumber),
+      data: accountUpdate,
     });
   }
 
@@ -80,12 +89,12 @@ class AccountController {
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-  static deleteAccount(req, res) {
+  static async deleteAccount(req, res) {
     const specificAccount = req.account;
 
-    data.deleteAccount(specificAccount);
-    const checkAccountData = data.findAccountByAccountNumber(specificAccount);
-    if (!checkAccountData) {
+    const deleted = await data.deleteAccount(parseInt(req.params.accountNumber));
+    
+    if (deleted) {
       return res.status(200).json({
         status: 200,
         message: "Account Successfully Delete",

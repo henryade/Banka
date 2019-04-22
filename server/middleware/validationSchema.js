@@ -28,5 +28,4 @@ module.exports = {
   type: Joi.string().valid(["savings", "current", "fixed", "fixed deposit", "joint"]).lowercase().required(),
   userType: Joi.string().valid(["admin", "staff"]).lowercase().required(),
   status: Joi.string().valid(["active", "dormant", ""]).lowercase(),
-  gender: Joi.string().valid(["M", "F", "MALE", "FEMALE"]).uppercase().required(),
 };
