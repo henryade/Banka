@@ -10,25 +10,25 @@ const router = express.Router();
 // View a  all Account's Transactions //
 // ///////////////////////////
 
-router.get("/accounts/:accountNumber/transactions", transactionData.viewAllAccountTransaction);
+router.get("/accounts/:accountNumber/transactions", isLoggedIn.user, transactionData.viewAllAccountTransaction);
 
 // /////////////////////////////
 // View Specific Transaction //
 // ///////////////////////////
 
-router.get("/transactions/:transactionId", transactionData.viewSpecificTransaction);
+router.get("/transactions/:transactionId", isLoggedIn.user, transactionData.viewSpecificTransaction);
 
 // ///////////////////
 // Debit Account //
 // /////////////////
 
-router.post("/transactions/:accountNumber/debit", validate.debitAccount, transactionData.debitAccount);
+router.post("/transactions/:accountNumber/debit", isLoggedIn.staff, validate.debitAccount, transactionData.debitAccount);
 
 // ///////////////////
 // Credit Account //
 // /////////////////
 
-router.post("/transactions/:accountNumber/credit", validate.creditAccount, transactionData.creditAccount);
+router.post("/transactions/:accountNumber/credit", isLoggedIn.staff, validate.creditAccount, transactionData.creditAccount);
 
 
 module.exports = router;

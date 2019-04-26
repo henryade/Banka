@@ -3,25 +3,23 @@ import chaiHttp from "chai-http";
 import data from "../../controllers/dbController";
 import app from "../../app";
 
-
 chai.use(chaiHttp);
 
 describe("Sign in test", () => {
   const endpoint = "/api/v1/auth/signin";
-  it("should not login a user when there are no parameters", () => {
+  it("should not login a user when there are no parameters", (done) => {
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({})
       .end((err, response) => {
         expect(response).have.a.status(400);
       });
+    done();
   });
 
-  it("should not login a user when the email is missing", () => {
+  it("should not login a user when the email is missing", (done) => {
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
         password: "password",
       })
@@ -29,13 +27,13 @@ describe("Sign in test", () => {
         expect(response).have.a.status(400);
         expect(response.text).to.include("email is required");
       });
+    done();
   });
 
 
-  it("should not login a user when the password is missing", () => {
+  it("should not login a user when the password is missing", (done) => {
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
         email: "user5@gmail.com",
       })
@@ -43,41 +41,41 @@ describe("Sign in test", () => {
         expect(response).have.a.status(400);
         expect(response.text).to.include("password is required");
       });
+    done();
   });
 
-  it("'should login a user when all the parameters are given", () => {
+  it("'should login a user when all the parameters are given", (done) => {
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${data.findOneUser("email", "user1@gmail.com").token}`)
       .send({
-        email: "user1@gmail.com",
+        email: "user5@gmail.com",
         password: "password",
       })
       .end((error, response) => {
         expect(response).have.a.status(200);
         expect(response.body).to.have.property("data");
       });
+    done();
   });
 
-  it("should not login a user with wrong credentials", () => {
+  it("should not login a user with wrong credentials", (done) => {
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
-        email: "user5@gmail.com",
+        email: "user1@gmail.com",
         password: "password",
-        name: "fdkjnjn"
+        name: "fdkjnjn",
       })
       .end((error, response) => {
         expect(response).have.a.status(400);
         expect(response.body.error).to.equal("name is not allowed");
       });
+    done();
   });
 
-  it("should not login a user with wrong credentials-email", () => {
+  it("should not login a user with wrong credentials-email", (done) => {
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
         email: "use@gmail.com",
         password: "password",
@@ -86,11 +84,11 @@ describe("Sign in test", () => {
         expect(response).have.a.status(401);
         expect(response.body.error).to.equal("Auth failed");
       });
+    done();
   });
-  it("should not be able to login with wrong credentials-password", () => {
+  it("should not be able to login with wrong credentials-password", (done) => {
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
         email: "user5@gmail.com",
         password: "pasword",
@@ -99,11 +97,11 @@ describe("Sign in test", () => {
         expect(response).have.a.status(401);
         expect(response.body.error).to.equal("Auth failed");
       });
+    done();
   });
-  it("should generate token", () => {
+  it("should generate token", (done) => {
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
         email: "user5@gmail.com",
         password: "password",
@@ -112,26 +110,27 @@ describe("Sign in test", () => {
         expect(response).have.a.status(200);
         expect(response.body.data).to.have.property("token");
       });
+    done();
   });
-  it("should signin staff", () => {
+  it("should signin staff", (done) => {
     chai.request(app)
       .post(endpoint)
-      // .set("authorization", `Bearer ${data.findOneUser("email", "user5@gmail.com").token}`)
       .send({
         email: "staff5@gmail.com",
-        password: "password",
+        password: "staff0001",
       })
       .end((error, response) => {
         expect(response).have.a.status(200);
         expect(response.body.data).to.have.property("token");
       });
+    done();
   });
 });
 
 
 describe("Sign up test", () => {
   const endpoint = "/api/v1/auth/signup";
-  it("should not signup a user when there are no parameters", () => {
+  it("should not signup a user when there are no parameters", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({})
@@ -139,9 +138,10 @@ describe("Sign up test", () => {
       .end((error, response) => {
         expect(response).have.a.status(400);
       });
+    done();
   });
 
-  it("should not register a user when the email is missing", () => {
+  it("should not register a user when the email is missing", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
@@ -154,9 +154,10 @@ describe("Sign up test", () => {
         expect(response).have.a.status(400);
         expect(response.text).to.include("email is required");
       });
+    done();
   });
 
-  it("should not register a user when the email already exist", () => {
+  it("should not register a user when the email already exist", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
@@ -170,9 +171,10 @@ describe("Sign up test", () => {
         expect(response).have.a.status(400);
         expect(response.body.error).to.equal("email already exist");
       });
+    done();
   });
 
-  it("should not register a user when the password is missing", () => {
+  it("should not register a user when the password is missing", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
@@ -185,9 +187,10 @@ describe("Sign up test", () => {
         expect(response).have.a.status(400);
         expect(response.text).to.include("password is required");
       });
+    done();
   });
 
-  it("should not register a user when the first name is invalid", () => {
+  it("should not register a user when the first name is invalid", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
@@ -201,9 +204,10 @@ describe("Sign up test", () => {
         expect(response).have.a.status(400);
         expect(response.text).to.include("Invalid first name");
       });
+    done();
   });
 
-  it("should not register a user when the last name is invalid", () => {
+  it("should not register a user when the last name is invalid", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
@@ -217,8 +221,9 @@ describe("Sign up test", () => {
         expect(response).have.a.status(400);
         expect(response.text).to.include("Invalid last name");
       });
+    done();
   });
-  it("should not register a user when the first name is missing", () => {
+  it("should not register a user when the first name is missing", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
@@ -231,9 +236,10 @@ describe("Sign up test", () => {
         expect(response).have.a.status(400);
         expect(response.text).to.include("first name is required");
       });
+    done();
   });
 
-  it("should not register a user when the last name is missing", () => {
+  it("should not register a user when the last name is missing", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
@@ -246,9 +252,10 @@ describe("Sign up test", () => {
         expect(response).have.a.status(400);
         expect(response.text).to.include("last name is required");
       });
+    done();
   });
 
-  it("should not register a user when the the passwords dont match", () => {
+  it("should not register a user when the the passwords dont match", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
@@ -262,9 +269,10 @@ describe("Sign up test", () => {
         expect(response).have.a.status(400);
         expect(response.body.error).to.include("confirm password does not match expected value");
       });
+    done();
   });
 
-  it("should not register a user when the confirm password is not given", () => {
+  it("should not register a user when the confirm password is not given", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
@@ -277,22 +285,23 @@ describe("Sign up test", () => {
         expect(response).have.a.status(400);
         expect(response.text).to.include("confirm password is required");
       });
+    done();
   });
 
-  it("'should register a new user when all the parameters are given", () => {
+  it("'should register a new user when all the parameters are given", (done) => {
     chai.request(app)
       .post(endpoint)
       .send({
         firstName: "Forth",
-        lastName: "Desth", 
-        email: "user3@gmail.com",
+        lastName: "Desth",
+        email: "user90@gmail.com",
         password: "password",
         confirmPassword: "password",
       })
       .end((error, response) => {
         expect(response).to.have.status(201);
-        expect(response.body.data).to.have.property("token");
         expect(response.body.data).to.have.property("id");
       });
+    done();
   });
 });

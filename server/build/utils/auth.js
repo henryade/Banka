@@ -12,12 +12,10 @@ var generateRandomPassword = exports.generateRandomPassword = function generateR
   return randomPassword.join("");
 };
 
-var generateId = exports.generateId = function generateId(type) {
-  if (type === "client") {
-    return Math.ceil(Math.random() * 2000) + 30000;
-  }
-  if (type === "staff") {
-    return Math.ceil(Math.random() * 200) + 20000;
-  }
-  return Math.ceil(Math.random() * 200) + 10000;
+var generateAccountNumber = exports.generateAccountNumber = function generateAccountNumber() {
+  var lengthOfAccountNumber = 999999;
+  var bankAccountNumberBranding = 9000000000;
+  var uniqueNumber = bankAccountNumberBranding + Math.floor(Math.random() * lengthOfAccountNumber);
+
+  return uniqueNumber;
 };

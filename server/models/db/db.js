@@ -1,15 +1,14 @@
+    
 import { Pool } from "pg";
 import {
   USER, HOST, PASSWORD, DATABASE, DBPORT,
 } from "../../config";
-import { CREATETABLES, dropTable } from "../controller";
+import { CREATETABLES } from "../controller";
 
 class Model {
   constructor() {
     this.pool = Model.initConn();
-    this.createTable(CREATETABLES.USER);
-    this.createTable(CREATETABLES.ACCOUNT);
-    this.createTable(CREATETABLES.TRANSACTION);
+    this.createTable(CREATETABLES);
     this.pool.on("error", (err) => {
       console.log("Error occured");
     });
@@ -18,7 +17,7 @@ class Model {
     });
   }
 
-   async createTable(type) {
+  async createTable(type) {
     await this.pool.query(type);
   }
 
@@ -44,19 +43,7 @@ class Model {
 
   async deleteTable(table) {
     const queryText = `DELETE FROM ${table}`;
-    await this.pool.query(queryText)
-
-  }
-
-  dropTables(queryText) {
-    this.pool.query(queryText)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        this.pool.end();
-      });
+    await this.pool.query(queryText);
   }
 
   static initConn() {

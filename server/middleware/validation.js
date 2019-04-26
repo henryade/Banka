@@ -53,15 +53,9 @@ module.exports = {
 
   createAccount(req, res, next) {
     const schema = Joi.object().keys({
-      firstName: check.name,
-      lastName: check.name,
       email: check.email,
-      dob: check.dob,
-      address: check.address,
-      phoneNumber: check.phoneNumber,
       openingBalance: check.balance,
       type: check.type,
-      // gender: check.gender,
     });
     footer(req, res, schema, next);
   },
@@ -89,6 +83,17 @@ module.exports = {
     }
     next();
   },
+  email(req, res, next) {
+    const schema = Joi.object().keys({
+      email: check.email,
+    });
+    const result = Joi.validate(req.params, schema);
+    if (result.error) {
+      return customErrors(res, result.error.details[0], result.error.details[0].context.label);
+    }
+    next();
+  },
+
   checkStaff(req, res, next) {
     const schema = Joi.object().keys({
       firstName: check.name,

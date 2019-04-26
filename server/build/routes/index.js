@@ -12,6 +12,10 @@ var _validation = require("../middleware/validation");
 
 var _validation2 = _interopRequireDefault(_validation);
 
+var _authorization = require("../middleware/authorization");
+
+var _authorization2 = _interopRequireDefault(_authorization);
+
 var _dbValidation = require("../middleware/dbValidation");
 
 var _dbValidation2 = _interopRequireDefault(_dbValidation);
