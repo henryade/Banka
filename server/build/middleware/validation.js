@@ -63,15 +63,9 @@ module.exports = {
   },
   createAccount: function createAccount(req, res, next) {
     var schema = _joi2.default.object().keys({
-      firstName: _validationSchema2.default.name,
-      lastName: _validationSchema2.default.name,
       email: _validationSchema2.default.email,
-      dob: _validationSchema2.default.dob,
-      address: _validationSchema2.default.address,
-      phoneNumber: _validationSchema2.default.phoneNumber,
       openingBalance: _validationSchema2.default.balance,
-      type: _validationSchema2.default.type,
-      gender: _validationSchema2.default.gender
+      type: _validationSchema2.default.type
     });
     footer(req, res, schema, next);
   },
@@ -92,6 +86,16 @@ module.exports = {
       status: _validationSchema2.default.status
     });
     var result = _joi2.default.validate(req.query, schema);
+    if (result.error) {
+      return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
+    }
+    next();
+  },
+  email: function email(req, res, next) {
+    var schema = _joi2.default.object().keys({
+      email: _validationSchema2.default.email
+    });
+    var result = _joi2.default.validate(req.params, schema);
     if (result.error) {
       return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
     }

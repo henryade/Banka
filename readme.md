@@ -97,6 +97,7 @@ Project links:
   - https://youtu.be/0D5EEKH97NA
   - https://github.com/hapijs/joi/blob/v14.3.1/API.md
   - https://stackoverflow.com/questions/48720942/node-js-joi-how-to-display-a-custom-error-messages
+  - https://stackoverflow.com/questions/19877246/nodemailer-with-gmail-and-nodejs
 
 ## Licensing
 

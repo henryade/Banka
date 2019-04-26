@@ -13,7 +13,6 @@ import email from "./email";
   const account = await data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
   const amount = parseFloat(req.body.amount);
 
-  console.log(account)
   if (!account) {
     return res.status(400).json({
       status: 400,
@@ -35,21 +34,18 @@ import email from "./email";
   }
 
   const newBalance = parseFloat(account.balance) + amount * action;
-  const id = generateId();
-  const createdOn = new Date(Date.now());  
+   const createdOn = new Date(Date.now());  
   const type = action === 1 ? "credit" : "debit";
   const depositor = req.body.depositor || "self";
   const phoneNumber = req.body.depositorPhoneNumber || "self";
-  const cashier = 30594;
+  const cashier = req.userData.id;
 
   data.updateBalance(newBalance, parseInt(req.params.accountNumber));
-  // console.log(balance);
 
   let newTransaction = {};
 
   try {
     newTransaction = await data.createTransaction(
-      id,
       createdOn,
       type,
       req.params.accountNumber,
@@ -63,7 +59,7 @@ import email from "./email";
   } catch (error) {
     return res.status(400).json({
       status: 400,
-      error,
+      error: "Error Occured",
     })
   }
   const message = {
@@ -84,32 +80,32 @@ import email from "./email";
        <tbody>
          <tr>
            <td style="border:2px solid black;padding:10px;text-align:center;"><strong>Account Number</strong></td>
-           <td style="border:2px solid black;padding:10px;text-align:center;">46576879809</td>
+           <td style="border:2px solid black;padding:10px;text-align:center;">${req.params.accountNumber}</td>
          </tr>
          <tr>
            <td style="border:2px solid black;padding:10px;text-align:center;"><strong>Transaction Location</strong></td>
            <td style="border:2px solid black;padding:10px;text-align:center;">Banka, Lagos</td>
          </tr>
          <tr>
-           <td style="border:2px solid black;padding:10px;text-align:center;"><strong>Description</strong></td>
-           <td style="border:2px solid black;padding:10px;text-align:center;">Over The Counter(OTC)</td>
+           <td style="border:2px solid black;padding:10px;text-align:center;"><strong>Type</strong></td>
+           <td style="border:2px solid black;padding:10px;text-align:center;text-transform:capitalise;">${type}</td>
          </tr>
          <tr>
            <td style="border:2px solid black;padding:10px;text-align:center;"><strong>Amount</strong></td>
-           <td style="border:2px solid black;padding:10px;text-align:center;">N70,000</td>
+           <td style="border:2px solid black;padding:10px;text-align:center;">${amount}</td>
          </tr>
          <tr>
-           <td style="border:2px solid black;padding:10px;text-align:center;"><strong>Date	</strong></td>
+           <td style="border:2px solid black;padding:10px;text-align:center;"><strong>Date</strong></td>
            <td style="border:2px solid black;padding:10px;text-align:center;">20-Mar-2019</td>
          </tr>
        </tbody>
                           </table>                     
                         </div>
-      <div style="background-color:#F5DEB3; padding-top:4px;padding-bottom:4px;border-top:1px solid black;margin-top:25px;">	
-        <p style="padding-left:20px;"><strong>Current Balance <span style="display:inline-block;width:40px;padding-left:20px;"> : </span>N930,000</strong></p>
-        <p style="padding-left:20px;"><strong>Available Balance <span style="display:inline-block;width:40px;padding-left:13px;"> : </span> N929,935</strong></p> </div>
+      <div style="background-color:#F5DEB3;border-top:1px solid black;margin-top:15px;padding-bottom:5px;">
+        <p style="padding-left:20px;"><strong>Old Balance <span style="display:inline-block;width:40px;padding-left:20px;"> : </span>${account.balance}</strong></p>
+        <p style="padding-left:20px;"><strong>New Balance <span style="display:inline-block;width:40px;padding-left:13px;"> : </span>${newBalance}</strong></p> </div>
                          
-    <p style="text-align:center;margin-top:10px;font-size:13px;"><strong>Thank you for choosing Banka Bank plc</strong></p>
+    <p style="text-align:center;margin-top:5px;font-size:13px;"><strong>Thank you for choosing Banka Bank plc</strong></p>
       </div>`,
   }
   email.sendMail(message);
