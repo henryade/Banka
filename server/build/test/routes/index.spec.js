@@ -85,7 +85,7 @@ describe("Sign in test", function () {
   it("should not be able to login with wrong credentials-password", function (done) {
     _chai2.default.request(_app2.default).post(endpoint).send({
       email: "user5@gmail.com",
-      password: "pasword"
+      password: "pasworod"
     }).end(function (error, response) {
       (0, _chai.expect)(response).have.a.status(401);
       (0, _chai.expect)(response.body.error).to.equal("Auth failed");

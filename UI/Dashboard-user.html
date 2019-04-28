@@ -19,17 +19,16 @@
 				<nav id="nav-user">
 					<ul>
 						<li><a href="createAccount.html">Create Account</a></li>
-						<li><a href="transactionHistory.html">View Transaction History</a></li>
 						<li><a href="../index.html">Logout</a></li>
 					</ul>
 				</nav>
 			</div>
 		</header>
-		<section class="dashboard dashboard-seg">
+		<section id="userSection" class="dashboard dashboard-full">
 				<div class="col-9-1 dashboard-full">
 					<aside class="col-1">
 					<div class="profilePic">
-						<a class="normal-link" href="#pop-up8"><img src="images/profile.png" alt="profile" />change picture</a>
+						<a class="normal-link" href="#" onclick="Visibility(8);"><img src="images/profile.png" alt="profile" />change picture</a>
 						<div>
 							<p>Welcome,</p>
 							<p class="capitalize"> Miss Naomi Peter</p>
@@ -37,38 +36,257 @@
 						</div>
 					</div>
 				</aside>
-				<div class="col-9">
-					<h1>Dashboard</h1>
-					<div id="accountDetails">
-						<p class="eachDetail">Account Number: <span>******6754</span></p>
-						<p class="eachDetail">Account Name: <span>Mr. Johnson John</span></p>
-						<p class="eachDetail">Account Type: <span>Savings</span></p>
-						<br />
-						<p class="eachDetail">Current Balance: <span>N402,000</span></p>
-						<p class="eachDetail">Available Balance: <span>N400,000</span></p>
-					</div>
-				</div>
-				<div id="pop-up8" class="pop-up">
-					<div class="pop-upBody">
-						<span class="pop-upSpan"></span>
-						<div>
-							<a class="closePop-up" href="#"><i class="fas fa-times-circle"></i></a>
-							<div>
-								<h3>CHANGE PICTURE</h3>
-								<form action="#">
-									<div class="profilePic">
-										<img src="images/profile.png" alt="profile" />
-										<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
-									</div>
-									<button class="btn btn-md">Submit</button>
-								</form>
+				<div class="col-9 profilePic">
+							<h1>Transaction History</h1>
+							<div >
+								<div class="search">
+									<form action="#pop-up4">
+										<input type="date" name="searchDate" placeholder="From" class="authInput input-ms" required="" />
+										<button class="btn btn-s" id="searchbtn">Search</button>
+									</form>
+								</div>
+								<table>
+									<thead>
+										<tr> 
+											<th colspan="2">Bank Account : 9368329723</th>
+											<th colspan="2">Savings Account</th>
+											<th style="background-color: white"></th>
+											<th colspan="3" style="background-color: white">
+												<div class="pageNumbers">
+													<a href="">&laquo;</a>
+													<a href=""  class="active">1</a>
+													<a class="hide" href="">2</a>
+													<a class="hide" href="">3</a>
+													<a class="hide" href="">4</a>
+													<a href="">&raquo;</a>
+												</div> 
+											</th>	
+										</tr>
+										<tr>
+											<th>Date</th>
+											<th class="hidden">Transaction ID</th>
+											<th>Title</th>
+											<th class="hide">Type</th>
+											<th class="hide">Method</th>
+											<th>Amount</th>
+											<th>Status</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>2019-03-19</td>
+											<td class="hidden">1123830438</td>
+											<td>Sam Samson</td>
+											<td class="hide">Transfer</td>
+											<td class="hide">Mobile</td>
+											<td>N100,000</td>
+											<td>Approved</td>
+											<td><a class="normal-link" href="#pop-up1">View</a></td>
+										</tr>
+										<tr>
+											<td>2019-03-07</td>
+											<td class="hidden">1123830434</td>
+											<td>Sam Samson</td>
+											<td class="hide">Withdrawal</td>
+											<td class="hide">ATM</td>
+											<td>N20,000</td>
+											<td>Cancelled</td>
+											<td><a class="normal-link" href="#pop-up2">View</a></td>
+										</tr>
+										<tr>
+											<td>2019-03-13</td>
+											<td class="hidden">1123813248</td>
+											<td>Daystar Super</td>
+											<td class="hide">Withdrawal</td>
+											<td class="hide">POS</td>
+											<td>N10,000</td>
+											<td>Approved</td>
+											<td><a class="normal-link" href="#pop-up3">View</a></td>
+										</tr>
+										<tr>
+											<td>2019-01-24</td>
+											<td class="hidden">1122430438</td>
+											<td>Sand Stone</td>
+											<td class="hide">Deposit</td>
+											<td class="hide">OTC</td>
+											<td>N700,000</td>
+											<td>Approved</td>
+											<td><a class="normal-link" href="#pop-up4">View</a></td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="">
+										<thead>
+											<tr>
+												<th colspan="2">Bank Account : 9368329723</th>
+												<!-- <th style="background-color: white"></th>	 -->
+												<th colspan="2">Current Account</th>
+												<th style="background-color: white"></th>
+												<th colspan="3" style="background-color: white">
+													<div class="pageNumbers">
+															<a href="">&laquo;</a>
+															<a href=""  class="active">1</a>
+															<a class="hide" href="">2</a>
+															<a class="hide" href="">3</a>
+															<a class="hide" href="">4</a>
+															<a href="">&raquo;</a>
+														</div> 
+													</th>	
+											</tr>
+											<tr>
+												<th>Date</th>
+												<th class="hidden">Transaction ID</th>
+												<th>Title</th>
+												<th class="hide">Type</th>
+												<th class="hide">Method</th>
+												<th>Amount</th>
+												<th>Status</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>2019-03-19</td>
+												<td class="hidden">1123830438</td>
+												<td>Sam Samson</td>
+												<td class="hide">Transfer</td>
+												<td class="hide">Mobile</td>
+												<td>N100,000</td>
+												<td>Approved</td>
+												<td><a class="normal-link" href="#pop-up1">View</a></td>
+											</tr>
+											<tr>
+												<td>2019-03-07</td>
+												<td class="hidden">1123830434</td>
+												<td>Sam Samson</td>
+												<td class="hide">Withdrawal</td>
+												<td class="hide">ATM</td>
+												<td>N20,000</td>
+												<td>Cancelled</td>
+												<td><a class="normal-link" href="#pop-up2">View</a></td>
+											</tr>
+											<tr>
+												<td>2019-03-13</td>
+												<td class="hidden">1123813248</td>
+												<td>Daystar Super</td>
+												<td class="hide">Withdrawal</td>
+												<td class="hide">POS</td>
+												<td>N10,000</td>
+												<td>Approved</td>
+												<td><a class="normal-link" href="#pop-up3">View</a></td>
+											</tr>
+											<tr>
+												<td>2019-01-24</td>
+												<td class="hidden">1122430438</td>
+												<td>Sand Stone</td>
+												<td class="hide">Deposit</td>
+												<td class="hide">OTC</td>
+												<td>N700,000</td>
+												<td>Approved</td>
+												<td><a class="normal-link" href="#pop-up4">View</a></td>
+											</tr>
+										</tbody>
+									</table>
 							</div>
+							<div id="pop-up1" class="pop-up">
+								<div class="pop-upBody">
+									<span class="pop-upSpan"></span>
+									<div>
+										<a class="closePop-up" href="#"><i class="fas fa-times-circle"></i></a>
+										<div>
+											<p>Date: 2019-03-19</p>
+											<p>Transaction ID: 1123830438</p>
+											<p>From: Mr. Johnson John | ******6754</p>
+											<p>Beneficiary: Sam Samson</p>
+											<p>Address: N/A</p>
+											<p>Type: Transfer</p>
+											<p>Method: Mobile</p>
+											<p>Amount: N100,000</p>
+											<p>Status: Successful</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="pop-up2" class="pop-up">
+								<div class="pop-upBody">
+									<span class="pop-upSpan"></span>
+									<div>
+										<a class="closePop-up" href="#"><i class="fas fa-times-circle"></i></a>
+										<div>
+											<p>Date: 2019-03-07</p>
+											<p>Transaction ID: 1123830434</p>
+											<p>From: Mr. Johnson John | ******6754</p>
+											<p>Beneficiary: Sam Samson</p>
+											<p>Address: Banka, Anthony, Lagos</p>
+											<p>Type: Withdrawal</p>
+											<p>Method: ATM</p>
+											<p>Amount: N20,000</p>		
+											<p>Status: UnSuccessful</p>		
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="pop-up3" class="pop-up">
+								<div class="pop-upBody">
+									<span class="pop-upSpan"></span>
+									<div>
+										<a class="closePop-up" href="#"><i class="fas fa-times-circle"></i></a>
+										<div>
+											<p>Date: 2019-03-13</p>
+											<p>Transaction ID: 1123813248</p>
+											<p>From: Mr. Johnson John | ******6754</p>
+											<p>Beneficiary: Daystar Supermarket</p>
+											<p>Address: Yaba, Lagos</p>
+											<p>Type: Withdrawal</p>
+											<p>Method: POS</p>
+											<p>Amount: N10,000</p>
+											<p>Status: Successful</p>		
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="pop-up4" class="pop-up">
+								<div class="pop-upBody">
+									<span class="pop-upSpan"></span>
+									<div>
+										<a class="closePop-up" href="#"><i class="fas fa-times-circle"></i></a>
+										<div>
+											<p>Date: 2019-01-24</p>
+											<p>Transaction ID: 1122430438</p>
+											<p>From: Mr. Johnson John | ******6754</p>
+											<p>Beneficiary: Sand Stone</p>
+											<p>Address: Banka, Anthony, Lagos</p>
+											<p>Type: Deposit</p>
+											<p>Method: OTC</p>
+											<p>Amount: N700,000</p>
+											<p>Status: Successful</p>		
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+			</div>
+			<div id="pop-up8" class="pop-up">
+				<div class="pop-upBody">
+					<span class="pop-upSpan"></span>
+					<div>
+						<a class="closePop-up" href="#" onclick="Visibility(8);"><i class="fas fa-times-circle"></i></a>
+						<div>
+							<h3>CHANGE PICTURE</h3>
+							<form action="#">
+								<div class="profilePic">
+									<img src="images/profile.png" alt="profile" />
+									<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
+								</div>
+								<button onclick="Visibility(8);" class="btn btn-md">Submit</button>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-		<footer>
+		<footer class="adjust-footer">
 			&copy; 2019 Banka Plc. All Rights Reserved.
 		</footer>
 		<script type="text/javascript" src="scripts/index.js"></script>

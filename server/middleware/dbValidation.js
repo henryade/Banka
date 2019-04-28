@@ -43,7 +43,6 @@ module.exports = {
     try {
       req.body.datafield = await data.getAccounts([req.query.status]);
     } catch (err) {
-      console.log(err);
     }
     next();
   },
