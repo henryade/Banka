@@ -19,7 +19,7 @@ const logic = (req, res, next) => {
     return customErrors(res, result.error.details[0], result.error.details[0].context.label);
   }
   next();
-}
+};
 
 const transactionLogic = (req, res, next) => {
   const schema = Joi.object().keys({
@@ -28,7 +28,7 @@ const transactionLogic = (req, res, next) => {
     depositorPhoneNumber: check.phoneNumber,
   });
   footer(req, res, schema, next);
-}
+};
 
 module.exports = {
   signUp(req, res, next) {
@@ -94,6 +94,17 @@ module.exports = {
     next();
   },
 
+  transaction(req, res, next) {
+    const schema = Joi.object().keys({
+      transactionId: check.cashier,
+    });
+    const result = Joi.validate(req.params, schema);
+    if (result.error) {
+      return customErrors(res, result.error.details[0], result.error.details[0].context.label);
+    }
+    next();
+  },
+
   checkStaff(req, res, next) {
     const schema = Joi.object().keys({
       firstName: check.name,
@@ -106,6 +117,6 @@ module.exports = {
       return customErrors(res, result.error.details[0], result.error.details[0].context.label);
     }
     next();
-  }
+  },
 
 };

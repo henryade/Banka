@@ -6,9 +6,10 @@
     "scripts": {
       "lint": "eslint server/index.js --fix",
       "build": "babel server/build/index.js --out-dir build",
-      "start": "node --require babel-polyfill server/build/index.js",
+      "start": "babel-node server/models/controller/populate && node --require babel-polyfill server/build/index.js",
       "test": "nyc --require babel-polyfill mocha server/build/test/**/*.spec.js --exit",
-      "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
+      "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov",
+      "heroku-postbuild": "npm run build && babel-node server/models/controller/populate"
     },
     "author": "Adeola Adeyemo",
     "license": "ISC",

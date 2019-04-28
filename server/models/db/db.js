@@ -1,20 +1,20 @@
     
 import { Pool } from "pg";
-import {
-  USER, HOST, PASSWORD, DATABASE, DBPORT,
-} from "../../config";
-import { CREATETABLES } from "../controller";
+import dotenv from "dotenv";
+
+dotenv.config();
+// import { CREATETABLES } from "../controller";
 
 class Model {
   constructor() {
     this.pool = Model.initConn();
-    this.createTable(CREATETABLES);
-    this.pool.on("error", (err) => {
-      console.log("Error occured");
-    });
-    this.pool.on("connect", (err) => {
-      console.log("connection successful");
-    });
+    // this.createTable(CREATETABLES);
+    // this.pool.on("error", (err) => {
+    //   console.log("Error occured");
+    // });
+    // this.pool.on("connect", (err) => {
+    //   console.log("connection successful");
+    // });
   }
 
   async createTable(type) {
@@ -48,11 +48,13 @@ class Model {
 
   static initConn() {
     const pool = new Pool({
-      user: USER,
-      host: HOST,
-      password: PASSWORD,
-      database: DATABASE,
-      port: DBPORT,
+      user: process.env.USER,
+      host: process.env.HOST,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
+      port: process.env.DBPORT,
+    }) || new Pool({
+      connectionString: process.env.DATABASE_URL,
     });
     return pool;
   }
