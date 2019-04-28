@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { JWT_KEY } from "../config";
 import data from "./dbController";
 import { generateRandomPassword } from "../utils/auth";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const salt = 10;
 
@@ -19,12 +21,18 @@ class UserController {
   static signin(req, res) {
     bcrypt.compare(req.body.password, req.body.User.password, (err, response) => {
       if (response) {
-        const token = jwt.sign(req.body, JWT_KEY);
-        const { password, ...user } = req.body;
-        const User = { token, ...user };
+        const token = jwt.sign({
+          firstName: req.body.User.firstName,
+          lastName: req.body.User.lastName,
+          email: req.body.User.email,
+          type: req.body.User.type,
+          isAdmin: req.body.User.isAdmin,
+        }, process.env.JWT_KEY);
+        const { password, ...user } = req.body.User;
         return res.status(200).json({
           status: 200,
-          data: User,
+          data: { token, ...user },
+
         });
       }
       return res.status(401).json({
@@ -44,7 +52,7 @@ class UserController {
     bcrypt.hash(req.body.password, salt, async (err, hash) => {
       let newUser = {};
       try {
-        newUser = await data.createUser(req.body.firstName, req.body.lastName, req.body.email, hash, "client", false);
+        newUser = await data.createUser(req.body.firstName.replace(/\s/g,""), req.body.lastName.replace(/\s/g,""), req.body.email, hash, "client", false);
         return res.status(201).json({
           status: 201,
           data: newUser,

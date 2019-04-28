@@ -13,7 +13,7 @@ var month = 12;
 var year = currentDate.getFullYear() - minimumAge;
 
 module.exports = {
-  name: _joi2.default.string().regex(/^[A-Za-z][^0-9]+$/).min(3).max(15).required(),
+  name: _joi2.default.string().regex(/^[A-Za-z][^0-9]+$/).min(3).max(25).required(),
   email: _joi2.default.string().email().regex(/^.+[.]\w{2,3}$/).required(),
   password: _joi2.default.string().regex(/.{7,}$/).required(),
   confirmPassword: _joi2.default.any().valid(_joi2.default.ref("password")).required(),

@@ -84,8 +84,8 @@ module.exports = {
           message: "Not Authorized To Access this Site",
         });
       }
-
       if (req.params.email) {
+        
         if (req.params.email !== decoded.email) {
           return res.status(401).json({
             message: "UnAuthorized User",

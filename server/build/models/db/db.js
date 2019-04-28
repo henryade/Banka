@@ -15,15 +15,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Model = function () {
   function Model() {
     _classCallCheck(this, Model);
-
     this.pool = Model.initConn();
     this.createTable(_controller.CREATETABLES);
-    this.pool.on("error", function (err) {
-      console.log("Error occured");
-    });
-    this.pool.on("connect", function (err) {
-      console.log("connection successful");
-    });
   }
 
   _createClass(Model, [{

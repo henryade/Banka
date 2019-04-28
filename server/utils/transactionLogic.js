@@ -50,7 +50,7 @@ import email from "./email";
       type,
       req.params.accountNumber,
       cashier,
-      amount,
+      parseFloat(amount),
       parseFloat(account.balance),
       parseFloat(newBalance),
       depositor,
