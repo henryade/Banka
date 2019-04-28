@@ -1,6 +1,8 @@
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
+import jwt from "jsonwebtoken";
 import app from "../../app";
+import data from "../../controllers/dbController";
 
 chai.use(chaiHttp);
 
@@ -10,69 +12,94 @@ const wrongAccount = 900013432;
 const wrongAccount2 = 9000134392;
 const wrongAccount1 = 900013439201;
 
-describe("View all bank account test", () => {
-  it("should return all accounts in the database", () => {
-    chai.request(app)
-      .get(`/api/v1/accounts`)
+let token = null;
+let token2 = null;
 
+before(() => {
+  token = jwt.sign({
+    email: "staff5@gmail.com",
+    password: "staff0001",
+    type: "staff",
+    isAdmin: false,
+  }, process.env.JWT_KEY);
+
+  token2 = jwt.sign({
+    email: "user5@gmail.com",
+    password: "password",
+    type: "client",
+    isAdmin: false,
+  }, process.env.JWT_KEY);
+});
+
+
+describe("View all bank account test", () => {
+  it("should return all accounts in the database", (done) => {
+    chai.request(app)
+      .get("/api/v1/accounts")
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(200);
         expect(response.body.data).to.be.an("array");
         expect(response.body.data[0]).to.be.an("object");
       });
+    done();
   });
 });
 
 describe("View all bank account query test", () => {
-  it("should return all active accounts in the database", () => {
+  it("should return all active accounts in the database", (done) => {
     chai.request(app)
-      .get(`/api/v1/accounts?status=active`)
+      .get("/api/v1/accounts?status=active")
+      .set("authorization", `Bearer ${token}`)
+      .end((err, response) => {
+        expect(response).to.have.status(200);
+        // expect(response.body.data).to.be.an("array");
+        // expect(response.body.data[0]).to.be.an("object");
+        // expect(response.body.data[0].status).to.equal("active");
+      });
+    done();
+  });
 
+  it("should return all dormant accounts in the database", (done) => {
+    chai.request(app)
+      .get("/api/v1/accounts?status=dormant")
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(200);
         expect(response.body.data).to.be.an("array");
         expect(response.body.data[0]).to.be.an("object");
-        expect(response.body.data[0].status).to.equal("active");
       });
+    done();
   });
 
-  it("should return all dormant accounts in the database", () => {
+  it("should throw error", (done) => {
     chai.request(app)
-      .get(`/api/v1/accounts?status=dormant`)
-
-      .end((err, response) => {
-        expect(response).to.have.status(200);
-        expect(response.body.data).to.be.an("array");
-        expect(response.body.data[0]).to.be.an("object");
-      });
-  });
-
-  it("should throw error", () => {
-    chai.request(app)
-      .get(`/api/v1/accounts?status=acive`)
-
+      .get("/api/v1/accounts?status=acive")
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(404);
         expect(response.body.error).to.equal("Invalid status");
       });
+    done();
   });
 
-  it("should throw error", () => {
+  it("should throw error", (done) => {
     chai.request(app)
-      .get(`/api/v1/accounts?id=active`)
-
+      .get("/api/v1/accounts?id=active")
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("id is not allowed");
       });
+    done();
   });
 });
 
 describe("View specific bank account test", () => {
-  it("should return a specific account in the database", () => {
+  it("should return a specific account in the database", (done) => {
     chai.request(app)
       .get(`/api/v1/accounts/${activeAccount}`)
-
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(200);
         expect(response.body.data).to.be.an("object");
@@ -83,59 +110,61 @@ describe("View specific bank account test", () => {
         expect(response.body.data).to.have.property("createdOn");
         expect(response.body.data).to.have.property("balance");
       });
+    done();
   });
 
-  it("should throw an error if the account isnt in the database", () => {
+  it("should throw an error if the account isnt in the database", (done) => {
     chai.request(app)
       .get(`/api/v1/accounts/${wrongAccount}`)
-
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Invalid account number");
+        expect(response).to.have.status(404);
+        expect(response.body.error).to.equal("Account Not Found");
       });
+    done();
   });
 
-  it("should throw an error if the account isnt in the database", () => {
+  it("should throw an error if the account isnt in the database", (done) => {
     chai.request(app)
       .get(`/api/v1/accounts/${wrongAccount2}`)
-
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Invalid account number");
+        expect(response).to.have.status(404);
+        expect(response.body.error).to.equal("Account Not Found");
       });
+    done();
   });
 
-  it("should throw an error if the account isnt in the database", () => {
+  it("should throw an error if the account isnt in the database", (done) => {
     chai.request(app)
       .get(`/api/v1/accounts/${wrongAccount1}`)
-
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Invalid account number");
+        expect(response).to.have.status(404);
+        expect(response.body.error).to.equal("Account Not Found");
       });
+    done();
   });
 });
 
 describe("Create Account test", () => {
   const endpoint = "/api/v1/accounts";
-  it("should not create a user when there are no parameters", () => {
+  it("should not create a user when there are no parameters", (done) => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${token2}`)
       .send({})
       .end((err, response) => {
         expect(response).have.a.status(400);
       });
+    done();
   });
 
-  it("should not create a user account if the email is missing", () => {
+  it("should not create a user account if the email is missing", (done) => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${token2}`)
       .send({
-        firstName: "Second",
-        lastName: "Nme",
-        phoneNumber: "2348064372423",
-        dob: "1991-05-12",
-        address: "11 Banka str., Andela, Lagos, Nigeria",
         type: "Savings",
         openingBalance: 400000.34,
       })
@@ -144,113 +173,15 @@ describe("Create Account test", () => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("email is required");
       });
+    done();
   });
 
-  it("should not create a user account if the phone number is missing", () => {
+  it("should not create a user account if the account type is missing", (done) => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${token2}`)
       .send({
-        firstName: "Second",
-        lastName: "Nme",
         email: "user1@gmail.com",
-        dob: "1991-05-12",
-        address: "11 Banka str., Andela, Lagos, Nigeria",
-        type: "Savings",
-        openingBalance: 400000.34,
-      })
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("phone number is required");
-      });
-  });
-
-  it("should not create a user account if the first name is missing", () => {
-    chai.request(app)
-      .post(endpoint)
-      .send({
-        lastName: "Nme",
-        email: "user1@gmail.com",
-        phoneNumber: "2348064372423",
-        dob: "1991-05-12",
-        address: "11 Banka str., Andela, Lagos, Nigeria",
-        type: "Savings",
-        openingBalance: 400000.34,
-      })
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("first name is required");
-      });
-  });
-
-  it("should not create a user account if the last name is missing", () => {
-    chai.request(app)
-      .post(endpoint)
-      .send({
-        firstName: "Second",
-        email: "user1@gmail.com",
-        phoneNumber: "2348064372423",
-        dob: "1991-05-12",
-        address: "11 Banka str., Andela, Lagos, Nigeria",
-        type: "Savings",
-        openingBalance: 400000.34,
-      })
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("last name is required");
-      });
-  });
-
-  it("should not create a user account if the date of birth is missing", () => {
-    chai.request(app)
-      .post(endpoint)
-      .send({
-        firstName: "Second",
-        lastName: "Nme",
-        email: "user1@gmail.com",
-        phoneNumber: "2348064372423",
-        address: "11 Banka str., Andela, Lagos, Nigeria",
-        type: "Savings",
-        openingBalance: 400000.34,
-      })
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("date of birth is required");
-      });
-  });
-
-  it("should not create a user account if the address is missing", () => {
-    chai.request(app)
-      .post(endpoint)
-      .send({
-        firstName: "Second",
-        lastName: "Nme",
-        email: "user1@gmail.com",
-        phoneNumber: "2348064372423",
-        dob: "1991-05-12",
-        type: "Savings",
-        openingBalance: 400000.34,
-      })
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("address is required");
-      });
-  });
-
-  it("should not create a user account if the account type is missing", () => {
-    chai.request(app)
-      .post(endpoint)
-      .send({
-        firstName: "Second",
-        lastName: "Nme",
-        email: "user1@gmail.com",
-        phoneNumber: "2348064372423",
-        dob: "1991-05-12",
-        address: "11 Banka str., Andela, Lagos, Nigeria",
         openingBalance: 400000.34,
       })
 
@@ -258,18 +189,15 @@ describe("Create Account test", () => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("type is required");
       });
+    done();
   });
 
-  it("should not create a user account if the opening balance is missing", () => {
+  it("should not create a user account if the opening balance is missing", (done) => {
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${token2}`)
       .send({
-        firstName: "Second",
-        lastName: "Nme",
         email: "user1@gmail.com",
-        phoneNumber: "2348064372423",
-        dob: "1991-05-12",
-        address: "11 Banka str., Andela, Lagos, Nigeria",
         type: "Savings",
       })
 
@@ -277,129 +205,35 @@ describe("Create Account test", () => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("opening balance is required");
       });
-  });
-  it("should create a user account if all credentials are given", () => {
-    const payload = {
-      firstName: "Second",
-      lastName: "Nme",
-      email: "user1@gmail.com",
-      openingBalance: 400040.34,
-      phoneNumber: "2348064372423",
-      dob: "1991-05-12",
-      address: "11 Banka str., Andela, Lagos, Nigeria",
-      type: "Savings",
-    };
-    chai.request(app)
-      .post(endpoint)
-      .send(payload)
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("gender is required");
-      });
+    done();
   });
 
-  it("should not create accounts if gender is empty", () => {
+  it("should not create accounts if email is invalid", (done) => {
     const payload = {
-      firstName: "Second",
-      lastName: "Nme",
-      email: "uebek@jntgrj.com",
-      openingBalance: 40000040.34,
-      phoneNumber: "2348067870423",
-      dob: "1991-05-12",
-      address: "11 Banka str., Andela, Lagos, Nigeria",
-      type: "Current",
-      gender: ""
-    };
-    chai.request(app)
-      .post(endpoint)
-      .send(payload)
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Invalid opening balance");
-  });
-});
-
-  it("should not create accounts if gender is empty", () => {
-    const payload = {
-      firstName: "Second",
-      lastName: "Nme",
-      email: "uebek@jntgrj.com",
-      openingBalance: 400040.34,
-      phoneNumber: "2348064372423",
-      dob: "1991-05-12",
-      address: "11 Banka str., Andela, Lagos, Nigeria",
-      type: "Current",
-      gender: ""
-    };
-    chai.request(app)
-      .post(endpoint)
-      .send(payload)
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("gender should not be empty");
-  });
-});
-
-  it("should not create accounts if email is invalid", () => {
-    const payload = {
-      firstName: "Second",
-      lastName: "Nme",
       email: "hyrgms.com",
       openingBalance: 400040.34,
-      phoneNumber: "2348064372423",
-      dob: "1991-05-12",
-      address: "11 Banka str., Andela, Lagos, Nigeria",
       type: "Current",
-      gender: "M"
     };
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${token2}`)
       .send(payload)
-
       .end((err, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Invalid email");
+      });
+    done();
   });
-});
 
-  it("should not create accounts with same type", () => {
+  it("should create a user account if all credentials are given", (done) => {
     const payload = {
-      firstName: "Second",
-      lastName: "Nme",
-      email: "user1@gmail.com",
       openingBalance: 400040.34,
-      phoneNumber: "2348064372423",
-      dob: "1991-05-12",
-      address: "11 Banka str., Andela, Lagos, Nigeria",
-      type: "Current",
-      gender: "M"
-    };
-    chai.request(app)
-      .post(endpoint)
-      .send(payload)
-
-      .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Account Exists");
-  });
-});
-  it("should create a user account if all credentials are given", () => {
-    const payload = {
-      firstName: "Second",
-      lastName: "Nme",
-      email: "user1@gmail.com",
-      openingBalance: 400040.34,
-      phoneNumber: "2348064372423",
-      dob: "1991-05-12",
-      address: "11 Banka str., Andela, Lagos, Nigeria",
+      email: "user5@gmail.com",
       type: "Savings",
-      gender: "M",
     };
     chai.request(app)
       .post(endpoint)
+      .set("authorization", `Bearer ${token2}`)
       .send(payload)
 
       .end((err, response) => {
@@ -412,91 +246,102 @@ describe("Create Account test", () => {
         expect(response.body.data).to.have.property("id");
         expect(response.body.data).to.have.property("status");
         expect(response.body.data).to.have.property("createdOn");
-        expect(response.body.data).to.have.property("gender");
       });
+    done();
   });
 });
 
 describe("Activate account test", () => {
-  it("should activate an user account if account is dormant", () => {
+  it("should activate an user account if account is dormant", (done) => {
     chai.request(app)
       .patch(`/api/v1/accounts/${dormantAccount}`)
-
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(200);
         expect(response.body.data.status).to.equal("active");
       });
+    done();
   });
 
-  it("should not activate if account number is invalid", () => {
+  it("should not activate if account number is invalid", (done) => {
     chai.request(app)
       .patch(`/api/v1/accounts/${wrongAccount}`)
-
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Invalid account number");
       });
+    done();
   });
 
-  it("should not activate if account number is invalid", () => {
+  it("should not activate if account number is invalid", (done) => {
     chai.request(app)
       .patch(`/api/v1/accounts/${wrongAccount2}`)
-
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Invalid account number");
+        expect(response).to.have.status(404);
+        expect(response.body.error).to.equal("Account Not Found");
       });
+    done();
   });
 });
 
 describe("Deactivate account test", () => {
-  it("should deactivate a user account if account is active", () => {
+  it("should deactivate a user account if account is active", (done) => {
     chai.request(app)
       .patch(`/api/v1/accounts/${activeAccount}`)
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(200);
         expect(response.body.data.status).to.equal("dormant");
       });
+    done();
   });
 
-  it("should not deactivate if account number is invalid", () => {
+  it("should not deactivate if account number is invalid", (done) => {
     chai.request(app)
       .patch(`/api/v1/accounts/${wrongAccount}`)
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Invalid account number");
       });
+    done();
   });
 
-  it("should not deactivate if account number is invalid", () => {
+  it("should not deactivate if account number is invalid", (done) => {
     chai.request(app)
       .patch(`/api/v1/accounts/${wrongAccount2}`)
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Invalid account number");
+        expect(response).to.have.status(404);
+        expect(response.body.error).to.equal("Account Not Found");
       });
+    done();
   });
 });
 
 describe("Delete account test", () => {
-  it("should do nothing if user account is not found", () => {
+  it("should do nothing if user account is not found", (done) => {
     chai.request(app)
       .delete(`/api/v1/accounts/${wrongAccount}`)
-
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Invalid account number");
       });
+    done();
   });
 
-  it("should delete a user account if account is found", () => {
+  it("should delete a user account if account is found", (done) => {
     chai.request(app)
       .delete(`/api/v1/accounts/${dormantAccount}`)
-
+      .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(200);
 
         expect(response.body.message).to.equal("Account Successfully Delete");
       });
+    done();
   });
 });

@@ -3,7 +3,6 @@ import userData from "../controllers/userController";
 import checks from "../middleware/dbValidation";
 import isLoggedIn from "../middleware/authorization";
 import validate from "../middleware/validation";
-import UserController from "../controllers/userController";
 
 const router = express.Router();
 
@@ -11,12 +10,12 @@ const router = express.Router();
 // View all Account Owned by a Specific User //
 // ///////////////////////////////////////////
 
-router.get("/user/:email/accounts", checks.email, userData.getAccounts);
+router.get("/user/:email/accounts",isLoggedIn.user, validate.email, checks.email, userData.getAccounts);
 
 // ////////////////
 // Create Staff //
 // //////////////
 
-router.post("/users", validate.checkStaff, checks.checkStaff, userData.createUser);
+router.post("/users", isLoggedIn.admin, validate.checkStaff, checks.checkStaff, userData.createUser);
 
 export default router;

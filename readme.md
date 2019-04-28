@@ -90,6 +90,8 @@ npm start -----------To run production ready app
 Project links:
 - Project homepage: https://henryade.github.io/Banka/
 - Repository: https://github.com/henryade/Banka
+- Heroku Deployment: https://bankaproject.herokuapp.com/
+- Pivotal Tracker User Stories: https://www.pivotaltracker.com/n/projects/2320074
 
   - In case of sensitive bugs like security vulnerabilities, please contact
     clasiqaas@email.com directly.
@@ -97,6 +99,7 @@ Project links:
   - https://youtu.be/0D5EEKH97NA
   - https://github.com/hapijs/joi/blob/v14.3.1/API.md
   - https://stackoverflow.com/questions/48720942/node-js-joi-how-to-display-a-custom-error-messages
+  - https://stackoverflow.com/questions/19877246/nodemailer-with-gmail-and-nodejs
 
 ## Licensing
 

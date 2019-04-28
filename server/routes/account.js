@@ -10,30 +10,30 @@ const router = express.Router();
 // View All Account //
 // /////////////////
 
-router.get("/accounts", validate.allAccount, checks.db, accountData.viewAllAccount)
+router.get("/accounts", isLoggedIn.staff_admin, validate.allAccount, checks.db, accountData.viewAllAccount);
 
 // /////////////////////////
 // View specific Account //
 // ///////////////////////
 
-router.get("/accounts/:accountNumber", checks.accountCheck, accountData.viewSpecificAccount)
+router.get("/accounts/:accountNumber", isLoggedIn.staff_admin, checks.accountCheck, accountData.viewSpecificAccount);
 
 // ///////////////////
 // Create Account //
 // /////////////////
 
-router.post("/accounts", validate.createAccount, accountData.createAccount);
+router.post("/accounts", validate.createAccount, isLoggedIn.user, accountData.createAccount);
 
 // ////////////////////////////////
 // Activate/Deactivate Account //
 // //////////////////////////////
 
-router.patch("/accounts/:accountNumber", validate.changeAccountStatus, checks.accountCheck, accountData.changeAccountStatus);
+router.patch("/accounts/:accountNumber", isLoggedIn.staff_admin, validate.changeAccountStatus, checks.accountCheck, accountData.changeAccountStatus);
 
 // ////////////////////////
- /// Delete Account ///
+// // Delete Account //////
 // //////////////////////
 
-router.delete("/accounts/:accountNumber", validate.deleteAccount, checks.accountCheck, accountData.deleteAccount);
+router.delete("/accounts/:accountNumber", isLoggedIn.staff_admin, validate.deleteAccount, checks.accountCheck, accountData.deleteAccount);
 
-module.exports = router;
+export default router;

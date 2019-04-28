@@ -12,9 +12,87 @@ const transactType = document.getElementById("transactType");
 const transactAmount = document.getElementById("transactAmount");
 const emailNotification = document.getElementById("emailNotification");
 const transactbtn = document.getElementById("transactbtn");
+const signUpModal = document.getElementById("signUpModal");
+const signInModal = document.getElementById("signInModal");
+const closeSignUp = document.getElementById("closeSignUp");
+const resetPassword = document.getElementById("resetPassword");
+const closeReset = document.getElementById("closeReset");
+const signInBtn = document.getElementById("signInBtn");
+const signUpBtn = document.getElementById("signUpBtn");
+const transactionPopUp = document.getElementById("pop-uptransaction");
+const arr = [signUpModal, signInModal, resetPassword]
+
 
 const path = window.location.href;
-const fileName = path.slice(path.lastIndexOf("/") + 1);
+const fileName = path.slice(path.lastIndexOf("/") + 1, path.indexOf("?"));
+
+const checkUser = (a) => {
+	a.href = `Dashboard-${localStorage.getItem("user").toLowerCase()}.html`;
+}
+const Visibility = (a) => {
+	document.getElementById("pop-up"+a).classList.toggle("makeVisible")
+}
+
+if(fileName === "index.html"){
+	username.addEventListener("click", () => {
+		credentials.style.display = "none";
+		username.value = "";
+		password.value = "";
+	})
+		signInBtn.addEventListener("click", () => {
+	transactions.classList.add("current-auth")
+	signInBtn.classList.remove("current-auth")
+});
+	signUpBtn.addEventListener("click", () => {
+	signInBtn.classList.add("current-auth")
+	signUpBtn.classList.remove("current-auth")
+});
+}
+if(fileName ==="Dashboard-user.html"){
+	toggleUser.addEventListener("click", (e) => {
+		e.preventDefault();
+		if(navUser.style.display == "none") navUser.style.display = "block";
+		else navUser.style.display = "none";
+	})
+}
+
+const transaction = () => {
+	
+	transactionPopUp.classList.add("makeVisible");
+}
+const closetransaction = () => {
+	transactionPopUp.classList.remove("makeVisible");
+}
+
+const signIn = () => {
+	signInModal.style.display = "block";
+	signUpModal.style.display = "none";
+}
+const signUp = () => {
+	signInModal.style.display = "none";
+	signUpModal.style.display = "block";
+}
+
+const resetPasswordfn = () => {
+	signInModal.style.visibility = "hidden";
+	resetPassword.style.display = "block";
+
+}
+const close = (e) => {
+
+	if(arr.indexOf(e.target) !== -1)
+	return e.target.style.display="none";
+}
+
+
+window.addEventListener("click", close);
+closeReset.addEventListener("click", () => {
+	resetPassword.style.display = "none";
+	signInModal.style.visibility = "visible";
+	signInModal.style.display = "none";
+});
+
+
 
 if(fileName !== "Dashboard-user.html"){
 	toggle.addEventListener("click", (e) => {
@@ -26,19 +104,37 @@ if(fileName !== "Dashboard-user.html"){
 
 const selectUser = (submit) => {
 	localStorage.setItem("user", username.value);
-	if(username.value.toLowerCase() === "admin") submit.action = "Dashboard-admin.html";
-	else if (username.value.toLowerCase() === "staff") submit.action = "Dashboard-staff.html";
-	else if (username.value.toLowerCase() === "user") submit.action = "Dashboard-user.html";
+	if(username.value.toLowerCase() === "admin") submit.action = "UI/Dashboard-admin.html";
+	else if (username.value.toLowerCase() === "staff") submit.action = "UI/Dashboard-staff.html";
+	else if (username.value.toLowerCase() === "user") submit.action = "UI/Dashboard-user.html";
 	else credentials.style.display = "block";
 }
 
 
 const loadAcc = () => {
 	accountInformation.innerHTML = `
-	<form id="flex-form" action="#pop-up9">
+	<div>
+		<h1>Account Details</h1>
+		<p>
+			<span>Account Name:</span> David Flush
+		</p>
+		<p>
+			<span>Account Type:</span> Savings
+		</p>
+		<p>
+			<span>Account Number:</span> ${accNumber.value}
+		</p>
+		<p>
+			<span>Account Balance:</span> N1,000,000
+		</p>
+		<p>
+			<span>Account Status:</span> Active
+		</p>
+	</div>
+	<form action="#pop-up9">
 		<h1>New Transaction</h1>
 		<p>
-			<select id="transactType" required>
+			<select required>
 				<option value="">--Choose transaction type--</option>
 				<option value="debit">Debit</option>
 				<option value="credit">Credit</option>
@@ -58,7 +154,7 @@ const loadAcc = () => {
 		</p>
 		<button id="transactbtn" class="btn btn-sm form-btn">Submit</button>
 	</form>
-	<div id="accInfo">
+	<div>
 		<h1>Account Details</h1>
 		<p>
 			<span>Account Name:</span> David Flush
@@ -85,24 +181,8 @@ const removeAcc = () => {
 	accNumber.value = "";
 }
 
-const checkUser = (a) => {
-	a.href = `Dashboard-${localStorage.getItem("user").toLowerCase()}.html`;
-}
 
-if(fileName === "SignIn.html"){
-	username.addEventListener("click", () => {
-		credentials.style.display = "none";
-		username.value = "";
-		password.value = "";
-	})
 
-}
-if(fileName ==="Dashboard-user.html"){
-	toggleUser.addEventListener("click", (e) => {
-		e.preventDefault();
-		if(navUser.style.display == "none") navUser.style.display = "block";
-		else navUser.style.display = "none";
-	})
-}
+
 
 

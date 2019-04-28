@@ -8,4 +8,4 @@ const router = express.Router();
 router.post("/auth/signup", validate.signUp, checks.checkUser, userData.signup);
 router.post("/auth/signin", validate.signIn, checks.signin, userData.signin);
 
-module.exports = router;
+export default router;

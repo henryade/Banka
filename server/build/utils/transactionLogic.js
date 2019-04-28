@@ -3,13 +3,20 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logic = undefined;
 
 var _dbController = require("../controllers/dbController");
 
 var _dbController2 = _interopRequireDefault(_dbController);
 
+var _auth = require("./auth");
+
+var _email = require("./email");
+
+var _email2 = _interopRequireDefault(_email);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 /**
  * Debit or Credit controller
@@ -18,46 +25,107 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
-var logic = exports.logic = function logic(action, req, res) {
-  var account = _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
-  var amount = parseFloat(req.body.amount);
+var logic = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(action, req, res) {
+    var account, amount, newBalance, createdOn, type, depositor, phoneNumber, cashier, newTransaction, message;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber));
 
-  if (!account) {
-    return res.status(400).json({
-      status: 400,
-      error: "Invalid Account Number"
-    });
-  }
+          case 2:
+            account = _context.sent;
+            amount = parseFloat(req.body.amount);
 
-  if (account.status === "dormant") {
-    return res.status(400).json({
-      status: 400,
-      error: "Account is Inactive"
-    });
-  }
-  if (action === -1 && account.balance - amount <= 0) {
-    return res.status(400).json({
-      status: 400,
-      error: "Low Funds. Account cant be Debited"
-    });
-  }
+            if (account) {
+              _context.next = 6;
+              break;
+            }
 
-  var newBalance = account.balance + amount * action;
-  var lengthOfTransactionId = 6;
-  var id = Math.floor(Math.random() * lengthOfTransactionId);
-  var createdOn = new Date(Date.now());
-  var type = action === 1 ? "credit" : "debit";
-  var depositor = req.body.depositor || "self";
-  var phoneNumber = req.body.depositorPhoneNumber || "self";
-  _dbController2.default.updateAccountDB(parseInt(req.params.accountNumber), "balance", newBalance);
+            return _context.abrupt("return", res.status(400).json({
+              status: 400,
+              error: "Invalid Account Number"
+            }));
 
-  _dbController2.default.createTransaction(id, createdOn, type, req.params.accountNumber,
-  // req.userData.id,
-  amount, account.balance, newBalance, depositor, phoneNumber);
+          case 6:
+            if (!(account.status === "dormant")) {
+              _context.next = 8;
+              break;
+            }
 
-  var newTransaction = _dbController2.default.findTransactionById(id);
-  return res.status(200).json({
-    status: 200,
-    data: newTransaction
-  });
-};
+            return _context.abrupt("return", res.status(400).json({
+              status: 400,
+              error: "Account is Inactive"
+            }));
+
+          case 8:
+            if (!(action === -1 && account.balance - amount <= 0)) {
+              _context.next = 10;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(400).json({
+              status: 400,
+              error: "Low Funds. Account cant be Debited"
+            }));
+
+          case 10:
+            newBalance = parseFloat(account.balance) + amount * action;
+            createdOn = new Date(Date.now());
+            type = action === 1 ? "credit" : "debit";
+            depositor = req.body.depositor || "self";
+            phoneNumber = req.body.depositorPhoneNumber || "self";
+            cashier = req.userData.id;
+
+
+            _dbController2.default.updateBalance(newBalance, parseInt(req.params.accountNumber));
+
+            newTransaction = {};
+            _context.prev = 18;
+            _context.next = 21;
+            return _dbController2.default.createTransaction(createdOn, type, req.params.accountNumber, cashier, parseFloat(amount), parseFloat(account.balance), parseFloat(newBalance), depositor, phoneNumber);
+
+          case 21:
+            newTransaction = _context.sent;
+            _context.next = 27;
+            break;
+
+          case 24:
+            _context.prev = 24;
+            _context.t0 = _context["catch"](18);
+            return _context.abrupt("return", res.status(400).json({
+              status: 400,
+              error: "Error Occured"
+            }));
+
+          case 27:
+            message = {
+              from: process.env.EMAIL,
+              to: "clasiqaas@gmail.com",
+              subject: "Transaction Alert",
+              html: "<div style=\"font-family:georgia\">\n    <h1 style=\"background-color:#172A3A;color:white;padding-left:20px;border-radius:5% 90% 90% 5%;font-family:Comic Sans MS;\">Banka </h1>\n    <p style=\"padding-bottom:10px;padding-left:5px;\">Dear DAVID FLUSH,</p> \n                        <p style=\"padding-left:15px;\">Banka Bank eLectronic Notification Service (BeNS)\n                        We wish to inform you that a  transaction occurred on your account with us.</p>\n    \n                        <p style=\"padding-left:15px;\">The details of this transaction are shown below:</p>\n                        <p><strong style=\"padding-left:20px;\">Transaction Notification</strong></p>\n                        <div style=\"font-family:Verdana;\">\n        \n     <table style=\"border-collapse:collapse;font-size:14px;margin-left:30px\">\n       <tbody>\n         <tr>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Account Number</strong></td>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;\">" + req.params.accountNumber + "</td>\n         </tr>\n         <tr>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Transaction Location</strong></td>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;\">Banka, Lagos</td>\n         </tr>\n         <tr>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Type</strong></td>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;text-transform:capitalise;\">" + type + "</td>\n         </tr>\n         <tr>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Amount</strong></td>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;\">" + amount + "</td>\n         </tr>\n         <tr>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Date</strong></td>\n           <td style=\"border:2px solid black;padding:10px;text-align:center;\">20-Mar-2019</td>\n         </tr>\n       </tbody>\n                          </table>                     \n                        </div>\n      <div style=\"background-color:#F5DEB3;border-top:1px solid black;margin-top:15px;padding-bottom:5px;\">\n        <p style=\"padding-left:20px;\"><strong>Old Balance <span style=\"display:inline-block;width:40px;padding-left:20px;\"> : </span>" + account.balance + "</strong></p>\n        <p style=\"padding-left:20px;\"><strong>New Balance <span style=\"display:inline-block;width:40px;padding-left:13px;\"> : </span>" + newBalance + "</strong></p> </div>\n                         \n    <p style=\"text-align:center;margin-top:5px;font-size:13px;\"><strong>Thank you for choosing Banka Bank plc</strong></p>\n      </div>"
+            };
+
+            _email2.default.sendMail(message);
+
+            return _context.abrupt("return", res.status(200).json({
+              status: 200,
+              data: newTransaction
+            }));
+
+          case 30:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, undefined, [[18, 24]]);
+  }));
+
+  return function logic(_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.default = logic;

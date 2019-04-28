@@ -1,6 +1,7 @@
 body{
 	font: 15px/1.5 Arial, Comic Sans MS, Garamond, ZCOOLXiaoWei-Regular, sans-serif;
 	background-color: #172A3A;
+	overflow: scroll;
 }
 
 @font-face{
@@ -13,6 +14,15 @@ body{
 	src: url("../fonts/Slabo27px-Regular.ttf");
 }
 
+@keyframes fadeIn{
+	from{
+		opacity: 0;
+	}
+	to{
+		opacity: 1;
+	}
+}
+
 body, html{
 	height: 100%;
 	width: 100%;
@@ -20,39 +30,54 @@ body, html{
 	margin: 0;
 }
 
-* {
+*{
 	box-sizing: border-box;
 }
 
+
 /* Global */
 textarea {
-	width: 50%;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	font-size: 15px;
 	height: 50px;
-	border: 1px solid green;
+	border: 1px solid #3aafa9;
 	outline: none;
 	background-color: #F8F8FF;
-	padding-left: 10px;
+	padding-left: 5px;
 }
+
+
+
 
 .pop-up11 th, .pop-up11 td  {
 	padding: 0;
 	
 }
-
+/*Table*/
 
 table{
 	margin: 20px auto;
 	border-collapse: collapse;
+	overflow: scroll;
 }
 
-.table-default-color td, .table-default-color th{
-	border: 2px solid #000;
+th {
+	background-color: #172A3A;
+	color: white;
+}
+thead{
+	border-radius:10px; 
+}
+tr{
+	background-color: #feeeee;
+}
+tr:nth-child(even){
+	background-color: rgb(211, 228, 228);	
+}
+#pop-up11 tr:nth-child(even){
+	background-color: rgb(255, 255, 255);	
 }
 
 th,td{
-	border: 2px solid #fff;
 	text-align: left;
 	padding: 10px 27px;
 }
@@ -60,10 +85,38 @@ select{
 	width: 200px;
 	height: 30px;
 	padding: 0 0 0 10px;
-	border: 1px solid green;
+	border: 1px solid #3aafa9;
 	outline: none;
 	border-radius: 3px;
 	background-color: #F8F8FF;
+}
+
+.selectTable{
+	width:initial;
+	border: none;
+}
+
+.pageNumbers{
+	display: inline;
+	margin: 0 auto;
+}
+.pageNumbers a{
+	color: black;
+  padding: 8px 16px;
+	text-decoration: none;
+	border-radius: 5px;
+
+	
+}
+
+.pageNumbers .active {
+  background-color: #09BC8A;
+	color: white;
+	
+}
+
+.pageNumbers a:hover:not(.active) {
+	background-color: rgb(214, 207, 207);
 }
 
 .profilePic .capitalize{
@@ -89,29 +142,55 @@ select{
 .authInput{
 	min-height: 40px;
 	padding:4px;
-	border: 1px solid green;
+	border: 1px solid #3aafa9;
 	outline: none;
-	background-color: #F8F8FF;
+	background-color: white;
 }
 
 textarea:hover, .authInput:hover, select:hover{
-	border: 1.5px solid green;
+	border: 1.5px solid #3AAfa9;
 }
 
 textarea:focus, .authInput:focus, select:focus{
-	border: 1.5px solid green;
+	border: 1.5px solid #3AAfa9;
 }
 
 input[type="checkbox"],input[type="radio"]{
 	transform:scale(1.5);
 }
 
+#createuser{
+	margin-top: 10px;
+	width:80%;
+	min-height: 40px;
+	background-color: rgb(41, 199, 154);
+	border: none;
+	color: #FFFAFA;
+	font-size: 17px;
+	cursor: pointer;
+}
+#createuserbtn{
+	display: none;
+	margin: 10px auto 0 auto;
+	width:30%;
+	min-height: 40px;
+	background-color: rgb(41, 199, 154);
+	border: none;
+	color: #FFFAFA;
+	font-size: 17px;
+	cursor: pointer;
+}
+#submitcreateuser, #closecreateuser{
+	width:100px;
+	margin:5px;
+}
 .btn{
 	min-height: 40px;
 	background-color: #09BC8A;
 	border: none;
 	color: #FFFAFA;
 	font-size: 17px;
+	cursor: pointer;
 }
 
 .input-lg{
@@ -131,8 +210,38 @@ input[type="checkbox"],input[type="radio"]{
 	width: 25%;
 
 }
+.modalbtn{
+	width: 100%;
+	display: flex;
+}
 
-.btn-lg{
+ .modalbtn button{
+	height: 40px;
+	width: 50%;
+	margin:0;
+	padding:0;
+	border:none;
+	outline: none;
+	background-color: #E9F2F0;
+	font-weight: 600;
+  color: #7d97ad;
+}
+
+button:hover, button:focus{
+	box-shadow: 12px 15px 20px rgba(0,0,0,.1);
+}
+
+.modalbtn .current-auth{
+	background-color: white;
+	box-shadow: none;
+	border:none;
+}
+
+.current-auth:hover{
+	box-shadow: none;
+}
+
+.btn-lg, .textarea-lg{
 	width: 100%;
 }
 
@@ -146,14 +255,17 @@ input[type="checkbox"],input[type="radio"]{
 .btn-sm{
 	width: 25%;
 }
+.btn-sml{
+	width: 20%;
+}
 
 #toggle{
 	display: none;
-	z-index: 5;
+	z-index: 10;
 }
 #toggle-user{
 	display: none;
-	z-index: 5;
+	z-index: 10;
 }
 
 .btn:hover{
@@ -181,15 +293,61 @@ input[type="checkbox"],input[type="radio"]{
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: rgba(0,0,0,0.4);
-	transition: opacity 100ms;
+	background-color: rgba(0,0,0,0.5);
+	transition: opacity 700ms;
 	visibility: hidden;
+	height: 100%;
+	width: 100%;
 	opacity: 0;
+	z-index: 13;
+	overflow: scroll;
+	display: none;
 }
+.makeVisible{
+	display: initial;
+	visibility: visible;
+	opacity:1;
+	z-index: 13;
+	transition: opacity 3s;
+}
+.pop-up h1{
+	width: 100%;
+	margin-top: 0;
+	padding-top: 0;
+	border-radius: 5px 5px 0 0;
+	color: #0B0B0B;
+	font-family: Arial, sans-serif, sans-serif;
+}
+ #signUpModal, #signInModal, #resetPassword{
+	visibility: visible;
+	opacity: 1;
+	display: none;
+	transition: opacity 2s;
+ }
 
 .pop-up:target{
 	visibility: visible;
 	opacity: 1;
+}
+
+.smallpopup{
+	visibility: visible;
+	display: block;
+	z-index:2;
+	top:100;
+	width:100px;
+	height: 40px;
+	margin-left:10px;
+	position: absolute;
+	background-color: black; 
+}
+
+.smallPopUpBody{
+	display: none;
+}
+
+.pop-upH3{
+	font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .pop-upBody{
@@ -203,15 +361,53 @@ input[type="checkbox"],input[type="radio"]{
 	transition: all 2s ease-out;
 }
 
-.pop-upBody2{
+.pop-upBodytransaction{
 	background-color: white;
-	margin: 1% auto 0 auto;
-	padding: 15px 22px;
-	border-radius: 10px;
-	width: 35%;
+	margin: 2.5% auto 0 auto;
+	padding: 1%;
+	box-shadow: 12px 15px 20px rgba(0,0,0,.1);
+	border-radius: 5px;
+	width: 40%;
 	box-sizing: border-box;
 	position: relative;
-	transition: all 2s ease-out;
+	min-height: 575px;
+}
+
+
+#pop-up12 .pop-upBody, #pop-up11 .pop-upBody, .pop-upBodytransaction{
+	background-color: rgb(236, 234, 234);
+}
+.modal form{
+	width: 80%;
+	margin: auto;
+}
+.modal{
+	background: white;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 150px;
+
+	width: 400px;
+	box-shadow: 0 5px 8px 0 rgba(0,0,0,0.3), 0 7px 20px 0 rgba(0,0,0,0.4);
+	border-radius: 4px;
+}
+
+.modalBody{
+	padding: 2%;
+}
+
+.pop-upBody2{
+	background-color: white;
+	margin: 2% auto 0 auto;
+	padding: 15px 22px;
+	border-radius: 10px;
+	width: 330px;
+	box-sizing: border-box;
+	position: relative;
+	/* transition: all 2s ease-out; */
+}
+#resetPassword .pop-upBody{
+	padding:3% 0 10% 0;
 }
 
 #pop-up11 .pop-upBody{
@@ -225,21 +421,38 @@ input[type="checkbox"],input[type="radio"]{
 }
 
 .closePop-up{
-	position: absolute;
-	top: -15px;
-	right: -5px;
-	font-size: 30px;
+	position: relative;
+	top: -44px;
+	right: -32px;
+	font-size: 50px;
 	font-weight: bolder;
 	color: #00000f;
+	float: right;
+}
+.pop-up .small{
+	top: -30px;
+	right: -30px;
+	font-size: 40px;
 }
 
+.pop-up #email-form form{
+	width: 100%;
+}
 .closePop-up:hover{
 	color: blue;
 	text-decoration: none;
 }
-
+.pop-up #closeReset{
+	top: -40px;
+	left: -30px;
+}
 .sign-up-link{
 	color: blue;
+}
+
+.authfooter{
+	text-align: center;
+	font-weight: bold;
 }
 
 .normal-link{
@@ -254,7 +467,7 @@ input[type="checkbox"],input[type="radio"]{
 }
 
 .normal-link-user, .sign-up-link, .normal-link{
-	z-index: 7;
+	z-index: 2;
 }
 
 .normal-link-user:hover, .sign-up-link:hover, .normal-link:hover{
@@ -279,10 +492,10 @@ ul{
 
 /* Header */
 header{
-	margin: 2% auto 1% auto;
+	margin: 5px auto 0 auto;
 	top: 0;
 	width: 100%;
-	z-index: 4;
+	z-index: 2;
 }
 
 .fixed{
@@ -301,7 +514,6 @@ header nav a{
 }
 
 header li{
-	float: left;
 	display: inline;
 	padding: 0 15px;
 }
@@ -327,8 +539,12 @@ header .current{
 	color:#e8491d;
 }
 
-.current-tab{
-	background-color: #75DDDD;
+.modalbtn .current-tab, .modalbtn .current-table:hover{
+	background-color: white;
+	box-shadow: none;
+	border:none;
+	color: black;
+	font-weight: bolder;
 }
 
 header nav a:hover{
@@ -342,14 +558,15 @@ header nav a:hover{
 /*landing-img-section*/
 .section-bg{
 	height: 100%;
-	background: url('../images/background5.jpg') no-repeat;
-	background-position: center;
+	background: url('../images/background5.jpg') no-repeat; 
+	background-position: center; 
 	background-size: cover;
 }
 
+
 .landing-img-text{
 	font-family: "ZCOOL XiaoWei";
-	z-index: 2;
+	z-index: 1;
 	position: absolute;
 	text-align: center; 
 	font-size: 20px;
@@ -393,6 +610,17 @@ header nav a:hover{
 }
 
 /* Content */
+.col-5-5{
+	width: 100%;
+	display: flex;
+}
+.col-5{
+	flex-basis: 50%;
+	justify-content: space-between;
+}
+.col-5 table{
+	margin-top:0;
+}
 .col-6-4{
 	display: flex;
 		flex-wrap: wrap;
@@ -408,7 +636,9 @@ header nav a:hover{
 .col-sign-up p {
 	text-align: center;
 }
-
+.show{
+	display: none;
+}
 .col-sign-up form div:first child {
 	box-sizing: content-box;
 }
@@ -428,6 +658,11 @@ header nav a:hover{
 .col-9{
 	flex-basis: 83%;
 	flex-shrink: 7;
+	overflow: auto;
+}
+
+#userSection{
+	min-height: 700px;
 }
 
 .col-9 h1{
@@ -454,17 +689,23 @@ header nav a:hover{
 	display: block;
 }
 
+.accountImage img {
+	max-width:70%;
+	max-height: 50%;
+	/* border: 1px solid rgb(59, 82, 83) */
+}
+
 
 /* dashboard */
 .dashboard{
 	width: 100%;
-	background-color: #75DDDD;	
+	background-color: white;	
 }
 .dashboard-full{
 	height: 100%;
 }
 .dashboard-seg{
-	height: 74%;
+	height: 85%;
 
 }
 
@@ -620,13 +861,8 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	margin: 0 auto;
 }
 
-.secB p input,.sec-B p input, textarea{
+.secB p input{
 	margin-left: 1%;
-}
-
-.sec-B{
-	margin-left: 1.5%;
-	width: 80%;
 }
 
 
@@ -640,9 +876,13 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	width: 30%;
 }
 
+#viewTransactions {
+	padding-top: 20px;
+}
 
 #changebtn{
-	width: 180px;
+	margin-top:10px;
+	min-width:30px;
 }
 
 .form-btn{
@@ -657,9 +897,13 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	margin-left: auto;
 }
 
+#viewAllBankAccounts table{
+	margin: 0 auto;
+}
+
 /* search */
 
-.search *{
+.search *, #accountNumberSearch *{
 	display: inline;
 }
 
@@ -689,6 +933,15 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	padding-left: 30px;
 }
 
+#accountInformation div input{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#accountInformation p{
+	margin:3px;
+	/* width: 100%; */
+}
 
 .tab-admin a{
 	color: brown;
@@ -710,6 +963,9 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 
 .hide, .hidden{
 	display: table-cell;
+}
+.hideTable{
+	display: block;
 }
 
 #bankAccbtn, #bankAccClosebtn{
@@ -742,7 +998,7 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 
 .bankAccForm p{
 	min-width: 40%
-	margin:0 auto;
+	margin: 0 auto;
 }
 
 .bankAccForm .authInput{
@@ -795,12 +1051,8 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	text-align: center;
 }
 
-#accountInformation{
-	display: flex;
-	font-size: 20px;
-	justify-content: space-around;
-}
 
+/*Tool Tip*/
 
 /* Email */
 
@@ -831,44 +1083,47 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 /* Footer */
 
 footer{
-	height: 10%;
+	max-height: 10px;
 	text-align: center;
 	color: white;
-	padding-top: 30px;
+	padding-top: 10px;
+
 }
 
-footer img{
-	width: 35px;
-	border-radius: 100px;
-	position: relative;
-}
-
-footer img:hover{
-	top: -3px;
-}
-
-footer a{
-	padding-left: 20px;
-	padding-right: 15px;
-}
-
-
-br{
-	display: block;
-	margin: 5px 0;
-	content: " ";
-}
-
-.movedown{
-	margin-top: 3.5%;
-}
 
 .adjust-footer{
-	margin-top:100px;
+	margin-top:30px;
 	overflow: hidden;
 }
 
+@media screen and (max-width: 1245px) {
+	th,td{
+		padding: 5px 2px;
+	}
+	#closeSingle, #updateSingle{
+		min-width: 100px;
+		margin: 5px;
+}
+}
+@media screen and (max-width: 1063px) {
+	.pop-upBodytransaction{
+		width: 70%;
+	}
+}
+
+@media screen and (max-width: 1005px) {
+
+
+	th,td{
+		padding: 5px 2px;
+	}
+
+}
+
 @media screen and (max-width: 830px) {
+	#createuserbtn{
+		display:block;
+	}
 
 	.img-icon-user{
 		display: block;
@@ -924,9 +1179,7 @@ br{
 	}
 	#accountInformation{
 		font-size: 16px;
-		justify-content: space-between;
 		padding: 2%;
-
 	}
 	#accInfo p, #flex-form p, #flex-form div{
 		padding: 3% 1% 0 1%;
@@ -938,7 +1191,14 @@ br{
 	}
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 549px) {
+	.modal{
+		width: 60%;
+		margin: 20% auto;
+	}
+	#newTransaction{
+		width: 75%;
+	}
 	header div{
 		display: flex;
 		flex-direction: column;
@@ -949,12 +1209,6 @@ br{
 	.img-icon{
 		display: block;
 		position: absolute;
-	}
-	.hidden{
-		display: none;
-	}
-	.eachDetail{
- 		width: 100%;
 	}
 
 	#pop-up11 .pop-upBody{
@@ -1034,8 +1288,7 @@ br{
 		margin-top: 2%;
 		margin-bottom: 2%;
 	}
-
-	.secB p input, .secB p textarea, .sec-B p textarea,.sec-B p input{
+	.secB p input{
 		width: 70%;
 		margin: 0 auto;
 	}
@@ -1056,7 +1309,7 @@ br{
 		flex-basis: 50%;
 	}
 
-	#accountInformation, #accInfo,#accInfo p, #accInfo h1, #flex-form, #flex-form p, #flex-form h1{
+	#accountInformation{
 		padding-top: 0;
 		padding-bottom: 1%;
 	}
@@ -1077,8 +1330,6 @@ br{
 
 	#accountInformation{
 		font-size: 15px;
-		display: flex;
-		flex-direction: column-reverse;
 		margin: 0 auto;
 	}
 
@@ -1089,9 +1340,17 @@ br{
 	header div nav {
 		display: block;
 	}
+
 }
 
+@media screen and (max-width: 595px) {
+	.pop-upBodytransaction{
+		width:90%;
+		margin-top:7%;
+	}
+}
 @media screen and (max-width: 465px) {
+	
 	#account-search #bankAccbtn {
 		margin: 0 auto;
 	}
@@ -1103,9 +1362,11 @@ br{
 		display: flex;
 		justify-content: space-around;
 	}
-
-
-
+	#accountNumberSearch form *{
+		display: block;
+		width: 80%;
+		margin:5px auto;
+	}
 }
 
 @media screen and (max-width: 768px) {
@@ -1115,9 +1376,7 @@ br{
 	.col-6-4 aside{
 		flex-basis: 100%;
 	}	
-	.hide{
-		display: none;
-	}
+
 /*	.col-header{
 		width:80%;
 	}*/
@@ -1137,22 +1396,19 @@ br{
 		background-size:cover;
 		background-position: center;
 	}
-
-}
-
-
-@media screen and (max-width: 1095px) {
-	th,td{
-		padding: 10px 20.5px;
+	.hide{
+		display: none;
+	}
+	.pageNumbers a{
+		padding: 1px 10px;
+	}
+	.wrapper{
+		width: 100%;
 	}
 }
 
-@media screen and (max-width: 1005px) {
-	th,td{
-		padding: 5px 2px;
-	}
 
-}
+
 
 @media screen and (max-width: 390px) {
 	br{
@@ -1166,6 +1422,12 @@ br{
 	}
 	#bankAccbtn{
 		width: 100%;
+	}
+	.pop-upBody2{
+		width: 250px;
+	}
+	.pop-upBody2 img{
+		width: 200px;
 	}
 }
 
@@ -1239,4 +1501,28 @@ br{
 		margin-bottom: 1%;
 	}
 
+}
+@media screen and (max-width: 461px) {
+	.modal{
+		width: 90%;
+		margin-top: 20%;	 
+	}
+}
+
+@media screen and (max-height: 550px) {
+.modal{
+	width: 60%;
+	margin-top: 10%;
+	 
+}
+.modal *{
+	font-size:15px;
+}
+.modal h1{
+	font-size: 18px;
+}
+.modalBody input, #sigin-in-btn button, .modalbtn button, .modalbtn button{
+	padding: 0 0 0 10px;
+	min-height: 25px;
+}
 }

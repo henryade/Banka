@@ -20,6 +20,7 @@ var footer = function footer(req, res, schema, next) {
     return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
   }
   next();
+  return null;
 };
 
 var logic = function logic(req, res, next) {
@@ -31,6 +32,7 @@ var logic = function logic(req, res, next) {
     return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
   }
   next();
+  return null;
 };
 
 var transactionLogic = function transactionLogic(req, res, next) {
@@ -42,72 +44,93 @@ var transactionLogic = function transactionLogic(req, res, next) {
   footer(req, res, schema, next);
 };
 
-module.exports = {
-  signUp: function signUp(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      firstName: _validationSchema2.default.name,
-      lastName: _validationSchema2.default.name,
-      email: _validationSchema2.default.email,
-      password: _validationSchema2.default.password,
-      confirmPassword: _validationSchema2.default.confirmPassword
-    });
+exports.signUp = function (req, res, next) {
+  var schema = _joi2.default.object().keys({
+    firstName: _validationSchema2.default.name,
+    lastName: _validationSchema2.default.name,
+    email: _validationSchema2.default.email,
+    password: _validationSchema2.default.password,
+    confirmPassword: _validationSchema2.default.confirmPassword
+  });
 
-    footer(req, res, schema, next);
-  },
-  signIn: function signIn(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      email: _validationSchema2.default.email,
-      password: _validationSchema2.default.password
-    });
-    footer(req, res, schema, next);
-  },
-  createAccount: function createAccount(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      firstName: _validationSchema2.default.name,
-      lastName: _validationSchema2.default.name,
-      email: _validationSchema2.default.email,
-      dob: _validationSchema2.default.dob,
-      address: _validationSchema2.default.address,
-      phoneNumber: _validationSchema2.default.phoneNumber,
-      openingBalance: _validationSchema2.default.balance,
-      type: _validationSchema2.default.type,
-      gender: _validationSchema2.default.gender
-    });
-    footer(req, res, schema, next);
-  },
-  changeAccountStatus: function changeAccountStatus(req, res, next) {
-    logic(req, res, next);
-  },
-  deleteAccount: function deleteAccount(req, res, next) {
-    logic(req, res, next);
-  },
-  creditAccount: function creditAccount(req, res, next) {
-    transactionLogic(req, res, next);
-  },
-  debitAccount: function debitAccount(req, res, next) {
-    transactionLogic(req, res, next);
-  },
-  allAccount: function allAccount(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      status: _validationSchema2.default.status
-    });
-    var result = _joi2.default.validate(req.query, schema);
-    if (result.error) {
-      return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
-    }
-    next();
-  },
-  checkStaff: function checkStaff(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      firstName: _validationSchema2.default.name,
-      lastName: _validationSchema2.default.name,
-      email: _validationSchema2.default.email,
-      userType: _validationSchema2.default.userType
-    });
-    var result = _joi2.default.validate(req.body, schema);
-    if (result.error) {
-      return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
-    }
-    next();
+  footer(req, res, schema, next);
+};
+
+exports.signIn = function (req, res, next) {
+  var schema = _joi2.default.object().keys({
+    email: _validationSchema2.default.email,
+    password: _validationSchema2.default.password
+  });
+  footer(req, res, schema, next);
+};
+
+exports.createAccount = function (req, res, next) {
+  var schema = _joi2.default.object().keys({
+    email: _validationSchema2.default.email,
+    openingBalance: _validationSchema2.default.balance,
+    type: _validationSchema2.default.type
+  });
+  footer(req, res, schema, next);
+};
+
+exports.changeAccountStatus = function (req, res, next) {
+  logic(req, res, next);
+};
+exports.deleteAccount = function (req, res, next) {
+  logic(req, res, next);
+};
+exports.creditAccount = function (req, res, next) {
+  transactionLogic(req, res, next);
+};
+exports.debitAccount = function (req, res, next) {
+  transactionLogic(req, res, next);
+};
+exports.allAccount = function (req, res, next) {
+  var schema = _joi2.default.object().keys({
+    status: _validationSchema2.default.status
+  });
+  var result = _joi2.default.validate(req.query, schema);
+  if (result.error) {
+    return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
   }
+  next();
+  return null;
+};
+exports.email = function (req, res, next) {
+  var schema = _joi2.default.object().keys({
+    email: _validationSchema2.default.email
+  });
+  var result = _joi2.default.validate(req.params, schema);
+  if (result.error) {
+    return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
+  }
+  next();
+  return null;
+};
+
+exports.transaction = function (req, res, next) {
+  var schema = _joi2.default.object().keys({
+    transactionId: _validationSchema2.default.cashier
+  });
+  var result = _joi2.default.validate(req.params, schema);
+  if (result.error) {
+    return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
+  }
+  next();
+  return null;
+};
+
+exports.checkStaff = function (req, res, next) {
+  var schema = _joi2.default.object().keys({
+    firstName: _validationSchema2.default.name,
+    lastName: _validationSchema2.default.name,
+    email: _validationSchema2.default.email,
+    userType: _validationSchema2.default.userType
+  });
+  var result = _joi2.default.validate(req.body, schema);
+  if (result.error) {
+    return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
+  }
+  next();
+  return null;
 };

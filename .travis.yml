@@ -6,6 +6,8 @@ install:
   - npm install
 before_install:
   - npm i -g npm@6.4.1
+services:
+  - postgresql
 env: 
   global:
   - CC_TEST_REPORTER_ID

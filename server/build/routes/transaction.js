@@ -1,5 +1,9 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
@@ -24,24 +28,24 @@ var router = _express2.default.Router();
 // View a  all Account's Transactions //
 // ///////////////////////////
 
-router.get("/accounts/:accountNumber/transactions", _transactionController2.default.viewAllAccountTransaction);
+router.get("/accounts/:accountNumber/transactions", _authorization2.default.user, _transactionController2.default.viewAllAccountTransaction);
 
 // /////////////////////////////
 // View Specific Transaction //
 // ///////////////////////////
 
-router.get("/transactions/:transactionId", _transactionController2.default.viewSpecificTransaction);
+router.get("/transactions/:transactionId", _authorization2.default.user, _validation2.default.transaction, _transactionController2.default.viewSpecificTransaction);
 
 // ///////////////////
 // Debit Account //
 // /////////////////
 
-router.post("/transactions/:accountNumber/debit", _validation2.default.debitAccount, _transactionController2.default.debitAccount);
+router.post("/transactions/:accountNumber/debit", _authorization2.default.staff, _validation2.default.debitAccount, _transactionController2.default.debitAccount);
 
 // ///////////////////
 // Credit Account //
 // /////////////////
 
-router.post("/transactions/:accountNumber/credit", _validation2.default.creditAccount, _transactionController2.default.creditAccount);
+router.post("/transactions/:accountNumber/credit", _authorization2.default.staff, _validation2.default.creditAccount, _transactionController2.default.creditAccount);
 
-module.exports = router;
+exports.default = router;

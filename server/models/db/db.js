@@ -1,24 +1,22 @@
 import { Pool } from "pg";
-import {
-  USER, HOST, PASSWORD, DATABASE, DBPORT,
-} from "../../config";
-import { CREATETABLES, dropTable } from "../controller";
+import dotenv from "dotenv";
+
+dotenv.config();
+// import { CREATETABLES } from "../controller";
 
 class Model {
   constructor() {
     this.pool = Model.initConn();
-    this.createTable(CREATETABLES.USER);
-    this.createTable(CREATETABLES.ACCOUNT);
-    this.createTable(CREATETABLES.TRANSACTION);
-    this.pool.on("error", (err) => {
-      console.log("Error occured");
-    });
-    this.pool.on("connect", (err) => {
-      console.log("connection successful");
-    });
+    // this.createTable(CREATETABLES);
+    // this.pool.on("error", (err) => {
+    //   console.log("Error occured");
+    // });
+    // this.pool.on("connect", (err) => {
+    //   console.log("connection successful");
+    // });
   }
 
-   async createTable(type) {
+  async createTable(type) {
     await this.pool.query(type);
   }
 
@@ -44,32 +42,16 @@ class Model {
 
   async deleteTable(table) {
     const queryText = `DELETE FROM ${table}`;
-    await this.pool.query(queryText)
-
-  }
-
-  dropTables(queryText) {
-    this.pool.query(queryText)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        this.pool.end();
-      });
+    await this.pool.query(queryText);
   }
 
   static initConn() {
     const pool = new Pool({
-      user: USER,
-      host: HOST,
-      password: PASSWORD,
-      database: DATABASE,
-      port: DBPORT,
+      connectionString: process.env.DATABASE_URL,
     });
     return pool;
   }
 }
 
 const model = new Model();
-module.exports = model;
+export default model;

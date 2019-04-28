@@ -1,6 +1,5 @@
 
 const errors = (res, error, fieldString) => {
-  // console.log(fieldString)
   let field = fieldString.replace(/([A-Z])/g, " $1").toLowerCase();
   if (fieldString === "dob") {
     field = fieldString.replace("dob", "date of birth");

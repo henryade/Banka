@@ -32,12 +32,12 @@ var router = _express2.default.Router();
 // View all Account Owned by a Specific User //
 // ///////////////////////////////////////////
 
-router.get("/user/:email/accounts", _dbValidation2.default.email, _userController2.default.getAccounts);
+router.get("/user/:email/accounts", _authorization2.default.user, _validation2.default.email, _dbValidation2.default.email, _userController2.default.getAccounts);
 
 // ////////////////
 // Create Staff //
 // //////////////
 
-router.post("/users", _validation2.default.checkStaff, _dbValidation2.default.checkStaff, _userController2.default.createUser);
+router.post("/users", _authorization2.default.admin, _validation2.default.checkStaff, _dbValidation2.default.checkStaff, _userController2.default.createUser);
 
 exports.default = router;
