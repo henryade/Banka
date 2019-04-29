@@ -18,13 +18,18 @@ class UserController {
  */
   static signin(req, res) {
     bcrypt.compare(req.body.password, req.body.User.password, (err, response) => {
-      if (response) {
-        const token = jwt.sign(req.body, JWT_KEY);
-        const { password, ...user } = req.body;
-        const User = { token, ...user };
+       if (response) {
+        const token = jwt.sign({
+          firstName: req.body.User.firstName,
+          lastName: req.body.User.lastName,
+          email: req.body.User.email,
+          type: req.body.User.type,
+          isAdmin: req.body.User.isAdmin,
+        }, process.env.JWT_KEY);
+        const { password, ...user } = req.body.User;
         return res.status(200).json({
           status: 200,
-          data: User,
+          data: { token, ...user },
         });
       }
       return res.status(401).json({
@@ -42,12 +47,22 @@ class UserController {
 
   static signup(req, res) {
     bcrypt.hash(req.body.password, salt, async (err, hash) => {
+      const isAdmin = false;
+      const type = "client";
+      const token = jwt.sign({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        type,
+        isAdmin,
+      }, process.env.JWT_KEY);
       let newUser = {};
       try {
-        newUser = await data.createUser(req.body.firstName, req.body.lastName, req.body.email, hash, "client", false);
+        newUser = await data.createUser(req.body.firstName.replace(/\s/g, ""), req.body.lastName.replace(/\s/g, ""), req.body.email, hash, type, isAdmin);
+        const { password, ...user } = newUser;
         return res.status(201).json({
           status: 201,
-          data: newUser,
+          data: { token, ...user },
         });
       } catch (error) {
         return res.status(400).json({
