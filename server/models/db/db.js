@@ -53,6 +53,7 @@ class Model {
       password: PASSWORD,
       database: DATABASE,
       port: DBPORT,
+      ssl: true,
     });
     return pool;
   }
