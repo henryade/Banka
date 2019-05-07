@@ -9,6 +9,11 @@ chai.use(chaiHttp);
 let token = null;
 let token1 = null;
 let token2 = null;
+<<<<<<< HEAD
+=======
+let token3 = null;
+let token4 = null;
+>>>>>>> ch-refactor-165853483
 
 before(() => {
   token = jwt.sign({
@@ -23,12 +28,32 @@ before(() => {
     isAdmin: false,
   }, process.env.JWT_KEY);
 
+<<<<<<< HEAD
+=======
+  token3 = jwt.sign({
+    email: "user20gmail.com",
+    password: "password",
+    type: "client",
+    isAdmin: false,
+  }, process.env.JWT_KEY);
+
+>>>>>>> ch-refactor-165853483
   token2 = jwt.sign({
     email: "user5@gmail.com",
     password: "password",
     type: "client",
     isAdmin: false,
   }, process.env.JWT_KEY);
+<<<<<<< HEAD
+=======
+
+  token4 = jwt.sign({
+    email: "admin3@gmail.com",
+    password: "staff0001",
+    type: "staff",
+    isAdmin: true,
+  }, process.env.JWT_KEY);
+>>>>>>> ch-refactor-165853483
 });
 
 describe("Create Staff test", () => {
@@ -114,11 +139,19 @@ describe("Create Staff test", () => {
   it("'should create staff when all the parameters are given", (done) => {
     chai.request(app)
       .post(endpoint)
+<<<<<<< HEAD
       .set("authorization", `Bearer ${token}`)
       .send({
         firstName: "Forth",
         lastName: "Dedth",
         email: "staff000@gmail.com",
+=======
+      .set("authorization", `Bearer ${token4}`)
+      .send({
+        firstName: "Forth",
+        lastName: "Dedth",
+        email: "staff002@gmail.com",
+>>>>>>> ch-refactor-165853483
         userType: "admin",
       })
       .end((error, response) => {
@@ -133,11 +166,19 @@ describe("Create Staff test", () => {
   it("'should create staff when all the parameters are given", (done) => {
     chai.request(app)
       .post(endpoint)
+<<<<<<< HEAD
       .set("authorization", `Bearer ${token}`)
       .send({
         firstName: "Forth",
         lastName: "Desth",
         email: "staff30000@gmail.com",
+=======
+      .set("authorization", `Bearer ${token4}`)
+      .send({
+        firstName: "Forth",
+        lastName: "Desth",
+        email: "staff30@gmail.com",
+>>>>>>> ch-refactor-165853483
         userType: "staff",
       })
       .end((error, response) => {
@@ -164,6 +205,7 @@ describe("View all accounts by a user test", () => {
     done();
   });
 
+<<<<<<< HEAD
   // it("should not display if the email doesnt exist", (done) => {
   //   chai.request(app)
   //     .get("/api/v1/user/user20@gmail.com/accounts")
@@ -179,10 +221,41 @@ describe("View all accounts by a user test", () => {
     chai.request(app)
       .get("/api/v1/user/user20@gmail.com/accounts")
       .set("authorization", `Bearer ${token1}`)
+=======
+  it("should not display if the email doesnt exist", (done) => {
+    chai.request(app)
+      .get("/api/v1/user/user20@gmail.com/accounts")
+      .set("authorization", `Bearer ${token2}`)
+>>>>>>> ch-refactor-165853483
       .end((error, response) => {
-        expect(response).have.a.status(400);
+        expect(response).have.a.status(403);
+        expect(response.body.message).to.equal("UnAuthorized User");
+      });
+    done();
+  });
+
+  it("should not display if the email doesnt exist", (done) => {
+    chai.request(app)
+      .get("/api/v1/user/user20@gmail.com/accounts")
+      .set("authorization", `Bearer ${token1}`)
+      .end((error, response) => {
+        expect(response).have.a.status(404);
         expect(response.body.error).to.equal("Email not found");
       });
     done();
+<<<<<<< HEAD
+=======
+  });
+
+  it("should not display if the email doesnt exist", (done) => {
+    chai.request(app)
+      .get("/api/v1/user/user20gmail.com/accounts")
+      .set("authorization", `Bearer ${token3}`)
+      .end((error, response) => {
+        expect(response).have.a.status(400);
+        expect(response.body.error).to.equal("Invalid email");
+      });
+    done();
+>>>>>>> ch-refactor-165853483
   });
 });

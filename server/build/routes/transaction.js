@@ -1,5 +1,9 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
@@ -34,7 +38,11 @@ router.get("/accounts/:accountNumber/transactions", _authorization2.default.user
 // View Specific Transaction //
 // ///////////////////////////
 
+<<<<<<< HEAD
 router.get("/transactions/:transactionId", _authorization2.default.user, _transactionController2.default.viewSpecificTransaction);
+=======
+router.get("/transactions/:transactionId", _validation2.default.transaction, _authorization2.default.user, _transactionController2.default.viewSpecificTransaction);
+>>>>>>> ch-refactor-165853483
 
 // ///////////////////
 // Debit Account //
@@ -48,4 +56,4 @@ router.post("/transactions/:accountNumber/debit", _authorization2.default.staff,
 
 router.post("/transactions/:accountNumber/credit", _authorization2.default.staff, _validation2.default.creditAccount, _transactionController2.default.creditAccount);
 
-module.exports = router;
+exports.default = router;

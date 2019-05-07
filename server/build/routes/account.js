@@ -1,5 +1,9 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
@@ -49,9 +53,9 @@ router.post("/accounts", _validation2.default.createAccount, _authorization2.def
 router.patch("/accounts/:accountNumber", _authorization2.default.staff_admin, _validation2.default.changeAccountStatus, _dbValidation2.default.accountCheck, _accountController2.default.changeAccountStatus);
 
 // ////////////////////////
-/// Delete Account ///
+// // Delete Account //////
 // //////////////////////
 
 router.delete("/accounts/:accountNumber", _authorization2.default.staff_admin, _validation2.default.deleteAccount, _dbValidation2.default.accountCheck, _accountController2.default.deleteAccount);
 
-module.exports = router;
+exports.default = router;

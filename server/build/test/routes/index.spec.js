@@ -8,10 +8,6 @@ var _chaiHttp = require("chai-http");
 
 var _chaiHttp2 = _interopRequireDefault(_chaiHttp);
 
-var _dbController = require("../../controllers/dbController");
-
-var _dbController2 = _interopRequireDefault(_dbController);
-
 var _app = require("../../app");
 
 var _app2 = _interopRequireDefault(_app);

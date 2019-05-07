@@ -66,11 +66,16 @@ var AccountController = function () {
     key: "createAccount",
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
+<<<<<<< HEAD
         var accountNumber, createdOn, owner, balance, newAccount;
+=======
+        var accountNumber, createdOn, user, owner, balance, newAccount;
+>>>>>>> ch-refactor-165853483
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+<<<<<<< HEAD
                 accountNumber = (0, _auth.generateAccountNumber)();
                 createdOn = new Date(Date.now());
                 _context.next = 4;
@@ -85,6 +90,14 @@ var AccountController = function () {
               case 8:
                 if (!_context.sent) {
                   _context.next = 10;
+=======
+                _context.next = 2;
+                return _dbController2.default.findAccount(req.body.type, req.body.email);
+
+              case 2:
+                if (!_context.sent) {
+                  _context.next = 4;
+>>>>>>> ch-refactor-165853483
                   break;
                 }
 
@@ -93,6 +106,7 @@ var AccountController = function () {
                   error: "Account Exists"
                 }));
 
+<<<<<<< HEAD
               case 10:
                 newAccount = {};
                 _context.prev = 11;
@@ -119,11 +133,54 @@ var AccountController = function () {
                 });
 
               case 21:
+=======
+              case 4:
+                accountNumber = (0, _auth.generateAccountNumber)();
+                createdOn = new Date(Date.now());
+                _context.next = 8;
+                return _dbController2.default.findOneUser(req.body.email);
+
+              case 8:
+                user = _context.sent;
+                owner = user.id;
+                balance = req.body.openingBalance;
+                newAccount = {};
+                _context.prev = 12;
+                _context.next = 15;
+                return _dbController2.default.createAccount(req.body.email, accountNumber, createdOn, owner, "active", req.body.type, balance);
+
+              case 15:
+                newAccount = _context.sent;
+                _context.next = 22;
+                break;
+
+              case 18:
+                _context.prev = 18;
+                _context.t0 = _context["catch"](12);
+
+                console.log(_context.t0);
+                return _context.abrupt("return", res.status(400).json({
+                  status: 400,
+                  error: "Error Occured"
+                }));
+
+              case 22:
+                return _context.abrupt("return", res.status(201).json({
+                  status: 201,
+                  data: newAccount
+                }));
+
+              case 23:
+>>>>>>> ch-refactor-165853483
               case "end":
                 return _context.stop();
             }
           }
+<<<<<<< HEAD
         }, _callee, this, [[11, 17]]);
+=======
+        }, _callee, this, [[12, 18]]);
+>>>>>>> ch-refactor-165853483
       }));
 
       function createAccount(_x, _x2) {
@@ -144,11 +201,16 @@ var AccountController = function () {
     key: "changeAccountStatus",
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
+<<<<<<< HEAD
         var accounts, accountUpdate;
+=======
+        var account, accountUpdate;
+>>>>>>> ch-refactor-165853483
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+<<<<<<< HEAD
                 accounts = req.account;
 
 
@@ -158,17 +220,49 @@ var AccountController = function () {
 
               case 4:
                 accountUpdate = _context2.sent;
+=======
+                account = req.account;
+
+                account.status = account.status === "active" ? "dormant" : "active";
+                accountUpdate = {};
+                _context2.prev = 3;
+                _context2.next = 6;
+                return _dbController2.default.findAccountByStatus(account.status, parseInt(req.params.accountNumber, 10));
+
+              case 6:
+                accountUpdate = _context2.sent;
+                _context2.next = 12;
+                break;
+
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](3);
+                return _context2.abrupt("return", res.status(400).json({
+                  status: 400,
+                  error: _context2.t0
+                }));
+
+              case 12:
+>>>>>>> ch-refactor-165853483
                 return _context2.abrupt("return", res.status(200).json({
                   status: 200,
                   data: accountUpdate
                 }));
 
+<<<<<<< HEAD
               case 6:
+=======
+              case 13:
+>>>>>>> ch-refactor-165853483
               case "end":
                 return _context2.stop();
             }
           }
+<<<<<<< HEAD
         }, _callee2, this);
+=======
+        }, _callee2, this, [[3, 9]]);
+>>>>>>> ch-refactor-165853483
       }));
 
       function changeAccountStatus(_x3, _x4) {
@@ -195,7 +289,11 @@ var AccountController = function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
+<<<<<<< HEAD
                 return _dbController2.default.deleteAccount(parseInt(req.params.accountNumber));
+=======
+                return _dbController2.default.deleteAccount(parseInt(req.params.accountNumber, 10));
+>>>>>>> ch-refactor-165853483
 
               case 2:
                 deleted = _context3.sent;
@@ -211,6 +309,12 @@ var AccountController = function () {
                 }));
 
               case 5:
+<<<<<<< HEAD
+=======
+                return _context3.abrupt("return", null);
+
+              case 6:
+>>>>>>> ch-refactor-165853483
               case "end":
                 return _context3.stop();
             }

@@ -1,6 +1,5 @@
 import data from "../controllers/dbController";
-import { generateId } from "./auth";
-import email from "./email";
+import mail from "./email";
 
 /**
  * Debit or Credit controller
@@ -9,8 +8,8 @@ import email from "./email";
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
- const logic = async (action, req, res) => {
-  const account = await data.findAccountByAccountNumber(parseInt(req.params.accountNumber));
+const logic = async (action, req, res) => {
+  const account = await data.findAccountByAccountNumber(parseInt(req.params.accountNumber, 10));
   const amount = parseFloat(req.body.amount);
 
   if (!account) {
@@ -33,14 +32,23 @@ import email from "./email";
     });
   }
 
+<<<<<<< HEAD
   const newBalance = parseFloat(account.balance) + amount * action;
    const createdOn = new Date(Date.now());  
+=======
+  const newBalance = Number.parseFloat(parseFloat(account.balance) + amount * action).toFixed(2);
+  const createdOn = new Date(Date.now());
+>>>>>>> ch-refactor-165853483
   const type = action === 1 ? "credit" : "debit";
   const depositor = req.body.depositor || "self";
   const phoneNumber = req.body.depositorPhoneNumber || "self";
   const cashier = req.userData.id;
+<<<<<<< HEAD
 
   data.updateBalance(newBalance, parseInt(req.params.accountNumber));
+=======
+  data.updateBalance(newBalance, parseInt(req.params.accountNumber, 10));
+>>>>>>> ch-refactor-165853483
 
   let newTransaction = {};
 
@@ -50,9 +58,9 @@ import email from "./email";
       type,
       req.params.accountNumber,
       cashier,
-      amount,
+      parseFloat(amount),
       parseFloat(account.balance),
-      parseFloat(newBalance),
+      newBalance,
       depositor,
       phoneNumber,
     );
@@ -60,6 +68,7 @@ import email from "./email";
     return res.status(400).json({
       status: 400,
       error: "Error Occured",
+<<<<<<< HEAD
     })
   }
   const message = {
@@ -107,8 +116,15 @@ import email from "./email";
                          
     <p style="text-align:center;margin-top:5px;font-size:13px;"><strong>Thank you for choosing Banka Bank plc</strong></p>
       </div>`,
+=======
+    });
+>>>>>>> ch-refactor-165853483
   }
-  email.sendMail(message);
+  const person = await data.findOwner(account.owner);
+  const { email } = person;
+  const name = `${person.lastName} ${person.firstName}`.toUpperCase();
+  const message = mail.message({ name, email, ...newTransaction });
+  mail.sendMail(message);
 
   return res.status(200).json({
     status: 200,

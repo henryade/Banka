@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js --fix",
+<<<<<<< HEAD
     "build": "babel . --ignore node_modules,build --out-dir ./build",
     "start": "node --require babel-polyfill build/index.js",
     "dev": "nodemon --exec babel-node index.js",
@@ -12,6 +13,16 @@
     "model": "babel-node models/db/db",
     "test-dev": "babel-node models/controller/populate && nyc --require @babel/register --require @babel/polyfill mocha test/index.spec.js --exit",
     "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+=======
+    "build": "babel . --ignore node_modules,build --require babel-polyfill --out-dir ./build",
+    "start": "node --require babel-polyfill build/index.js",
+    "dev": "nodemon --exec babel-node index.js",
+    "test": "nyc --require babel-polyfill mocha build/test/index.spec.js --exit",
+    "model": "babel-node models/controller/populate",
+    "test-dev": "nyc --require @babel/register --require @babel/polyfill mocha test/index.spec.js --exit",
+    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "heroku-postbuild": "npm run build && babel-node models/controller/populate"
+>>>>>>> ch-refactor-165853483
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
@@ -20,6 +31,10 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chai-http": "^4.2.1",
+<<<<<<< HEAD
+=======
+    "cors": "^2.8.5",
+>>>>>>> ch-refactor-165853483
     "debug": "^4.1.1",
     "dotenv": "^7.0.0",
     "eslint-config-airbnb": "^17.1.0",

@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 import debug from "debug";
+=======
+import dotenv from "dotenv";
+>>>>>>> ch-refactor-165853483
 import app from "./app";
-// eslint-disable-next-line import/named
-import { Port } from "./config";
 
-const port = process.env.PORT || Port;
+dotenv.config();
+
+
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server running at port:${port}...`);
 });

@@ -10,7 +10,11 @@ const router = express.Router();
 // View All Account //
 // /////////////////
 
+<<<<<<< HEAD
 router.get("/accounts", isLoggedIn.staff_admin, validate.allAccount, checks.db, accountData.viewAllAccount)
+=======
+router.get("/accounts", isLoggedIn.staff_admin, validate.allAccount, checks.db, accountData.viewAllAccount);
+>>>>>>> ch-refactor-165853483
 
 // /////////////////////////
 // View specific Account //
@@ -31,9 +35,9 @@ router.post("/accounts", validate.createAccount, isLoggedIn.user, accountData.cr
 router.patch("/accounts/:accountNumber", isLoggedIn.staff_admin, validate.changeAccountStatus, checks.accountCheck, accountData.changeAccountStatus);
 
 // ////////////////////////
- /// Delete Account ///
+// // Delete Account //////
 // //////////////////////
 
 router.delete("/accounts/:accountNumber", isLoggedIn.staff_admin, validate.deleteAccount, checks.accountCheck, accountData.deleteAccount);
 
-module.exports = router;
+export default router;

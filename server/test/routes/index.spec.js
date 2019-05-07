@@ -1,6 +1,5 @@
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
-import data from "../../controllers/dbController";
 import app from "../../app";
 
 chai.use(chaiHttp);

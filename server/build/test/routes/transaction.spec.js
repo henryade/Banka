@@ -23,9 +23,16 @@ _chai2.default.use(_chaiHttp2.default);
 var testAccountNumber1 = 9000134322;
 var wrongAccountNumber = 8000134354;
 var testAccountNumber2 = 9000134354;
+<<<<<<< HEAD
 var testAccountNumber = 9000134302;
 
 var token = null;
+=======
+var testAccountNumber = 9000240793;
+
+var token = null;
+var token1 = null;
+>>>>>>> ch-refactor-165853483
 var token2 = null;
 
 before(function () {
@@ -37,6 +44,16 @@ before(function () {
     isAdmin: false
   }, process.env.JWT_KEY);
 
+<<<<<<< HEAD
+=======
+  token1 = _jsonwebtoken2.default.sign({
+    email: "clasiqaas@gmail.com",
+    password: "password",
+    type: "client",
+    isAdmin: false
+  }, process.env.JWT_KEY);
+
+>>>>>>> ch-refactor-165853483
   token2 = _jsonwebtoken2.default.sign({
     email: "user5@gmail.com",
     password: "password",
@@ -88,10 +105,25 @@ describe("View specific transaction test", function () {
 
   it("should not display a transaction if id is invalid", function (done) {
     _chai2.default.request(_app2.default).get("/api/v1/transactions/87").set("authorization", "Bearer " + token2).end(function (error, response) {
+<<<<<<< HEAD
       (0, _chai.expect)(response).to.have.status(404);
       (0, _chai.expect)(response.body.error).to.equal("Invalid Transaction Id");
     });
     done();
+=======
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid Transaction Id");
+    });
+    done();
+  });
+
+  it("should not display a transaction if id is invalid", function (done) {
+    _chai2.default.request(_app2.default).get("/api/v1/transactions/1.1").set("authorization", "Bearer " + token2).end(function (error, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("transaction id contains incorrect parameters");
+    });
+    done();
+>>>>>>> ch-refactor-165853483
   });
 });
 
@@ -104,7 +136,11 @@ describe("Debit Account test", function () {
   });
 
   it("should debit a user when the parameters are correct", function (done) {
+<<<<<<< HEAD
     _chai2.default.request(_app2.default).post("/api/v1/transactions/9000134302/debit").set("authorization", "Bearer " + token).send({
+=======
+    _chai2.default.request(_app2.default).post("/api/v1/transactions/9000240793/debit").set("authorization", "Bearer " + token).send({
+>>>>>>> ch-refactor-165853483
       amount: 50000,
       depositor: "Hail",
       depositorPhoneNumber: "2348064372423"
@@ -187,7 +223,11 @@ describe("Credit Account test", function () {
   });
 
   it("should credit a user when the parameters are correct", function (done) {
+<<<<<<< HEAD
     _chai2.default.request(_app2.default).post("/api/v1/transactions/9000134394/credit").set("authorization", "Bearer " + token).send({
+=======
+    _chai2.default.request(_app2.default).post("/api/v1/transactions/9000240793/credit").set("authorization", "Bearer " + token).send({
+>>>>>>> ch-refactor-165853483
       amount: 600000,
       depositor: "Ben",
       depositorPhoneNumber: "2348064372423"

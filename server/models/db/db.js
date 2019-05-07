@@ -1,13 +1,21 @@
     
 import { Pool } from "pg";
+<<<<<<< HEAD
 import {
   USER, HOST, PASSWORD, DATABASE, DBPORT,
 } from "../../config";
 import { CREATETABLES } from "../controller";
+=======
+import dotenv from "dotenv";
+
+dotenv.config();
+// import { CREATETABLES } from "../controller";
+>>>>>>> ch-refactor-165853483
 
 class Model {
   constructor() {
     this.pool = Model.initConn();
+<<<<<<< HEAD
     this.createTable(CREATETABLES);
     this.pool.on("error", (err) => {
       console.log("Error occured");
@@ -15,6 +23,8 @@ class Model {
     this.pool.on("connect", (err) => {
       console.log("connection successful");
     });
+=======
+>>>>>>> ch-refactor-165853483
   }
 
   async createTable(type) {
@@ -48,11 +58,19 @@ class Model {
 
   static initConn() {
     const pool = new Pool({
+<<<<<<< HEAD
       user: USER,
       host: HOST,
       password: PASSWORD,
       database: DATABASE,
       port: DBPORT,
+=======
+      user: process.env.USER,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
+      port: process.env.DBPORT,
+      host: process.env.HOST,
+>>>>>>> ch-refactor-165853483
       ssl: true,
     });
     return pool;
@@ -60,4 +78,4 @@ class Model {
 }
 
 const model = new Model();
-module.exports = model;
+export default model;

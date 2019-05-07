@@ -1,53 +1,30 @@
 "use strict";
 
-<<<<<<< HEAD
-=======
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
->>>>>>> ch-refactor-165853483
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _pg = require("pg");
 
-<<<<<<< HEAD
-var _config = require("../../config");
-
-var _controller = require("../controller");
-=======
 var _dotenv = require("dotenv");
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
->>>>>>> ch-refactor-165853483
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-<<<<<<< HEAD
-=======
 _dotenv2.default.config();
-// import { CREATETABLES } from "../controller";
 
->>>>>>> ch-refactor-165853483
 var Model = function () {
   function Model() {
     _classCallCheck(this, Model);
 
     this.pool = Model.initConn();
-<<<<<<< HEAD
-    this.createTable(_controller.CREATETABLES);
-    this.pool.on("error", function (err) {
-      console.log("Error occured");
-    });
-    this.pool.on("connect", function (err) {
-      console.log("connection successful");
-    });
-=======
->>>>>>> ch-refactor-165853483
   }
 
   _createClass(Model, [{
@@ -226,20 +203,11 @@ var Model = function () {
     key: "initConn",
     value: function initConn() {
       var pool = new _pg.Pool({
-<<<<<<< HEAD
-        user: _config.USER,
-        host: _config.HOST,
-        password: _config.PASSWORD,
-        database: _config.DATABASE,
-        port: _config.DBPORT
-=======
-        user: process.env.USER,
-        password: process.env.PASSWORD,
-        database: process.env.DATABASE,
+        user: process.env.TESTUSER,
+        password: process.env.TESTPASSWORD,
+        database: process.env.TESTDATABASE,
         port: process.env.DBPORT,
-        host: process.env.HOST,
-        ssl: true
->>>>>>> ch-refactor-165853483
+        host: process.env.TESTHOST
       });
       return pool;
     }
@@ -249,8 +217,4 @@ var Model = function () {
 }();
 
 var model = new Model();
-<<<<<<< HEAD
-module.exports = model;
-=======
 exports.default = model;
->>>>>>> ch-refactor-165853483

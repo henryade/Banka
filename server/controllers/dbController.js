@@ -1,4 +1,3 @@
-import db from "../models/jsObject/database";
 import dbs from "../models/db/db";
 import { DBQUERY } from "../models/controller";
 
@@ -46,9 +45,15 @@ module.exports = {
     const result = await dbs.queryDb(DBQUERY.SELECT.USER.EMAIL([email]));
     return result;
   },
+<<<<<<< HEAD
   async findOwner(email) {
     const result = await dbs.queryDb(DBQUERY.SELECT.USER.OWNER([email]));
     return result.id;
+=======
+  async findOwner(id) {
+    const result = await dbs.queryDb(DBQUERY.SELECT.USER.ID([id]));
+    return result;
+>>>>>>> ch-refactor-165853483
   },
 
   async findStaff(email, type) {
@@ -105,8 +110,13 @@ module.exports = {
  * @param {any} value1 - the value to be matched
  * @return {obj}    - returns a account obj that meets the pararmeters specified
  */
+<<<<<<< HEAD
   async findAccount(type, accountNumber) {
     const res = await dbs.modifyDb(DBQUERY.SELECT.ACCOUNT.TYPE([type, accountNumber]));
+=======
+  async findAccount(type, email) {
+    const res = await dbs.modifyDb(DBQUERY.SELECT.ACCOUNT.TYPE([type, email]));
+>>>>>>> ch-refactor-165853483
     return res;
   },
   /**

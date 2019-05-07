@@ -12,12 +12,23 @@ var _app = require("../app");
 
 var _app2 = _interopRequireDefault(_app);
 
+<<<<<<< HEAD
 require("./routes/index.spec");
 
 require("./routes/user.spec");
 
 require("./routes/account.spec");
 
+=======
+var _auth = require("../utils/auth");
+
+require("./routes/index.spec");
+
+require("./routes/user.spec");
+
+require("./routes/account.spec");
+
+>>>>>>> ch-refactor-165853483
 require("./routes/transaction.spec");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -38,5 +49,17 @@ describe("Other Route test", function () {
       (0, _chai.expect)(response.text).to.include("Page Not Found");
     });
     done();
+<<<<<<< HEAD
+=======
+  });
+});
+
+describe("Function test", function () {
+  it("generate password function", function (done) {
+    var password = (0, _auth.generateRandomPassword)();
+    (0, _chai.expect)(password).to.be.a("string");
+    (0, _chai.expect)(password.length).to.be.above(9);
+    done();
+>>>>>>> ch-refactor-165853483
   });
 });

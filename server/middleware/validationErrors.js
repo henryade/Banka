@@ -1,15 +1,14 @@
 
 const errors = (res, error, fieldString) => {
+<<<<<<< HEAD
   let field = fieldString.replace(/([A-Z])/g, " $1").toLowerCase();
   if (fieldString === "dob") {
     field = fieldString.replace("dob", "date of birth");
   }
+=======
+  const field = fieldString.replace(/([A-Z])/g, " $1").toLowerCase();
+>>>>>>> ch-refactor-165853483
   switch (error.type) {
-    case "any.empty":
-      return res.status(400).json({
-        status: 400,
-        error: `${field} should not be empty`,
-      });
     case "any.required":
       return res.status(400).json({
         status: 400,

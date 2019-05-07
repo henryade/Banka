@@ -8,10 +8,18 @@ chai.use(chaiHttp);
 const testAccountNumber1 = 9000134322;
 const wrongAccountNumber = 8000134354;
 const testAccountNumber2 = 9000134354;
+<<<<<<< HEAD
 const testAccountNumber = 9000134302;
 
 
 let token = null;
+=======
+const testAccountNumber = 9000240793;
+
+
+let token = null;
+let token1 = null;
+>>>>>>> ch-refactor-165853483
 let token2 = null;
 
 before(() => {
@@ -23,6 +31,16 @@ before(() => {
     isAdmin: false,
   }, process.env.JWT_KEY);
 
+<<<<<<< HEAD
+=======
+  token1 = jwt.sign({
+    email: "clasiqaas@gmail.com",
+    password: "password",
+    type: "client",
+    isAdmin: false,
+  }, process.env.JWT_KEY);
+
+>>>>>>> ch-refactor-165853483
   token2 = jwt.sign({
     email: "user5@gmail.com",
     password: "password",
@@ -86,10 +104,24 @@ describe("View specific transaction test", () => {
       .get("/api/v1/transactions/87")
       .set("authorization", `Bearer ${token2}`)
       .end((error, response) => {
-        expect(response).to.have.status(404);
+        expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Invalid Transaction Id");
       });
     done();
+<<<<<<< HEAD
+=======
+  });
+
+  it("should not display a transaction if id is invalid", (done) => {
+    chai.request(app)
+      .get("/api/v1/transactions/1.1")
+      .set("authorization", `Bearer ${token2}`)
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("transaction id contains incorrect parameters");
+      });
+    done();
+>>>>>>> ch-refactor-165853483
   });
 });
 
@@ -107,7 +139,11 @@ describe("Debit Account test", () => {
 
   it("should debit a user when the parameters are correct", (done) => {
     chai.request(app)
+<<<<<<< HEAD
       .post(`/api/v1/transactions/9000134302/debit`)
+=======
+      .post("/api/v1/transactions/9000240793/debit")
+>>>>>>> ch-refactor-165853483
       .set("authorization", `Bearer ${token}`)
       .send({
         amount: 50000,
@@ -220,7 +256,11 @@ describe("Credit Account test", () => {
 
   it("should credit a user when the parameters are correct", (done) => {
     chai.request(app)
+<<<<<<< HEAD
       .post("/api/v1/transactions/9000134394/credit")
+=======
+      .post("/api/v1/transactions/9000240793/credit")
+>>>>>>> ch-refactor-165853483
       .set("authorization", `Bearer ${token}`)
       .send({
         amount: 600000,

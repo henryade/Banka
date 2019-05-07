@@ -36,27 +36,40 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static async createAccount(req, res) {
+<<<<<<< HEAD
     const accountNumber = generateAccountNumber();
     const createdOn = new Date(Date.now());
     const owner = await data.findOwner(req.body.email);
     const balance = req.body.openingBalance;
 
+=======
+>>>>>>> ch-refactor-165853483
     if (await data.findAccount(req.body.type, req.body.email)) {
       return res.status(400).json({
         status: 400,
         error: "Account Exists",
       });
     }
+    const accountNumber = generateAccountNumber();
+    const createdOn = new Date(Date.now());
+    const user = await data.findOneUser(req.body.email);
+    const owner = user.id;
+    const balance = req.body.openingBalance;
     let newAccount = {};
     try {
       newAccount = await data.createAccount(req.body.email, accountNumber, createdOn, owner, "active", req.body.type, balance);
     } catch (error) {
+      console.log(error);
       return res.status(400).json({
         status: 400,
-        error,
-      });
+        error: "Error Occured",
+      })
     }
+<<<<<<< HEAD
     res.status(201).json({
+=======
+    return res.status(201).json({
+>>>>>>> ch-refactor-165853483
       status: 201,
       data: newAccount,
     });
@@ -69,10 +82,21 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static async changeAccountStatus(req, res) {
-    const accounts = req.account;
- 
-    accounts.status = accounts.status === "active" ? "dormant" : "active";
-    const accountUpdate = await data.findAccountByStatus(accounts.status, parseInt(req.params.accountNumber));
+    const { account } = req;
+    account.status = account.status === "active" ? "dormant" : "active";
+    let accountUpdate = {};
+    try {
+      accountUpdate = await data
+        .findAccountByStatus(
+          account.status,
+          parseInt(req.params.accountNumber, 10),
+        );
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        error,
+      });
+    }
     return res.status(200).json({
       status: 200,
       data: accountUpdate,
@@ -86,14 +110,20 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static async deleteAccount(req, res) {
+<<<<<<< HEAD
     const deleted = await data.deleteAccount(parseInt(req.params.accountNumber));
     
+=======
+    const deleted = await data.deleteAccount(parseInt(req.params.accountNumber, 10));
+
+>>>>>>> ch-refactor-165853483
     if (deleted) {
       return res.status(200).json({
         status: 200,
         message: "Account Successfully Delete",
       });
     }
+    return null;
   }
 }
 

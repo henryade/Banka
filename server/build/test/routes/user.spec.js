@@ -23,6 +23,11 @@ _chai2.default.use(_chaiHttp2.default);
 var token = null;
 var token1 = null;
 var token2 = null;
+<<<<<<< HEAD
+=======
+var token3 = null;
+var token4 = null;
+>>>>>>> ch-refactor-165853483
 
 before(function () {
   token = _jsonwebtoken2.default.sign({
@@ -37,12 +42,32 @@ before(function () {
     isAdmin: false
   }, process.env.JWT_KEY);
 
+<<<<<<< HEAD
+=======
+  token3 = _jsonwebtoken2.default.sign({
+    email: "user20gmail.com",
+    password: "password",
+    type: "client",
+    isAdmin: false
+  }, process.env.JWT_KEY);
+
+>>>>>>> ch-refactor-165853483
   token2 = _jsonwebtoken2.default.sign({
     email: "user5@gmail.com",
     password: "password",
     type: "client",
     isAdmin: false
   }, process.env.JWT_KEY);
+<<<<<<< HEAD
+=======
+
+  token4 = _jsonwebtoken2.default.sign({
+    email: "admin3@gmail.com",
+    password: "staff0001",
+    type: "staff",
+    isAdmin: true
+  }, process.env.JWT_KEY);
+>>>>>>> ch-refactor-165853483
 });
 
 describe("Create Staff test", function () {
@@ -105,10 +130,17 @@ describe("Create Staff test", function () {
   });
 
   it("'should create staff when all the parameters are given", function (done) {
+<<<<<<< HEAD
     _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + token).send({
       firstName: "Forth",
       lastName: "Dedth",
       email: "staff000@gmail.com",
+=======
+    _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + token4).send({
+      firstName: "Forth",
+      lastName: "Dedth",
+      email: "staff002@gmail.com",
+>>>>>>> ch-refactor-165853483
       userType: "admin"
     }).end(function (error, response) {
       (0, _chai.expect)(response).to.have.status(201);
@@ -120,10 +152,17 @@ describe("Create Staff test", function () {
     done();
   });
   it("'should create staff when all the parameters are given", function (done) {
+<<<<<<< HEAD
     _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + token).send({
       firstName: "Forth",
       lastName: "Desth",
       email: "staff30000@gmail.com",
+=======
+    _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + token4).send({
+      firstName: "Forth",
+      lastName: "Desth",
+      email: "staff30@gmail.com",
+>>>>>>> ch-refactor-165853483
       userType: "staff"
     }).end(function (error, response) {
       (0, _chai.expect)(response).to.have.status(201);
@@ -146,6 +185,7 @@ describe("View all accounts by a user test", function () {
     done();
   });
 
+<<<<<<< HEAD
   // it("should not display if the email doesnt exist", (done) => {
   //   chai.request(app)
   //     .get("/api/v1/user/user20@gmail.com/accounts")
@@ -163,5 +203,29 @@ describe("View all accounts by a user test", function () {
       (0, _chai.expect)(response.body.error).to.equal("Email not found");
     });
     done();
+=======
+  it("should not display if the email doesnt exist", function (done) {
+    _chai2.default.request(_app2.default).get("/api/v1/user/user20@gmail.com/accounts").set("authorization", "Bearer " + token2).end(function (error, response) {
+      (0, _chai.expect)(response).have.a.status(403);
+      (0, _chai.expect)(response.body.message).to.equal("UnAuthorized User");
+    });
+    done();
+  });
+
+  it("should not display if the email doesnt exist", function (done) {
+    _chai2.default.request(_app2.default).get("/api/v1/user/user20@gmail.com/accounts").set("authorization", "Bearer " + token1).end(function (error, response) {
+      (0, _chai.expect)(response).have.a.status(404);
+      (0, _chai.expect)(response.body.error).to.equal("Email not found");
+    });
+    done();
+  });
+
+  it("should not display if the email doesnt exist", function (done) {
+    _chai2.default.request(_app2.default).get("/api/v1/user/user20gmail.com/accounts").set("authorization", "Bearer " + token3).end(function (error, response) {
+      (0, _chai.expect)(response).have.a.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("Invalid email");
+    });
+    done();
+>>>>>>> ch-refactor-165853483
   });
 });

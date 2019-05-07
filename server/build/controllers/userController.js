@@ -59,6 +59,10 @@ var UserController = function () {
       _bcryptjs2.default.compare(req.body.password, req.body.User.password, function (err, response) {
         if (response) {
           var token = _jsonwebtoken2.default.sign({
+<<<<<<< HEAD
+=======
+            id: req.body.User.id,
+>>>>>>> ch-refactor-165853483
             firstName: req.body.User.firstName,
             lastName: req.body.User.lastName,
             email: req.body.User.email,

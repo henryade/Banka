@@ -90,6 +90,8 @@ npm start -----------To run production ready app
 Project links:
 - Project homepage: https://henryade.github.io/Banka/
 - Repository: https://github.com/henryade/Banka
+- Heroku Deployment: https://bankaproject.herokuapp.com/
+- Pivotal Tracker User Stories: https://www.pivotaltracker.com/n/projects/2320074
 
   - In case of sensitive bugs like security vulnerabilities, please contact
     clasiqaas@email.com directly.
