@@ -19,13 +19,6 @@ const SchemaObject = {
     .required(),
   phoneNumber: Joi.string().trim().regex(/^234[7-9][0-1][0-9]+$/).length(13)
     .required(),
-<<<<<<< HEAD
-  email: Joi.string().email().regex(/^.+[.]\w{2,3}$/).required(),
-  password: Joi.string().regex(/.{7,}$/).required(),
-  confirmPassword: Joi.any().valid(Joi.ref("password")).required(),
-  phoneNumber: Joi.string().regex(/^234[7-9][0-1][0-9]+$/).length(13).required(),
-=======
->>>>>>> ch-refactor-165853483
   dob: Joi.date().min("01-01-1919").max(`${month}-${day}-${year}`).required(),
   balance: Joi.number().positive().max(2000000).required(),
   address: Joi.string().trim().max(50).required(),
@@ -35,11 +28,7 @@ const SchemaObject = {
   accountNumber: Joi.number().integer().positive().min(9000000001)
     .max(9999999999)
     .required(),
-<<<<<<< HEAD
-  amount: Joi.number().positive().min(10).max(10000000)
-=======
   amount: Joi.number().positive().min(100).max(10000000)
->>>>>>> ch-refactor-165853483
     .required(),
   type: Joi.string().trim().valid(["savings", "current", "fixed", "fixed deposit", "joint"]).lowercase()
     .required(),

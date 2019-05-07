@@ -24,37 +24,14 @@ var Email = function () {
     value: function transport() {
       return _nodemailer2.default.createTransport({
         service: "gmail",
-<<<<<<< HEAD
-        port: 465,
-        host: "smtp.gmail.com",
-        secure: true,
-        auth: {
-          type: "OAuth2",
-          user: process.env.EMAIL,
-          clientId: process.env.CLIENT_ID,
-          clientSecret: process.env.CLIENT_SECRET,
-          refreshToken: process.env.REFRESH_TOKEN,
-          accessToken: process.env.REFRESH_TOKEN
-=======
         auth: {
           user: process.env.EMAIL,
           pass: process.env.EMAIL_PASSWORD
->>>>>>> ch-refactor-165853483
         }
       });
     }
   }, {
     key: "sendMail",
-<<<<<<< HEAD
-    value: function sendMail(message) {
-      Email.transport().sendMail(message, function (err, info) {
-        if (err) {
-          console.log(err);
-        }
-        console.log("success");
-      });
-    }
-=======
     value: function sendMail(mail) {
       Email.transport().sendMail(mail, function (err) {
         if (err) {
@@ -73,7 +50,6 @@ var Email = function () {
         html: "<div style=\"font-family:georgia\">\n      <h1 style=\"background-color:#172A3A;color:white;padding-left:20px;border-radius:5% 90% 90% 5%;font-family:Comic Sans MS;\">Banka </h1>\n      <p style=\"padding-bottom:10px;padding-left:5px;\">Dear " + transaction.name + ",</p> \n                          <p style=\"padding-left:15px;\">Banka Bank eLectronic Notification Service (BeNS)\n                          We wish to inform you that a  transaction occurred on your account with us.</p>\n      \n                          <p style=\"padding-left:15px;\">The details of this transaction are shown below:</p>\n                          <p><strong style=\"padding-left:20px;\">Transaction Notification</strong></p>\n                          <div style=\"font-family:Verdana;\">\n          \n       <table style=\"border-collapse:collapse;font-size:14px;margin-left:30px\">\n         <tbody>\n           <tr>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Account Number</strong></td>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;\">" + transaction.accountNumber + "</td>\n           </tr>\n           <tr>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Transaction Location</strong></td>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;\">Banka, Lagos</td>\n           </tr>\n           <tr>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Type</strong></td>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;text-transform:capitalise;\">" + transaction.type + "</td>\n           </tr>\n           <tr>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Amount</strong></td>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;\">" + transaction.amount + "</td>\n           </tr>\n           <tr>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;\"><strong>Date</strong></td>\n             <td style=\"border:2px solid black;padding:10px;text-align:center;\">20-Mar-2019</td>\n           </tr>\n         </tbody>\n                            </table>                     \n                          </div>\n        <div style=\"background-color:#F5DEB3;border-top:1px solid black;margin-top:15px;padding-bottom:5px;\">\n          <p style=\"padding-left:20px;\"><strong>Old Balance <span style=\"display:inline-block;width:40px;padding-left:20px;\"> : </span>" + transaction.oldbalance + "</strong></p>\n          <p style=\"padding-left:20px;\"><strong>New Balance <span style=\"display:inline-block;width:40px;padding-left:15px;\"> : </span>" + transaction.newbalance + "</strong></p> </div>\n                           \n      <p style=\"text-align:center;margin-top:5px;font-size:13px;\"><strong>Thank you for choosing Banka Bank plc</strong></p>\n        </div>"
       };
     }
->>>>>>> ch-refactor-165853483
   }]);
 
   return Email;
