@@ -16,8 +16,8 @@ router.get("/accounts/:accountNumber/transactions",
 // View Specific Transaction //
 // ///////////////////////////
 
-router.get("/transactions/:transactionId", isLoggedIn.user,
-  validate.transaction, transactionData.viewSpecificTransaction);
+router.get("/transactions/:transactionId",
+  validate.transaction, isLoggedIn.user, transactionData.viewSpecificTransaction);
 
 // ///////////////////
 // Debit Account //

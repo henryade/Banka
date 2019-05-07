@@ -19,7 +19,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 _dotenv2.default.config();
-// import { CREATETABLES } from "../controller";
 
 var Model = function () {
   function Model() {
@@ -204,12 +203,11 @@ var Model = function () {
     key: "initConn",
     value: function initConn() {
       var pool = new _pg.Pool({
-        user: process.env.USER,
-        password: process.env.PASSWORD,
-        database: process.env.DATABASE,
+        user: process.env.TESTUSER,
+        password: process.env.TESTPASSWORD,
+        database: process.env.TESTDATABASE,
         port: process.env.DBPORT,
-        host: process.env.HOST,
-        ssl: true
+        host: process.env.TESTHOST
       });
       return pool;
     }

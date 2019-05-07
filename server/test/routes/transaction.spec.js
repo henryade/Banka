@@ -8,10 +8,11 @@ chai.use(chaiHttp);
 const testAccountNumber1 = 9000134322;
 const wrongAccountNumber = 8000134354;
 const testAccountNumber2 = 9000134354;
-const testAccountNumber = 9000134302;
+const testAccountNumber = 9000240793;
 
 
 let token = null;
+let token1 = null;
 let token2 = null;
 
 before(() => {
@@ -20,6 +21,13 @@ before(() => {
     email: "staff5@gmail.com",
     password: "staff0001",
     type: "staff",
+    isAdmin: false,
+  }, process.env.JWT_KEY);
+
+  token1 = jwt.sign({
+    email: "clasiqaas@gmail.com",
+    password: "password",
+    type: "client",
     isAdmin: false,
   }, process.env.JWT_KEY);
 
@@ -64,22 +72,22 @@ describe("View all account transaction test", () => {
 });
 
 describe("View specific transaction test", () => {
-  // it("should display a transaction if id is valid", (done) => {
-  //   chai.request(app)
-  //     .get("/api/v1/transactions/4")
-  //     .set("authorization", `Bearer ${token2}`)
-  //     .end((error, response) => {
-  //       expect(response).to.have.status(200);
-  //       expect(response.body.data).to.have.property("id");
-  //       expect(response.body.data).to.have.property("createdOn");
-  //       expect(response.body.data).to.have.property("type");
-  //       expect(response.body.data).to.have.property("accountNumber");
-  //       expect(response.body.data).to.have.property("amount");
-  //       expect(response.body.data).to.have.property("oldbalance");
-  //       expect(response.body.data).to.have.property("newbalance");
-  //     });
-  //   done();
-  // });
+  it("should display a transaction if id is valid", (done) => {
+    chai.request(app)
+      .get("/api/v1/transactions/1")
+      .set("authorization", `Bearer ${token2}`)
+      .end((error, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.data).to.have.property("id");
+        expect(response.body.data).to.have.property("createdOn");
+        expect(response.body.data).to.have.property("type");
+        expect(response.body.data).to.have.property("accountNumber");
+        expect(response.body.data).to.have.property("amount");
+        expect(response.body.data).to.have.property("oldbalance");
+        expect(response.body.data).to.have.property("newbalance");
+      });
+    done();
+  });
 
   it("should not display a transaction if id is invalid", (done) => {
     chai.request(app)
@@ -87,7 +95,18 @@ describe("View specific transaction test", () => {
       .set("authorization", `Bearer ${token2}`)
       .end((error, response) => {
         expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Invalid transaction id");
+        expect(response.body.error).to.equal("Invalid Transaction Id");
+      });
+    done();
+  });
+
+  it("should not display a transaction if id is invalid", (done) => {
+    chai.request(app)
+      .get("/api/v1/transactions/1.1")
+      .set("authorization", `Bearer ${token2}`)
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.error).to.equal("transaction id contains incorrect parameters");
       });
     done();
   });
@@ -107,7 +126,7 @@ describe("Debit Account test", () => {
 
   it("should debit a user when the parameters are correct", (done) => {
     chai.request(app)
-      .post("/api/v1/transactions/9000134302/debit")
+      .post("/api/v1/transactions/9000240793/debit")
       .set("authorization", `Bearer ${token}`)
       .send({
         amount: 50000,
@@ -220,7 +239,7 @@ describe("Credit Account test", () => {
 
   it("should credit a user when the parameters are correct", (done) => {
     chai.request(app)
-      .post("/api/v1/transactions/9000134394/credit")
+      .post("/api/v1/transactions/9000240793/credit")
       .set("authorization", `Bearer ${token}`)
       .send({
         amount: 600000,

@@ -59,6 +59,7 @@ var UserController = function () {
       _bcryptjs2.default.compare(req.body.password, req.body.User.password, function (err, response) {
         if (response) {
           var token = _jsonwebtoken2.default.sign({
+            id: req.body.User.id,
             firstName: req.body.User.firstName,
             lastName: req.body.User.lastName,
             email: req.body.User.email,
@@ -96,37 +97,48 @@ var UserController = function () {
 
       _bcryptjs2.default.hash(req.body.password, salt, function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(err, hash) {
-          var newUser;
+          var isAdmin, type, token, newUser, _newUser, password, user;
+
           return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
+                  isAdmin = false;
+                  type = "client";
+                  token = _jsonwebtoken2.default.sign({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    email: req.body.email,
+                    type: type,
+                    isAdmin: isAdmin
+                  }, process.env.JWT_KEY);
                   newUser = {};
-                  _context.prev = 1;
-                  _context.next = 4;
-                  return _dbController2.default.createUser(req.body.firstName.replace(/\s/g, ""), req.body.lastName.replace(/\s/g, ""), req.body.email, hash, "client", false);
+                  _context.prev = 4;
+                  _context.next = 7;
+                  return _dbController2.default.createUser(req.body.firstName.replace(/\s/g, ""), req.body.lastName.replace(/\s/g, ""), req.body.email, hash, type, isAdmin);
 
-                case 4:
+                case 7:
                   newUser = _context.sent;
+                  _newUser = newUser, password = _newUser.password, user = _objectWithoutProperties(_newUser, ["password"]);
                   return _context.abrupt("return", res.status(201).json({
                     status: 201,
-                    data: newUser
+                    data: _extends({ token: token }, user)
                   }));
 
-                case 8:
-                  _context.prev = 8;
-                  _context.t0 = _context["catch"](1);
+                case 12:
+                  _context.prev = 12;
+                  _context.t0 = _context["catch"](4);
                   return _context.abrupt("return", res.status(400).json({
                     status: 400,
                     error: _context.t0
                   }));
 
-                case 11:
+                case 15:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, _this, [[1, 8]]);
+          }, _callee, _this, [[4, 12]]);
         }));
 
         return function (_x, _x2) {

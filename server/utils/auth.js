@@ -11,7 +11,8 @@ export const generateRandomPassword = () => {
 export const generateAccountNumber = () => {
   const lengthOfAccountNumber = 999999;
   const bankAccountNumberBranding = 9000000000;
-  const uniqueNumber = bankAccountNumberBranding + Math.floor(Math.random() * lengthOfAccountNumber);
+  const uniqueNumber = bankAccountNumberBranding
+  + Math.floor(Math.random() * lengthOfAccountNumber);
 
   return uniqueNumber;
 };

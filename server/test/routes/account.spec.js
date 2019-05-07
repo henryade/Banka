@@ -2,7 +2,6 @@ import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 import jwt from "jsonwebtoken";
 import app from "../../app";
-import data from "../../controllers/dbController";
 
 chai.use(chaiHttp);
 
@@ -31,7 +30,6 @@ before(() => {
   }, process.env.JWT_KEY);
 });
 
-
 describe("View all bank account test", () => {
   it("should return all accounts in the database", (done) => {
     chai.request(app)
@@ -44,6 +42,16 @@ describe("View all bank account test", () => {
       });
     done();
   });
+  it("should not return all accounts in the database if the user is unauthorised", (done) => {
+    chai.request(app)
+      .get("/api/v1/accounts")
+      .set("authorization", `Bearer ${token2}`)
+      .end((err, response) => {
+        expect(response).to.have.status(403);
+        expect(response.body.message).to.equal("Not Authorized To Access this Site");
+      });
+    done();
+  });
 });
 
 describe("View all bank account query test", () => {
@@ -53,9 +61,9 @@ describe("View all bank account query test", () => {
       .set("authorization", `Bearer ${token}`)
       .end((err, response) => {
         expect(response).to.have.status(200);
-        // expect(response.body.data).to.be.an("array");
-        // expect(response.body.data[0]).to.be.an("object");
-        // expect(response.body.data[0].status).to.equal("active");
+        expect(response.body.data).to.be.an("array");
+        expect(response.body.data[0]).to.be.an("object");
+        expect(response.body.data[0].status).to.equal("active");
       });
     done();
   });
@@ -228,8 +236,8 @@ describe("Create Account test", () => {
   it("should create a user account if all credentials are given", (done) => {
     const payload = {
       openingBalance: 400040.34,
-      email: "user5@gmail.com",
-      type: "Savings",
+      email: "clasiqaas@gmail.com",
+      type: "savings",
     };
     chai.request(app)
       .post(endpoint)
@@ -246,6 +254,58 @@ describe("Create Account test", () => {
         expect(response.body.data).to.have.property("id");
         expect(response.body.data).to.have.property("status");
         expect(response.body.data).to.have.property("createdOn");
+      });
+    done();
+  });
+
+  it("should not create a user account if wrong token is given", (done) => {
+    const payload = {
+      openingBalance: 400040.34,
+      email: "user5@gmail.com",
+      type: "Savings",
+    };
+    chai.request(app)
+      .post(endpoint)
+      .set("authorization", `Bearer ${token}`)
+      .send(payload)
+
+      .end((err, response) => {
+        expect(response).to.have.status(403);
+        expect(response.body.message).to.equal("Not Authorized To Access this Site");
+      });
+    done();
+  });
+
+  it("should not create a user account if bad token is given", (done) => {
+    const payload = {
+      openingBalance: 400040.34,
+      email: "user5@gmail.com",
+      type: "Savings",
+    };
+    chai.request(app)
+      .post(endpoint)
+      .set("authorization", "Bearer rtcyvubm76546t789k09u544")
+      .send(payload)
+
+      .end((err, response) => {
+        expect(response).to.have.status(401);
+        expect(response.body.message).to.equal("Not Authorized");
+      });
+    done();
+  });
+  it("should not create a user account if bad token is given", (done) => {
+    const payload = {
+      openingBalance: 400040.34,
+      email: "user5@gmail.com",
+      type: "Savings",
+    };
+    chai.request(app)
+      .post(endpoint)
+      .send(payload)
+
+      .end((err, response) => {
+        expect(response).to.have.status(407);
+        expect(response.body.message).to.equal("Missing Authorization");
       });
     done();
   });

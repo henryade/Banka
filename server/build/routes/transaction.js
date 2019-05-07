@@ -34,7 +34,7 @@ router.get("/accounts/:accountNumber/transactions", _authorization2.default.user
 // View Specific Transaction //
 // ///////////////////////////
 
-router.get("/transactions/:transactionId", _authorization2.default.user, _validation2.default.transaction, _transactionController2.default.viewSpecificTransaction);
+router.get("/transactions/:transactionId", _validation2.default.transaction, _authorization2.default.user, _transactionController2.default.viewSpecificTransaction);
 
 // ///////////////////
 // Debit Account //

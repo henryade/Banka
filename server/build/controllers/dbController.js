@@ -1,9 +1,5 @@
 "use strict";
 
-var _database = require("../models/jsObject/database");
-
-var _database2 = _interopRequireDefault(_database);
-
 var _db = require("../models/db/db");
 
 var _db2 = _interopRequireDefault(_db);
@@ -119,18 +115,18 @@ module.exports = {
     return findOneUser;
   }(),
   findOwner: function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(email) {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(id) {
       var result;
       return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               _context4.next = 2;
-              return _db2.default.queryDb(_controller.DBQUERY.SELECT.USER.OWNER([email]));
+              return _db2.default.queryDb(_controller.DBQUERY.SELECT.USER.ID([id]));
 
             case 2:
               result = _context4.sent;
-              return _context4.abrupt("return", result.id);
+              return _context4.abrupt("return", result);
 
             case 4:
             case "end":
@@ -266,14 +262,14 @@ module.exports = {
   * @return {obj}    - returns a account obj that meets the pararmeters specified
   */
   findAccount: function () {
-    var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(type, accountNumber) {
+    var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(type, email) {
       var res;
       return regeneratorRuntime.wrap(function _callee8$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
               _context8.next = 2;
-              return _db2.default.modifyDb(_controller.DBQUERY.SELECT.ACCOUNT.TYPE([type, accountNumber]));
+              return _db2.default.modifyDb(_controller.DBQUERY.SELECT.ACCOUNT.TYPE([type, email]));
 
             case 2:
               res = _context8.sent;

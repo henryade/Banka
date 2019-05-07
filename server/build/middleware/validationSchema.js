@@ -25,7 +25,7 @@ var SchemaObject = {
   dob: _joi2.default.date().min("01-01-1919").max(month + "-" + day + "-" + year).required(),
   balance: _joi2.default.number().positive().max(2000000).required(),
   address: _joi2.default.string().trim().max(50).required(),
-  cashier: _joi2.default.number().integer().min(10000).positive().max(19999).required(),
+  cashier: _joi2.default.number().integer().positive().min(1).max(19999).required(),
   accountNumber: _joi2.default.number().integer().positive().min(9000000001).max(9999999999).required(),
   amount: _joi2.default.number().positive().min(100).max(10000000).required(),
   type: _joi2.default.string().trim().valid(["savings", "current", "fixed", "fixed deposit", "joint"]).lowercase().required(),

@@ -46,7 +46,7 @@ var TransactionController = function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _dbController2.default.findAllAccountTransactionsByAccountNumber(parseInt(req.params.accountNumber));
+                return _dbController2.default.findAllAccountTransactionsByAccountNumber(parseInt(req.params.accountNumber, 10));
 
               case 2:
                 transactions = _context.sent;
@@ -117,7 +117,7 @@ var TransactionController = function () {
               case 5:
                 return _context2.abrupt("return", res.status(404).json({
                   status: 404,
-                  error: "Invalid Transaction Id"
+                  error: "Transaction Id Not Found"
                 }));
 
               case 6:

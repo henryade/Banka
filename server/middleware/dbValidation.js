@@ -9,7 +9,6 @@ const error = (res, status, msg) => res.status(status).json({
 
 exports.accountCheck = async (req, res, next) => {
   const account = await data.findAccountByAccountNumber(parseInt(req.params.accountNumber, 10));
-
   if (!account) {
     return error(res, 404, "Account Not Found");
   }
@@ -57,9 +56,8 @@ exports.db = async (req, res, next) => {
 exports.email = async (req, res, next) => {
   const response = await data.findAccountByEmail(req.params.email);
   if (response.length === 0 || response[0] === undefined) {
-    return error(res, 400, "Email not found");
+    return error(res, 404, "Email not found");
   }
-
   next();
   return null;
 };

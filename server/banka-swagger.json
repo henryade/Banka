@@ -1,0 +1,720 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Banka",
+    "description" : "A light-weight core banking application that manage all bank account operations. A bank that is readily available to you anywhere you go and also allow you to perform most banking activities.",
+    "version" : "v1-oas3"
+  },
+  "servers" : [ {
+    "url" : "https://bankaproject.herokuapp.com/api/v1"
+  }, {
+    "url" : "http://localhost:3030/api/v1"
+  } ],
+  "tags" : [ {
+    "name" : "Users",
+    "description" : "API for creating and authorising users in the app"
+  }, {
+    "name" : "Accounts",
+    "description" : "API for all account operations in the app"
+  }, {
+    "name" : "Transactions",
+    "description" : "API for all Transactions in the app"
+  } ],
+  "paths" : {
+    "/auth/signup" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Register new users",
+        "operationId" : "signUp",
+        "requestBody" : {
+          "description" : "register new users into banka",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Account Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Login existing users",
+        "operationId" : "Login",
+        "requestBody" : {
+          "description" : "authenticate existing user",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_1"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Login Successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Authorization Failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Get all bank accounts",
+        "responses" : {
+          "200" : {
+            "description" : "Successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/accounts"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Accounts Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Create new account",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_2"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/accounts"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountNumber}" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "View a specific account",
+        "parameters" : [ {
+          "name" : "accountNumber",
+          "in" : "path",
+          "description" : "Account Number",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1000000000,
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/accounts"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Delete a specific account",
+        "parameters" : [ {
+          "name" : "accountNumber",
+          "in" : "path",
+          "description" : "Account Number",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1000000000,
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/accounts"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/account/{accountNumber}" : {
+      "patch" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Activate/Deactivate an account status",
+        "parameters" : [ {
+          "name" : "accountNumber",
+          "in" : "path",
+          "description" : "Account Number",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1000000000,
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_3"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/accounts"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/transactions/{transactionId}" : {
+      "get" : {
+        "tags" : [ "Transactions" ],
+        "summary" : "Gets a specific transaction",
+        "parameters" : [ {
+          "name" : "transactionId",
+          "in" : "path",
+          "description" : "Transaction Id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/transactions"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountNumber}/transactions" : {
+      "get" : {
+        "tags" : [ "Transactions" ],
+        "summary" : "Get all transactions by account",
+        "parameters" : [ {
+          "name" : "accountNumber",
+          "in" : "path",
+          "description" : "Account Number",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1000000000,
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/transactions"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/transactions/{accountNumber}/credit" : {
+      "post" : {
+        "tags" : [ "Transactions" ],
+        "summary" : "Credits a user account",
+        "parameters" : [ {
+          "name" : "accountNumber",
+          "in" : "path",
+          "description" : "accountnumber",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1000000000,
+            "type" : "number"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_4"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/transactions"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/transactions/{accountNumber}/debit" : {
+      "post" : {
+        "tags" : [ "Transactions" ],
+        "summary" : "Debits a user account",
+        "parameters" : [ {
+          "name" : "accountNumber",
+          "in" : "path",
+          "description" : "Account Number",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1000000000,
+            "type" : "number"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_5"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/accounts"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/user/{email}/accounts" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "View a user's accounts by email",
+        "parameters" : [ {
+          "name" : "email",
+          "in" : "path",
+          "description" : "Accounts owned by a specific user",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "User Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/accounts"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/user" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Create a new staff or admin",
+        "responses" : {
+          "201" : {
+            "description" : "User Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "accounts" : {
+        "type" : "object",
+        "properties" : {
+          "accountNumber" : {
+            "type" : "integer"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "createdOn" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "balance" : {
+            "type" : "number"
+          }
+        }
+      },
+      "transactions" : {
+        "type" : "object",
+        "properties" : {
+          "transactionId" : {
+            "type" : "integer"
+          },
+          "accountNumber" : {
+            "type" : "integer"
+          },
+          "createdOn" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "oldBalance" : {
+            "type" : "integer"
+          },
+          "newBalance" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "users" : {
+        "type" : "object",
+        "properties" : {
+          "token" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "response" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "number"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "body" : {
+        "type" : "object",
+        "properties" : {
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        }
+      },
+      "body_1" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        }
+      },
+      "body_2" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "openingBalance" : {
+            "type" : "number"
+          }
+        }
+      },
+      "body_3" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string"
+          }
+        }
+      },
+      "body_4" : {
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number"
+          }
+        }
+      },
+      "body_5" : {
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer"
+      }
+    }
+  }
+}

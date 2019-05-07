@@ -224,10 +224,9 @@ exports.email = function () {
               break;
             }
 
-            return _context6.abrupt("return", error(res, 400, "Email not found"));
+            return _context6.abrupt("return", error(res, 404, "Email not found"));
 
           case 5:
-
             next();
             return _context6.abrupt("return", null);
 

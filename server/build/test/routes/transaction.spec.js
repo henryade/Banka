@@ -23,9 +23,10 @@ _chai2.default.use(_chaiHttp2.default);
 var testAccountNumber1 = 9000134322;
 var wrongAccountNumber = 8000134354;
 var testAccountNumber2 = 9000134354;
-var testAccountNumber = 9000134302;
+var testAccountNumber = 9000240793;
 
 var token = null;
+var token1 = null;
 var token2 = null;
 
 before(function () {
@@ -34,6 +35,13 @@ before(function () {
     email: "staff5@gmail.com",
     password: "staff0001",
     type: "staff",
+    isAdmin: false
+  }, process.env.JWT_KEY);
+
+  token1 = _jsonwebtoken2.default.sign({
+    email: "clasiqaas@gmail.com",
+    password: "password",
+    type: "client",
     isAdmin: false
   }, process.env.JWT_KEY);
 
@@ -72,27 +80,32 @@ describe("View all account transaction test", function () {
 });
 
 describe("View specific transaction test", function () {
-  // it("should display a transaction if id is valid", (done) => {
-  //   chai.request(app)
-  //     .get("/api/v1/transactions/4")
-  //     .set("authorization", `Bearer ${token2}`)
-  //     .end((error, response) => {
-  //       expect(response).to.have.status(200);
-  //       expect(response.body.data).to.have.property("id");
-  //       expect(response.body.data).to.have.property("createdOn");
-  //       expect(response.body.data).to.have.property("type");
-  //       expect(response.body.data).to.have.property("accountNumber");
-  //       expect(response.body.data).to.have.property("amount");
-  //       expect(response.body.data).to.have.property("oldbalance");
-  //       expect(response.body.data).to.have.property("newbalance");
-  //     });
-  //   done();
-  // });
+  it("should display a transaction if id is valid", function (done) {
+    _chai2.default.request(_app2.default).get("/api/v1/transactions/1").set("authorization", "Bearer " + token2).end(function (error, response) {
+      (0, _chai.expect)(response).to.have.status(200);
+      (0, _chai.expect)(response.body.data).to.have.property("id");
+      (0, _chai.expect)(response.body.data).to.have.property("createdOn");
+      (0, _chai.expect)(response.body.data).to.have.property("type");
+      (0, _chai.expect)(response.body.data).to.have.property("accountNumber");
+      (0, _chai.expect)(response.body.data).to.have.property("amount");
+      (0, _chai.expect)(response.body.data).to.have.property("oldbalance");
+      (0, _chai.expect)(response.body.data).to.have.property("newbalance");
+    });
+    done();
+  });
 
   it("should not display a transaction if id is invalid", function (done) {
     _chai2.default.request(_app2.default).get("/api/v1/transactions/87").set("authorization", "Bearer " + token2).end(function (error, response) {
       (0, _chai.expect)(response).to.have.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("Invalid transaction id");
+      (0, _chai.expect)(response.body.error).to.equal("Invalid Transaction Id");
+    });
+    done();
+  });
+
+  it("should not display a transaction if id is invalid", function (done) {
+    _chai2.default.request(_app2.default).get("/api/v1/transactions/1.1").set("authorization", "Bearer " + token2).end(function (error, response) {
+      (0, _chai.expect)(response).to.have.status(400);
+      (0, _chai.expect)(response.body.error).to.equal("transaction id contains incorrect parameters");
     });
     done();
   });
@@ -107,7 +120,7 @@ describe("Debit Account test", function () {
   });
 
   it("should debit a user when the parameters are correct", function (done) {
-    _chai2.default.request(_app2.default).post("/api/v1/transactions/9000134302/debit").set("authorization", "Bearer " + token).send({
+    _chai2.default.request(_app2.default).post("/api/v1/transactions/9000240793/debit").set("authorization", "Bearer " + token).send({
       amount: 50000,
       depositor: "Hail",
       depositorPhoneNumber: "2348064372423"
@@ -190,7 +203,7 @@ describe("Credit Account test", function () {
   });
 
   it("should credit a user when the parameters are correct", function (done) {
-    _chai2.default.request(_app2.default).post("/api/v1/transactions/9000134394/credit").set("authorization", "Bearer " + token).send({
+    _chai2.default.request(_app2.default).post("/api/v1/transactions/9000240793/credit").set("authorization", "Bearer " + token).send({
       amount: 600000,
       depositor: "Ben",
       depositorPhoneNumber: "2348064372423"

@@ -12,6 +12,8 @@ var _app = require("../app");
 
 var _app2 = _interopRequireDefault(_app);
 
+var _auth = require("../utils/auth");
+
 require("./routes/index.spec");
 
 require("./routes/user.spec");
@@ -37,6 +39,15 @@ describe("Other Route test", function () {
       (0, _chai.expect)(response).have.a.status(404);
       (0, _chai.expect)(response.text).to.include("Page Not Found");
     });
+    done();
+  });
+});
+
+describe("Function test", function () {
+  it("generate password function", function (done) {
+    var password = (0, _auth.generateRandomPassword)();
+    (0, _chai.expect)(password).to.be.a("string");
+    (0, _chai.expect)(password.length).to.be.above(9);
     done();
   });
 });

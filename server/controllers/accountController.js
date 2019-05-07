@@ -36,25 +36,26 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static async createAccount(req, res) {
-    const accountNumber = generateAccountNumber();
-    const createdOn = new Date(Date.now());
-    const owner = await data.findOwner(req.body.email);
-    const balance = req.body.openingBalance;
-
     if (await data.findAccount(req.body.type, req.body.email)) {
       return res.status(400).json({
         status: 400,
         error: "Account Exists",
       });
     }
+    const accountNumber = generateAccountNumber();
+    const createdOn = new Date(Date.now());
+    const user = await data.findOneUser(req.body.email);
+    const owner = user.id;
+    const balance = req.body.openingBalance;
     let newAccount = {};
     try {
       newAccount = await data.createAccount(req.body.email, accountNumber, createdOn, owner, "active", req.body.type, balance);
     } catch (error) {
+      console.log(error);
       return res.status(400).json({
         status: 400,
-        error,
-      });
+        error: "Error Occured",
+      })
     }
     return res.status(201).json({
       status: 201,
@@ -69,14 +70,13 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static async changeAccountStatus(req, res) {
-    const { accounts } = req;
-
-    accounts.status = accounts.status === "active" ? "dormant" : "active";
+    const { account } = req;
+    account.status = account.status === "active" ? "dormant" : "active";
     let accountUpdate = {};
     try {
       accountUpdate = await data
         .findAccountByStatus(
-          accounts.status,
+          account.status,
           parseInt(req.params.accountNumber, 10),
         );
     } catch (error) {

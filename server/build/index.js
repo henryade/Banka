@@ -1,16 +1,12 @@
 "use strict";
 
-var _debug = require("debug");
+var _dotenv = require("dotenv");
 
-var _debug2 = _interopRequireDefault(_debug);
+var _dotenv2 = _interopRequireDefault(_dotenv);
 
 var _app = require("./app");
 
 var _app2 = _interopRequireDefault(_app);
-
-var _dotenv = require("dotenv");
-
-var _dotenv2 = _interopRequireDefault(_dotenv);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

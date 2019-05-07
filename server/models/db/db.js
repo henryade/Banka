@@ -7,13 +7,6 @@ dotenv.config();
 class Model {
   constructor() {
     this.pool = Model.initConn();
-    // this.createTable(CREATETABLES);
-    // this.pool.on("error", (err) => {
-    //   console.log("Error occured");
-    // });
-    // this.pool.on("connect", (err) => {
-    //   console.log("connection successful");
-    // });
   }
 
   async createTable(type) {
@@ -47,7 +40,12 @@ class Model {
 
   static initConn() {
     const pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
+      user: process.env.USER,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
+      port: process.env.DBPORT,
+      host: process.env.HOST,
+      ssl: true,
     });
     return pool;
   }

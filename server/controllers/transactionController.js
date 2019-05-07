@@ -1,5 +1,5 @@
 import data from "./dbController";
-import logic  from "../utils/transactionLogic";
+import logic from "../utils/transactionLogic";
 
 
 /**
@@ -14,7 +14,8 @@ class TransactionController {
  * @return {obj}    - returns response object
  */
   static async viewAllAccountTransaction(req, res) {
-    const transactions = await data.findAllAccountTransactionsByAccountNumber(parseInt(req.params.accountNumber));
+    const transactions = await data
+      .findAllAccountTransactionsByAccountNumber(parseInt(req.params.accountNumber, 10));
     if (transactions.length !== 0) {
       return res.status(200).json({
         status: 200,
@@ -43,7 +44,7 @@ class TransactionController {
     }
     return res.status(404).json({
       status: 404,
-      error: "Invalid Transaction Id",
+      error: "Transaction Id Not Found",
     });
   }
 

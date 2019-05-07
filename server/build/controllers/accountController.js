@@ -66,25 +66,17 @@ var AccountController = function () {
     key: "createAccount",
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-        var accountNumber, createdOn, owner, balance, newAccount;
+        var accountNumber, createdOn, user, owner, balance, newAccount;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                accountNumber = (0, _auth.generateAccountNumber)();
-                createdOn = new Date(Date.now());
-                _context.next = 4;
-                return _dbController2.default.findOwner(req.body.email);
-
-              case 4:
-                owner = _context.sent;
-                balance = req.body.openingBalance;
-                _context.next = 8;
+                _context.next = 2;
                 return _dbController2.default.findAccount(req.body.type, req.body.email);
 
-              case 8:
+              case 2:
                 if (!_context.sent) {
-                  _context.next = 10;
+                  _context.next = 4;
                   break;
                 }
 
@@ -93,37 +85,48 @@ var AccountController = function () {
                   error: "Account Exists"
                 }));
 
-              case 10:
+              case 4:
+                accountNumber = (0, _auth.generateAccountNumber)();
+                createdOn = new Date(Date.now());
+                _context.next = 8;
+                return _dbController2.default.findOneUser(req.body.email);
+
+              case 8:
+                user = _context.sent;
+                owner = user.id;
+                balance = req.body.openingBalance;
                 newAccount = {};
-                _context.prev = 11;
-                _context.next = 14;
+                _context.prev = 12;
+                _context.next = 15;
                 return _dbController2.default.createAccount(req.body.email, accountNumber, createdOn, owner, "active", req.body.type, balance);
 
-              case 14:
+              case 15:
                 newAccount = _context.sent;
-                _context.next = 20;
+                _context.next = 22;
                 break;
 
-              case 17:
-                _context.prev = 17;
-                _context.t0 = _context["catch"](11);
+              case 18:
+                _context.prev = 18;
+                _context.t0 = _context["catch"](12);
+
+                console.log(_context.t0);
                 return _context.abrupt("return", res.status(400).json({
                   status: 400,
-                  error: _context.t0
+                  error: "Error Occured"
                 }));
 
-              case 20:
+              case 22:
                 return _context.abrupt("return", res.status(201).json({
                   status: 201,
                   data: newAccount
                 }));
 
-              case 21:
+              case 23:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[11, 17]]);
+        }, _callee, this, [[12, 18]]);
       }));
 
       function createAccount(_x, _x2) {
@@ -144,19 +147,18 @@ var AccountController = function () {
     key: "changeAccountStatus",
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
-        var accounts, accountUpdate;
+        var account, accountUpdate;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                accounts = req.accounts;
+                account = req.account;
 
-
-                accounts.status = accounts.status === "active" ? "dormant" : "active";
+                account.status = account.status === "active" ? "dormant" : "active";
                 accountUpdate = {};
                 _context2.prev = 3;
                 _context2.next = 6;
-                return _dbController2.default.findAccountByStatus(accounts.status, parseInt(req.params.accountNumber, 10));
+                return _dbController2.default.findAccountByStatus(account.status, parseInt(req.params.accountNumber, 10));
 
               case 6:
                 accountUpdate = _context2.sent;

@@ -1,6 +1,7 @@
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 import app from "../app";
+import { generateRandomPassword } from "../utils/auth";
 import "./routes/index.spec";
 import "./routes/user.spec";
 import "./routes/account.spec";
@@ -25,6 +26,15 @@ describe("Other Route test", () => {
         expect(response).have.a.status(404);
         expect(response.text).to.include("Page Not Found");
       });
+    done();
+  });
+});
+
+describe("Function test", () => {
+  it("generate password function", (done) => {
+    const password = generateRandomPassword();
+    expect(password).to.be.a("string");
+    expect(password.length).to.be.above(9);
     done();
   });
 });

@@ -16,10 +16,6 @@ var _app = require("../../app");
 
 var _app2 = _interopRequireDefault(_app);
 
-var _dbController = require("../../controllers/dbController");
-
-var _dbController2 = _interopRequireDefault(_dbController);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _chai2.default.use(_chaiHttp2.default);
@@ -58,15 +54,22 @@ describe("View all bank account test", function () {
     });
     done();
   });
+  it("should not return all accounts in the database if the user is unauthorised", function (done) {
+    _chai2.default.request(_app2.default).get("/api/v1/accounts").set("authorization", "Bearer " + token2).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(403);
+      (0, _chai.expect)(response.body.message).to.equal("Not Authorized To Access this Site");
+    });
+    done();
+  });
 });
 
 describe("View all bank account query test", function () {
   it("should return all active accounts in the database", function (done) {
     _chai2.default.request(_app2.default).get("/api/v1/accounts?status=active").set("authorization", "Bearer " + token).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(200);
-      // expect(response.body.data).to.be.an("array");
-      // expect(response.body.data[0]).to.be.an("object");
-      // expect(response.body.data[0].status).to.equal("active");
+      (0, _chai.expect)(response.body.data).to.be.an("array");
+      (0, _chai.expect)(response.body.data[0]).to.be.an("object");
+      (0, _chai.expect)(response.body.data[0].status).to.equal("active");
     });
     done();
   });
@@ -195,8 +198,8 @@ describe("Create Account test", function () {
   it("should create a user account if all credentials are given", function (done) {
     var payload = {
       openingBalance: 400040.34,
-      email: "user5@gmail.com",
-      type: "Savings"
+      email: "clasiqaas@gmail.com",
+      type: "savings"
     };
     _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + token2).send(payload).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(201);
@@ -208,6 +211,44 @@ describe("Create Account test", function () {
       (0, _chai.expect)(response.body.data).to.have.property("id");
       (0, _chai.expect)(response.body.data).to.have.property("status");
       (0, _chai.expect)(response.body.data).to.have.property("createdOn");
+    });
+    done();
+  });
+
+  it("should not create a user account if wrong token is given", function (done) {
+    var payload = {
+      openingBalance: 400040.34,
+      email: "user5@gmail.com",
+      type: "Savings"
+    };
+    _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + token).send(payload).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(403);
+      (0, _chai.expect)(response.body.message).to.equal("Not Authorized To Access this Site");
+    });
+    done();
+  });
+
+  it("should not create a user account if bad token is given", function (done) {
+    var payload = {
+      openingBalance: 400040.34,
+      email: "user5@gmail.com",
+      type: "Savings"
+    };
+    _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer rtcyvubm76546t789k09u544").send(payload).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(401);
+      (0, _chai.expect)(response.body.message).to.equal("Not Authorized");
+    });
+    done();
+  });
+  it("should not create a user account if bad token is given", function (done) {
+    var payload = {
+      openingBalance: 400040.34,
+      email: "user5@gmail.com",
+      type: "Savings"
+    };
+    _chai2.default.request(_app2.default).post(endpoint).send(payload).end(function (err, response) {
+      (0, _chai.expect)(response).to.have.status(407);
+      (0, _chai.expect)(response.body.message).to.equal("Missing Authorization");
     });
     done();
   });
