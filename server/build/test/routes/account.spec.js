@@ -53,8 +53,6 @@ describe("View all bank account test", function () {
       (0, _chai.expect)(response.body.data[0]).to.be.an("object");
     });
     done();
-<<<<<<< HEAD
-=======
   });
   it("should not return all accounts in the database if the user is unauthorised", function (done) {
     _chai2.default.request(_app2.default).get("/api/v1/accounts").set("authorization", "Bearer " + token2).end(function (err, response) {
@@ -62,7 +60,6 @@ describe("View all bank account test", function () {
       (0, _chai.expect)(response.body.message).to.equal("Not Authorized To Access this Site");
     });
     done();
->>>>>>> ch-refactor-165853483
   });
 });
 
@@ -183,19 +180,6 @@ describe("Create Account test", function () {
       (0, _chai.expect)(response.body.error).to.equal("opening balance is required");
     });
     done();
-<<<<<<< HEAD
-  });
-
-  it("should not create accounts if email is invalid", function (done) {
-    var payload = {
-      email: "hyrgms.com",
-      openingBalance: 400040.34,
-      type: "Current"
-    };
-    _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + token2).send(payload).end(function (err, response) {
-      (0, _chai.expect)(response).to.have.status(400);
-      (0, _chai.expect)(response.body.error).to.equal("Invalid email");
-=======
   });
 
   it("should not create accounts if email is invalid", function (done) {
@@ -240,29 +224,10 @@ describe("Create Account test", function () {
     _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + token).send(payload).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(403);
       (0, _chai.expect)(response.body.message).to.equal("Not Authorized To Access this Site");
->>>>>>> ch-refactor-165853483
     });
     done();
   });
 
-<<<<<<< HEAD
-  it("should create a user account if all credentials are given", function (done) {
-    var payload = {
-      email: "user5@gmail.com",
-      openingBalance: 400040.34,
-      type: "Savings"
-    };
-    _chai2.default.request(_app2.default).post(endpoint).set("authorization", "Bearer " + token2).send(payload).end(function (err, response) {
-      (0, _chai.expect)(response).to.have.status(201);
-      (0, _chai.expect)(response.body).to.be.an("object");
-      (0, _chai.expect)(response).to.have.status(201);
-      (0, _chai.expect)(response.body.data).to.be.a("object");
-      (0, _chai.expect)(response.body.data).to.have.property("accountNumber");
-      (0, _chai.expect)(response.body.data).to.have.property("owner");
-      (0, _chai.expect)(response.body.data).to.have.property("id");
-      (0, _chai.expect)(response.body.data).to.have.property("status");
-      (0, _chai.expect)(response.body.data).to.have.property("createdOn");
-=======
   it("should not create a user account if bad token is given", function (done) {
     var payload = {
       openingBalance: 400040.34,
@@ -284,7 +249,6 @@ describe("Create Account test", function () {
     _chai2.default.request(_app2.default).post(endpoint).send(payload).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(407);
       (0, _chai.expect)(response.body.message).to.equal("Missing Authorization");
->>>>>>> ch-refactor-165853483
     });
     done();
   });

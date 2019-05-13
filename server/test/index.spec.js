@@ -1,10 +1,7 @@
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 import app from "../app";
-<<<<<<< HEAD
-=======
 import { generateRandomPassword } from "../utils/auth";
->>>>>>> ch-refactor-165853483
 import "./routes/index.spec";
 import "./routes/user.spec";
 import "./routes/account.spec";
@@ -30,8 +27,6 @@ describe("Other Route test", () => {
         expect(response.text).to.include("Page Not Found");
       });
     done();
-<<<<<<< HEAD
-=======
   });
 });
 
@@ -41,6 +36,5 @@ describe("Function test", () => {
     expect(password).to.be.a("string");
     expect(password.length).to.be.above(9);
     done();
->>>>>>> ch-refactor-165853483
   });
 });

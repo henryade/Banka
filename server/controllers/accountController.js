@@ -36,14 +36,6 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static async createAccount(req, res) {
-<<<<<<< HEAD
-    const accountNumber = generateAccountNumber();
-    const createdOn = new Date(Date.now());
-    const owner = await data.findOwner(req.body.email);
-    const balance = req.body.openingBalance;
-
-=======
->>>>>>> ch-refactor-165853483
     if (await data.findAccount(req.body.type, req.body.email)) {
       return res.status(400).json({
         status: 400,
@@ -59,17 +51,12 @@ class AccountController {
     try {
       newAccount = await data.createAccount(req.body.email, accountNumber, createdOn, owner, "active", req.body.type, balance);
     } catch (error) {
-      console.log(error);
       return res.status(400).json({
         status: 400,
         error: "Error Occured",
-      })
+      });
     }
-<<<<<<< HEAD
-    res.status(201).json({
-=======
     return res.status(201).json({
->>>>>>> ch-refactor-165853483
       status: 201,
       data: newAccount,
     });
@@ -110,13 +97,8 @@ class AccountController {
  * @return {obj}    - returns response object
  */
   static async deleteAccount(req, res) {
-<<<<<<< HEAD
-    const deleted = await data.deleteAccount(parseInt(req.params.accountNumber));
-    
-=======
     const deleted = await data.deleteAccount(parseInt(req.params.accountNumber, 10));
 
->>>>>>> ch-refactor-165853483
     if (deleted) {
       return res.status(200).json({
         status: 200,

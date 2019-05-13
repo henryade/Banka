@@ -30,10 +30,6 @@ before(() => {
   }, process.env.JWT_KEY);
 });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ch-refactor-165853483
 describe("View all bank account test", () => {
   it("should return all accounts in the database", (done) => {
     chai.request(app)
@@ -45,8 +41,6 @@ describe("View all bank account test", () => {
         expect(response.body.data[0]).to.be.an("object");
       });
     done();
-<<<<<<< HEAD
-=======
   });
   it("should not return all accounts in the database if the user is unauthorised", (done) => {
     chai.request(app)
@@ -57,7 +51,6 @@ describe("View all bank account test", () => {
         expect(response.body.message).to.equal("Not Authorized To Access this Site");
       });
     done();
->>>>>>> ch-refactor-165853483
   });
 });
 
@@ -226,14 +219,6 @@ describe("Create Account test", () => {
   it("should not create accounts if email is invalid", (done) => {
     const payload = {
       email: "hyrgms.com",
-<<<<<<< HEAD
-      openingBalance: 400040.34,
-      type: "Current",
-    };
-    chai.request(app)
-      .post(endpoint)
-      .set("authorization", `Bearer ${token2}`)
-=======
       openingBalance: 400040.34,
       type: "Current",
     };
@@ -282,26 +267,14 @@ describe("Create Account test", () => {
     chai.request(app)
       .post(endpoint)
       .set("authorization", `Bearer ${token}`)
->>>>>>> ch-refactor-165853483
       .send(payload)
       .end((err, response) => {
-<<<<<<< HEAD
-        expect(response).to.have.status(400);
-        expect(response.body.error).to.equal("Invalid email");
-=======
         expect(response).to.have.status(403);
         expect(response.body.message).to.equal("Not Authorized To Access this Site");
->>>>>>> ch-refactor-165853483
       });
     done();
   });
 
-<<<<<<< HEAD
-  it("should create a user account if all credentials are given", (done) => {
-    const payload = {
-      email: "user5@gmail.com",
-      openingBalance: 400040.34,
-=======
   it("should not create a user account if bad token is given", (done) => {
     const payload = {
       openingBalance: 400040.34,
@@ -323,29 +296,15 @@ describe("Create Account test", () => {
     const payload = {
       openingBalance: 400040.34,
       email: "user5@gmail.com",
->>>>>>> ch-refactor-165853483
       type: "Savings",
     };
     chai.request(app)
       .post(endpoint)
-      .set("authorization", `Bearer ${token2}`)
       .send(payload)
 
       .end((err, response) => {
-<<<<<<< HEAD
-        expect(response).to.have.status(201);
-        expect(response.body).to.be.an("object");
-        expect(response).to.have.status(201);
-        expect(response.body.data).to.be.a("object");
-        expect(response.body.data).to.have.property("accountNumber");
-        expect(response.body.data).to.have.property("owner");
-        expect(response.body.data).to.have.property("id");
-        expect(response.body.data).to.have.property("status");
-        expect(response.body.data).to.have.property("createdOn");
-=======
         expect(response).to.have.status(407);
         expect(response.body.message).to.equal("Missing Authorization");
->>>>>>> ch-refactor-165853483
       });
     done();
   });
