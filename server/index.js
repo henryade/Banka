@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import debug from "debug";
-=======
 import dotenv from "dotenv";
->>>>>>> ch-refactor-165853483
 import app from "./app";
 
 dotenv.config();

@@ -1,5 +1,9 @@
 "use strict";
 
+var _bcryptjs = require("bcryptjs");
+
+var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
+
 var _db = require("../db/db");
 
 var _db2 = _interopRequireDefault(_db);
@@ -12,13 +16,31 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var execute = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var hash, res, query;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _db2.default.createTable(_index.POPULATETABLES);
+            hash = _bcryptjs2.default.hashSync(process.env.superuserPassword, 10);
+            _context.next = 3;
+            return _db2.default.createTable(_index.CREATETABLES);
 
-          case 1:
+          case 3:
+            res = _context.sent;
+            query = {
+              text: "INSERT INTO users(\"firstName\",\"lastName\",email,password,type,\"isAdmin\") VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
+              values: [process.env.firstName, process.env.lastName, process.env.superuserEmail, hash, "staff", true]
+            };
+
+            if (!(res === undefined)) {
+              _context.next = 8;
+              break;
+            }
+
+            _context.next = 8;
+            return _db2.default.insertTable(query);
+
+          case 8:
           case "end":
             return _context.stop();
         }

@@ -3,11 +3,8 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import data from "./dbController";
 import { generateRandomPassword } from "../utils/auth";
-<<<<<<< HEAD
-=======
 
 dotenv.config();
->>>>>>> ch-refactor-165853483
 
 const salt = 10;
 
@@ -23,14 +20,9 @@ class UserController {
  */
   static signin(req, res) {
     bcrypt.compare(req.body.password, req.body.User.password, (err, response) => {
-<<<<<<< HEAD
-       if (response) {
-        const token = jwt.sign({
-=======
       if (response) {
         const token = jwt.sign({
           id: req.body.User.id,
->>>>>>> ch-refactor-165853483
           firstName: req.body.User.firstName,
           lastName: req.body.User.lastName,
           email: req.body.User.email,
@@ -41,10 +33,6 @@ class UserController {
         return res.status(200).json({
           status: 200,
           data: { token, ...user },
-<<<<<<< HEAD
-=======
-
->>>>>>> ch-refactor-165853483
         });
       }
       return res.status(401).json({
@@ -93,9 +81,6 @@ class UserController {
     const isAdmin = req.body.userType === "admin";
 
     bcrypt.hash(plainPassword, salt, async (err, hash) => {
-<<<<<<< HEAD
-      const newStaff = await data.createUser(req.body.firstName, req.body.lastName, req.body.email, hash, "staff", isAdmin);
-=======
       let newStaff = {};
       try {
         newStaff = await data.createUser(req.body.firstName, req.body.lastName, req.body.email, hash, "staff", isAdmin);
@@ -107,7 +92,6 @@ class UserController {
       }
 
       const { password, ...staff } = newStaff;
->>>>>>> ch-refactor-165853483
       return res.status(201).json({
         status: 201,
         plainPassword,

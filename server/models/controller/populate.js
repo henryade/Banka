@@ -1,7 +1,7 @@
 import dbs from "../db/db";
-import { CREATETABLES } from "./index";
+import { POPULATETABLES } from "./index";
 
 const execute = async () => {
-  dbs.createTable(CREATETABLES);
+  dbs.createTable(POPULATETABLES);
 };
 execute();

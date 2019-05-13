@@ -32,11 +32,7 @@ var router = _express2.default.Router();
 // View all Account Owned by a Specific User //
 // ///////////////////////////////////////////
 
-<<<<<<< HEAD
-router.get("/user/:email/accounts", _validation2.default.email, _dbValidation2.default.email, _authorization2.default.user, _userController2.default.getAccounts);
-=======
 router.get("/user/:email/accounts", _authorization2.default.user, _validation2.default.email, _dbValidation2.default.email, _userController2.default.getAccounts);
->>>>>>> ch-refactor-165853483
 
 // ////////////////
 // Create Staff //

@@ -1,19 +1,14 @@
 "use strict";
 
-<<<<<<< HEAD
-/**
- * Create Tables
- */
-var CREATETABLES = "\nDROP TABLE IF EXISTS users CASCADE;\nDROP TABLE IF EXISTS accounts CASCADE;\nDROP TABLE IF EXISTS transactions CASCADE;\n\nCREATE TABLE IF NOT EXISTS\n      users(\n        id SERIAL PRIMARY KEY UNIQUE,\n        \"firstName\" VARCHAR(25) NOT NULL,\n        \"lastName\" VARCHAR(25) NOT NULL,\n        email VARCHAR NOT NULL UNIQUE,\n        password TEXT NOT NULL,\n        type TEXT NOT NULL,\n        \"isAdmin\" boolean NOT NULL\n        );\n    CREATE TABLE IF NOT EXISTS\n      accounts(\n        id SERIAL PRIMARY KEY UNIQUE,\n        email VARCHAR NOT NULL UNIQUE,\n        \"accountNumber\" NUMERIC (10) NOT NULL UNIQUE,\n        owner INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n        type VARCHAR(20) NOT NULL,\n        \"createdOn\" TIMESTAMP,\n        status VARCHAR(7) NOT NULL,\n        balance NUMERIC (13, 2) NOT NULL\n      );\n  CREATE TABLE IF NOT EXISTS\n    transactions(\n      id SERIAL PRIMARY KEY UNIQUE,\n      type VARCHAR(6) NOT NULL,\n      \"accountNumber\" NUMERIC (10) NOT NULL REFERENCES accounts(\"accountNumber\") ON DELETE CASCADE,\n      cashier INTEGER REFERENCES users(id),\n      amount NUMERIC (12, 2) NOT NULL,\n      oldbalance NUMERIC (20, 2) NOT NULL,\n      newbalance NUMERIC (20, 2) NOT NULL,\n      \"createdOn\" TIMESTAMP,\n      depositor_name VARCHAR(25) NOT NULL,\n      depositor_phone_number NUMERIC (13) NOT NULL\n  );\n\n  INSERT INTO users(\"firstName\",\"lastName\",email,password,type,\"isAdmin\") VALUES ('Second','Nme','staff5@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',false), ('Second','Nme','user5@gmail.com','$2y$10$TMc8YcK/7CcCpfJRCToIQ.MOEU970aFyzMEF6epiPkCBfgvSOuKIq','client',false), ('Forth','Desth','admin3@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',true);\n  INSERT INTO accounts(email,\"accountNumber\",owner,type,\"createdOn\",status,balance) VALUES ('user6@gmail.com',9000134322,2,'Savings',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',400000.00), ('user5@gmail.com',9000134354,2,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'dormant',5000000.00), ('user75@gmail.com',9000134302,2,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',4000000.00), ('user7@gmail.com',9000134394,2,'Savings',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',5000000.00);\n  INSERT INTO transactions(type,\"accountNumber\",cashier,amount,oldbalance,newbalance,\"createdOn\",depositor_name,depositor_phone_number) VALUES ('credit',9000134322,1,4000, 400000, 394000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'henry',2348062879553), ('debit', 9000134354, 3,4000, 400000, 396000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553), ('debit', 9000134354, 3,4000, 396000, 39200, TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553);\n  ";
-=======
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 /**
  * Create Tables
  */
-var CREATETABLES = "\nDROP TABLE IF EXISTS users CASCADE;\nDROP TABLE IF EXISTS accounts CASCADE;\nDROP TABLE IF EXISTS transactions CASCADE;\n\nCREATE TABLE IF NOT EXISTS\n      users(\n        id SERIAL PRIMARY KEY UNIQUE,\n        \"firstName\" VARCHAR(25) NOT NULL,\n        \"lastName\" VARCHAR(25) NOT NULL,\n        email VARCHAR NOT NULL UNIQUE,\n        password TEXT NOT NULL,\n        type TEXT NOT NULL,\n        \"isAdmin\" boolean NOT NULL\n        );\n    CREATE TABLE IF NOT EXISTS\n      accounts(\n        id SERIAL PRIMARY KEY UNIQUE,\n        email VARCHAR NOT NULL,\n        \"accountNumber\" NUMERIC (10) NOT NULL UNIQUE,\n        owner INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n        type VARCHAR(20) NOT NULL,\n        \"createdOn\" TIMESTAMP,\n        status VARCHAR(7) NOT NULL,\n        balance NUMERIC (13, 2) NOT NULL\n      );\n  CREATE TABLE IF NOT EXISTS\n    transactions(\n      id SERIAL PRIMARY KEY UNIQUE,\n      type VARCHAR(6) NOT NULL,\n      \"accountNumber\" NUMERIC (10) NOT NULL REFERENCES accounts(\"accountNumber\") ON DELETE CASCADE,\n      cashier INTEGER REFERENCES users(id),\n      amount NUMERIC (12, 2) NOT NULL,\n      oldbalance NUMERIC (20, 2) NOT NULL,\n      newbalance NUMERIC (20, 2) NOT NULL,\n      \"createdOn\" TIMESTAMP,\n      depositor_name VARCHAR(25) NOT NULL,\n      depositor_phone_number NUMERIC (13) NOT NULL\n  );\n\n  INSERT INTO users(\"firstName\",\"lastName\",email,password,type,\"isAdmin\") VALUES ('Second','Nme','staff5@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',false), ('Second','Name','user5@gmail.com','$2y$10$TMc8YcK/7CcCpfJRCToIQ.MOEU970aFyzMEF6epiPkCBfgvSOuKIq','client',false), ('Forth','Desth','admin3@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',true), ('Second','Name','clasiqaas@gmail.com','$2y$10$TMc8YcK/7CcCpfJRCToIQ.MOEU970aFyzMEF6epiPkCBfgvSOuKIq','client',false);\n  INSERT INTO accounts(email,\"accountNumber\",owner,type,\"createdOn\",status,balance) VALUES ('user5@gmail.com',9000134322,2,'Savings',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',400000.00), ('clasiqaas@gmail.com',9000240793,4,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',5000000.00), ('user5@gmail.com',9000134354,2,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'dormant',5000000.00);\n  INSERT INTO transactions(type,\"accountNumber\",cashier,amount,oldbalance,newbalance,\"createdOn\",depositor_name,depositor_phone_number) VALUES ('credit',9000134322,1,4000, 400000, 394000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'henry',2348062879553), ('debit', 9000134354, 3,4000, 400000, 396000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553), ('debit', 9000134354, 3,4000, 396000, 39200, TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553);\n  ";
->>>>>>> ch-refactor-165853483
+var CREATETABLES = "\nDROP TABLE IF EXISTS users CASCADE;\nDROP TABLE IF EXISTS accounts CASCADE;\nDROP TABLE IF EXISTS transactions CASCADE;\n\nCREATE TABLE IF NOT EXISTS\n      users(\n        id SERIAL PRIMARY KEY UNIQUE,\n        \"firstName\" VARCHAR(25) NOT NULL,\n        \"lastName\" VARCHAR(25) NOT NULL,\n        email VARCHAR NOT NULL UNIQUE,\n        password TEXT NOT NULL,\n        type TEXT NOT NULL,\n        \"isAdmin\" boolean NOT NULL\n        );\n    CREATE TABLE IF NOT EXISTS\n      accounts(\n        id SERIAL PRIMARY KEY UNIQUE,\n        email VARCHAR NOT NULL,\n        \"accountNumber\" NUMERIC (10) NOT NULL UNIQUE,\n        owner INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n        type VARCHAR(20) NOT NULL,\n        \"createdOn\" TIMESTAMP,\n        status VARCHAR(7) NOT NULL,\n        balance NUMERIC (13, 2) NOT NULL\n      );\n  CREATE TABLE IF NOT EXISTS\n    transactions(\n      id SERIAL PRIMARY KEY UNIQUE,\n      type VARCHAR(6) NOT NULL,\n      \"accountNumber\" NUMERIC (10) NOT NULL REFERENCES accounts(\"accountNumber\") ON DELETE CASCADE,\n      cashier INTEGER REFERENCES users(id),\n      amount NUMERIC (12, 2) NOT NULL,\n      oldbalance NUMERIC (20, 2) NOT NULL,\n      newbalance NUMERIC (20, 2) NOT NULL,\n      \"createdOn\" TIMESTAMP,\n      depositor_name VARCHAR(25) NOT NULL,\n      depositor_phone_number NUMERIC (13) NOT NULL\n  );\n ";
+
+var POPULATETABLES = "\nDROP TABLE IF EXISTS users CASCADE;\nDROP TABLE IF EXISTS accounts CASCADE;\nDROP TABLE IF EXISTS transactions CASCADE;\n\nCREATE TABLE IF NOT EXISTS\n      users(\n        id SERIAL PRIMARY KEY UNIQUE,\n        \"firstName\" VARCHAR(25) NOT NULL,\n        \"lastName\" VARCHAR(25) NOT NULL,\n        email VARCHAR NOT NULL UNIQUE,\n        password TEXT NOT NULL,\n        type TEXT NOT NULL,\n        \"isAdmin\" boolean NOT NULL\n        );\n    CREATE TABLE IF NOT EXISTS\n      accounts(\n        id SERIAL PRIMARY KEY UNIQUE,\n        email VARCHAR NOT NULL,\n        \"accountNumber\" NUMERIC (10) NOT NULL UNIQUE,\n        owner INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n        type VARCHAR(20) NOT NULL,\n        \"createdOn\" TIMESTAMP,\n        status VARCHAR(7) NOT NULL,\n        balance NUMERIC (13, 2) NOT NULL\n      );\n  CREATE TABLE IF NOT EXISTS\n    transactions(\n      id SERIAL PRIMARY KEY UNIQUE,\n      type VARCHAR(6) NOT NULL,\n      \"accountNumber\" NUMERIC (10) NOT NULL REFERENCES accounts(\"accountNumber\") ON DELETE CASCADE,\n      cashier INTEGER REFERENCES users(id),\n      amount NUMERIC (12, 2) NOT NULL,\n      oldbalance NUMERIC (20, 2) NOT NULL,\n      newbalance NUMERIC (20, 2) NOT NULL,\n      \"createdOn\" TIMESTAMP,\n      depositor_name VARCHAR(25) NOT NULL,\n      depositor_phone_number NUMERIC (13) NOT NULL\n  );\n\n  INSERT INTO users(\"firstName\",\"lastName\",email,password,type,\"isAdmin\") VALUES ('Second','Nme','staff5@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',false), ('Second','Name','user5@gmail.com','$2y$10$TMc8YcK/7CcCpfJRCToIQ.MOEU970aFyzMEF6epiPkCBfgvSOuKIq','client',false), ('Forth','Desth','admin3@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',true), ('Second','Name','clasiqaas@gmail.com','$2y$10$TMc8YcK/7CcCpfJRCToIQ.MOEU970aFyzMEF6epiPkCBfgvSOuKIq','client',false);\n  INSERT INTO accounts(email,\"accountNumber\",owner,type,\"createdOn\",status,balance) VALUES ('user5@gmail.com',9000134322,2,'Savings',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',400000.00), ('clasiqaas@gmail.com',9000240793,4,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',5000000.00), ('user5@gmail.com',9000134354,2,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'dormant',5000000.00);\n  INSERT INTO transactions(type,\"accountNumber\",cashier,amount,oldbalance,newbalance,\"createdOn\",depositor_name,depositor_phone_number) VALUES ('credit',9000134322,1,4000, 400000, 394000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'henry',2348062879553), ('debit', 9000134354, 3,4000, 400000, 396000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553), ('debit', 9000134354, 3,4000, 396000, 39200, TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553);\n  ";
 
 var DBQUERY = {
   GETALL: {
@@ -37,15 +32,9 @@ var DBQUERY = {
   },
   SELECT: {
     USER: {
-<<<<<<< HEAD
-      EMAIL: function EMAIL(values) {
-        return {
-          text: "SELECT * FROM users WHERE email = $1",
-=======
       ID: function ID(values) {
         return {
           text: "SELECT * FROM users WHERE id = $1",
->>>>>>> ch-refactor-165853483
           values: values
         };
       },
@@ -55,15 +44,9 @@ var DBQUERY = {
           values: values
         };
       },
-<<<<<<< HEAD
-      OWNER: function OWNER(values) {
-        return {
-          text: "SELECT id FROM users WHERE email = $1",
-=======
       EMAIL: function EMAIL(values) {
         return {
           text: "SELECT * FROM users WHERE email = $1",
->>>>>>> ch-refactor-165853483
           values: values
         };
       }
@@ -71,11 +54,7 @@ var DBQUERY = {
     ACCOUNT: {
       TYPE: function TYPE(values) {
         return {
-<<<<<<< HEAD
-          text: "SELECT * FROM users WHERE id IN (SELECT owner FROM accounts WHERE type = $1 AND \"accountNumber\" = $2)",
-=======
           text: "SELECT * FROM users WHERE id IN (SELECT owner FROM accounts WHERE type = $1 AND email = $2)",
->>>>>>> ch-refactor-165853483
           values: values
         };
       },
@@ -162,13 +141,6 @@ var DBQUERY = {
     }
   }
 };
-<<<<<<< HEAD
-
-module.exports = {
-  CREATETABLES: CREATETABLES,
-  DBQUERY: DBQUERY
-};
-=======
 exports.CREATETABLES = CREATETABLES;
 exports.DBQUERY = DBQUERY;
->>>>>>> ch-refactor-165853483
+exports.POPULATETABLES = POPULATETABLES;
