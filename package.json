@@ -9,7 +9,7 @@
     "start": "node --require babel-polyfill server/build/index.js",
     "test": "nyc --require babel-polyfill mocha server/build/test/**/*.spec.js --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov",
-    "heroku-postbuild": "npm run build && babel-node server/models/controller/populate"
+    "heroku-postbuild": "babel-node server/models/controller/superuser"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
