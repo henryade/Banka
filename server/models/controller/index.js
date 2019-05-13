@@ -19,11 +19,48 @@ CREATE TABLE IF NOT EXISTS
     CREATE TABLE IF NOT EXISTS
       accounts(
         id SERIAL PRIMARY KEY UNIQUE,
-<<<<<<< HEAD
-        email VARCHAR NOT NULL UNIQUE,
-=======
         email VARCHAR NOT NULL,
->>>>>>> ch-refactor-165853483
+        "accountNumber" NUMERIC (10) NOT NULL UNIQUE,
+        owner INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        type VARCHAR(20) NOT NULL,
+        "createdOn" TIMESTAMP,
+        status VARCHAR(7) NOT NULL,
+        balance NUMERIC (13, 2) NOT NULL
+      );
+  CREATE TABLE IF NOT EXISTS
+    transactions(
+      id SERIAL PRIMARY KEY UNIQUE,
+      type VARCHAR(6) NOT NULL,
+      "accountNumber" NUMERIC (10) NOT NULL REFERENCES accounts("accountNumber") ON DELETE CASCADE,
+      cashier INTEGER REFERENCES users(id),
+      amount NUMERIC (12, 2) NOT NULL,
+      oldbalance NUMERIC (20, 2) NOT NULL,
+      newbalance NUMERIC (20, 2) NOT NULL,
+      "createdOn" TIMESTAMP,
+      depositor_name VARCHAR(25) NOT NULL,
+      depositor_phone_number NUMERIC (13) NOT NULL
+  );
+ `;
+
+const POPULATETABLES = `
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS accounts CASCADE;
+DROP TABLE IF EXISTS transactions CASCADE;
+
+CREATE TABLE IF NOT EXISTS
+      users(
+        id SERIAL PRIMARY KEY UNIQUE,
+        "firstName" VARCHAR(25) NOT NULL,
+        "lastName" VARCHAR(25) NOT NULL,
+        email VARCHAR NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        type TEXT NOT NULL,
+        "isAdmin" boolean NOT NULL
+        );
+    CREATE TABLE IF NOT EXISTS
+      accounts(
+        id SERIAL PRIMARY KEY UNIQUE,
+        email VARCHAR NOT NULL,
         "accountNumber" NUMERIC (10) NOT NULL UNIQUE,
         owner INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         type VARCHAR(20) NOT NULL,
@@ -45,15 +82,9 @@ CREATE TABLE IF NOT EXISTS
       depositor_phone_number NUMERIC (13) NOT NULL
   );
 
-<<<<<<< HEAD
-  INSERT INTO users("firstName","lastName",email,password,type,"isAdmin") VALUES ('Second','Nme','staff5@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',false), ('Second','Nme','user5@gmail.com','$2y$10$TMc8YcK/7CcCpfJRCToIQ.MOEU970aFyzMEF6epiPkCBfgvSOuKIq','client',false), ('Forth','Desth','admin3@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',true) ON CONFLICT DO NOTHING;
-  INSERT INTO accounts(email,"accountNumber",owner,type,"createdOn",status,balance) VALUES ('user6@gmail.com',9000134322,2,'Savings',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',400000.00), ('user5@gmail.com',9000134354,2,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'dormant',5000000.00), ('user75@gmail.com',9000134302,2,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',4000000.00), ('user7@gmail.com',9000134394,2,'Savings',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',5000000.00) ON CONFLICT DO NOTHING;
-  INSERT INTO transactions(type,"accountNumber",cashier,amount,oldbalance,newbalance,"createdOn",depositor_name,depositor_phone_number) VALUES ('credit',9000134322,1,4000, 400000, 394000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'henry',2348062879553), ('debit', 9000134354, 3,4000, 400000, 396000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553), ('debit', 9000134354, 3,4000, 396000, 39200, TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553) ON CONFLICT DO NOTHING;
-=======
   INSERT INTO users("firstName","lastName",email,password,type,"isAdmin") VALUES ('Second','Nme','staff5@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',false), ('Second','Name','user5@gmail.com','$2y$10$TMc8YcK/7CcCpfJRCToIQ.MOEU970aFyzMEF6epiPkCBfgvSOuKIq','client',false), ('Forth','Desth','admin3@gmail.com','$2y$10$zrLAN0nrtJ1JyVMD6BHUM.ZXak4.rvrdP2whzeMuCudRuFCvcVzZm','staff',true), ('Second','Name','clasiqaas@gmail.com','$2y$10$TMc8YcK/7CcCpfJRCToIQ.MOEU970aFyzMEF6epiPkCBfgvSOuKIq','client',false);
   INSERT INTO accounts(email,"accountNumber",owner,type,"createdOn",status,balance) VALUES ('user5@gmail.com',9000134322,2,'Savings',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',400000.00), ('clasiqaas@gmail.com',9000240793,4,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'active',5000000.00), ('user5@gmail.com',9000134354,2,'Current',TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'dormant',5000000.00);
   INSERT INTO transactions(type,"accountNumber",cashier,amount,oldbalance,newbalance,"createdOn",depositor_name,depositor_phone_number) VALUES ('credit',9000134322,1,4000, 400000, 394000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'henry',2348062879553), ('debit', 9000134354, 3,4000, 400000, 396000,TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553), ('debit', 9000134354, 3,4000, 396000, 39200, TO_TIMESTAMP('01-01-2017 10:2', 'DD-MM-YYYY SS:MS'),'harry',2348062898553);
->>>>>>> ch-refactor-165853483
   `;
 
 const DBQUERY = {
@@ -87,11 +118,7 @@ const DBQUERY = {
     },
     ACCOUNT: {
       TYPE: values => ({
-<<<<<<< HEAD
-        text: "SELECT * FROM users WHERE id IN (SELECT owner FROM accounts WHERE type = $1 AND \"accountNumber\" = $2)",
-=======
         text: "SELECT * FROM users WHERE id IN (SELECT owner FROM accounts WHERE type = $1 AND email = $2)",
->>>>>>> ch-refactor-165853483
         values,
       }),
       EMAIL: values => ({
@@ -153,12 +180,8 @@ const DBQUERY = {
     }),
   },
 };
-<<<<<<< HEAD
-
-module.exports = {
-=======
 export {
->>>>>>> ch-refactor-165853483
   CREATETABLES,
   DBQUERY,
+  POPULATETABLES,
 };

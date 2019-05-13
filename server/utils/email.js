@@ -5,7 +5,7 @@ class Email {
     return nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL,
+        user: process.env.OfficialBankaEmail,
         pass: process.env.EMAIL_PASSWORD,
       },
     });

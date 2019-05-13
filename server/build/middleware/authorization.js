@@ -5,129 +5,11 @@ var _jsonwebtoken = require("jsonwebtoken");
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
 var _dbController = require("../controllers/dbController");
-<<<<<<< HEAD
-=======
-
-var _dbController2 = _interopRequireDefault(_dbController);
->>>>>>> ch-refactor-165853483
 
 var _dbController2 = _interopRequireDefault(_dbController);
 
-<<<<<<< HEAD
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = {
-  staff: function staff(req, res, next) {
-    var token = req.headers.authorization.split(" ")[1];
-    _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function (err, decoded) {
-      if (err) {
-        return res.status(401).json({
-          message: "Not Authorized"
-        });
-      }
-      if (decoded.type !== "staff" || decoded.isAdmin !== false) {
-        return res.status(401).json({
-          message: "Not Authorized To Access this Site"
-        });
-      }
-      req.userData = decoded;
-      next();
-    });
-    return null;
-  },
-  staff_admin: function staff_admin(req, res, next) {
-    if (!req.headers.authorization) {
-      return res.status(407).json({
-        message: "Missing Authorization"
-      });
-    }
-    var token = req.headers.authorization.split(" ")[1];
-    _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function (err, decoded) {
-      if (err) {
-        return res.status(401).json({
-          message: "Not Authorized"
-        });
-      }
-      if (decoded.type !== "staff") {
-        return res.status(401).json({
-          message: "Not Authorized To Access this Site"
-        });
-      }
-      req.userData = decoded;
-      next();
-    });
-    return null;
-  },
-  admin: function admin(req, res, next) {
-    if (!req.headers.authorization) {
-      return res.status(407).json({
-        message: "Missing Authorization"
-      });
-    }
-    var token = req.headers.authorization.split(" ")[1];
-    _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function (err, decoded) {
-      if (err) {
-        return res.status(401).json({
-          message: "Not Authorized"
-        });
-      }
-      if (decoded.isAdmin === false) {
-        return res.status(401).json({
-          message: "Not Authorized To Access this Site"
-        });
-      }
-      req.userData = decoded;
-      next();
-      return null;
-    });
-  },
-  user: function user(req, res, next) {
-    if (!req.headers.authorization) {
-      return res.status(407).json({
-        message: "Missing Authorization"
-      });
-    }
-    var token = req.headers.authorization.split(" ")[1];
-    _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function (err, decoded) {
-      if (err) {
-        return res.status(401).json({
-          message: "Not Authorized"
-        });
-      }
-      if (decoded.type !== "client") {
-        return res.status(401).json({
-          message: "Not Authorized To Access this Site"
-        });
-      }
-
-      if (req.params.email) {
-        if (req.params.email !== decoded.email) {
-          return res.status(401).json({
-            message: "UnAuthorized User"
-          });
-        }
-      }
-      if (req.params.accountNumber) {
-        if (_dbController2.default.findAccountByAccountNumber(req.params.accountNumber).owner !== decoded.id) {
-          return res.status(401).json({
-            message: "UnAuthorized User"
-          });
-        }
-      }
-      if (req.params.transactionId) {
-        if (_dbController2.default.findTransactionById(req.params.transactionId).accountNumber !== _dbController2.default.findAccountByEmail(decoded.email).accountNumber) {
-          return res.status(401).json({
-            message: "UnAuthorized User"
-          });
-        }
-      }
-
-      req.userData = decoded;
-      next();
-      return null;
-    });
-  }
-=======
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 exports.staff = function (req, res, next) {
@@ -331,5 +213,4 @@ exports.user = function (req, res, next) {
     };
   }());
   return null;
->>>>>>> ch-refactor-165853483
 };
