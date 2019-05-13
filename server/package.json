@@ -11,7 +11,7 @@
     "test": "npm run model && nyc --require babel-polyfill mocha build/test/index.spec.js --exit",
     "model": "babel-node models/controller/populate",
     "test-dev": "npm run model && nyc --require @babel/register --require @babel/polyfill mocha test/index.spec.js --exit",
-    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "author": "Adeola Adeyemo",
   "license": "ISC",
