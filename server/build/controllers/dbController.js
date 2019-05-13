@@ -1,24 +1,11 @@
 "use strict";
 
-<<<<<<< HEAD
-var _database = require("../models/jsObject/database");
-=======
-var _db = require("../models/db/db");
->>>>>>> ch-refactor-165853483
-
-var _db2 = _interopRequireDefault(_db);
-
-var _controller = require("../models/controller");
-
-<<<<<<< HEAD
 var _db = require("../models/db/db");
 
 var _db2 = _interopRequireDefault(_db);
 
 var _controller = require("../models/controller");
 
-=======
->>>>>>> ch-refactor-165853483
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -128,30 +115,18 @@ module.exports = {
     return findOneUser;
   }(),
   findOwner: function () {
-<<<<<<< HEAD
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(email) {
-=======
     var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(id) {
->>>>>>> ch-refactor-165853483
       var result;
       return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               _context4.next = 2;
-<<<<<<< HEAD
-              return _db2.default.queryDb(_controller.DBQUERY.SELECT.USER.OWNER([email]));
-
-            case 2:
-              result = _context4.sent;
-              return _context4.abrupt("return", result.id);
-=======
               return _db2.default.queryDb(_controller.DBQUERY.SELECT.USER.ID([id]));
 
             case 2:
               result = _context4.sent;
               return _context4.abrupt("return", result);
->>>>>>> ch-refactor-165853483
 
             case 4:
             case "end":
@@ -287,22 +262,14 @@ module.exports = {
   * @return {obj}    - returns a account obj that meets the pararmeters specified
   */
   findAccount: function () {
-<<<<<<< HEAD
-    var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(type, accountNumber) {
-=======
     var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(type, email) {
->>>>>>> ch-refactor-165853483
       var res;
       return regeneratorRuntime.wrap(function _callee8$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
               _context8.next = 2;
-<<<<<<< HEAD
-              return _db2.default.modifyDb(_controller.DBQUERY.SELECT.ACCOUNT.TYPE([type, accountNumber]));
-=======
               return _db2.default.modifyDb(_controller.DBQUERY.SELECT.ACCOUNT.TYPE([type, email]));
->>>>>>> ch-refactor-165853483
 
             case 2:
               res = _context8.sent;

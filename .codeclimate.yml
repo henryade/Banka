@@ -3,35 +3,35 @@ checks:
   argument-count:
     enabled: true
     config:
-      threshold: 15
+      threshold: 30
   complex-logic:
     enabled: true
     config:
-      threshold: 15
+      threshold: 30
   file-lines:
     enabled: true
     config:
-      threshold: 500
+      threshold: 1000
   method-complexity:
     enabled: true
     config:
-      threshold: 15
+      threshold: 25
   method-count:
     enabled: true
     config:
-      threshold: 20
+      threshold: 50
   method-lines:
     enabled: true
     config:
-      threshold: 200
+      threshold: 400
   nested-control-flow:
     enabled: true
     config:
-      threshold: 4
+      threshold: 10
   return-statements:
     enabled: true
     config:
-      threshold: 5
+      threshold: 10
   similar-code:
     enabled: true
     config:

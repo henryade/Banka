@@ -44,79 +44,6 @@ var transactionLogic = function transactionLogic(req, res, next) {
   footer(req, res, schema, next);
 };
 
-<<<<<<< HEAD
-module.exports = {
-  signUp: function signUp(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      firstName: _validationSchema2.default.name,
-      lastName: _validationSchema2.default.name,
-      email: _validationSchema2.default.email,
-      password: _validationSchema2.default.password,
-      confirmPassword: _validationSchema2.default.confirmPassword
-    });
-
-    footer(req, res, schema, next);
-  },
-  signIn: function signIn(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      email: _validationSchema2.default.email,
-      password: _validationSchema2.default.password
-    });
-    footer(req, res, schema, next);
-  },
-  createAccount: function createAccount(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      email: _validationSchema2.default.email,
-      openingBalance: _validationSchema2.default.balance,
-      type: _validationSchema2.default.type
-    });
-    footer(req, res, schema, next);
-  },
-  changeAccountStatus: function changeAccountStatus(req, res, next) {
-    logic(req, res, next);
-  },
-  deleteAccount: function deleteAccount(req, res, next) {
-    logic(req, res, next);
-  },
-  creditAccount: function creditAccount(req, res, next) {
-    transactionLogic(req, res, next);
-  },
-  debitAccount: function debitAccount(req, res, next) {
-    transactionLogic(req, res, next);
-  },
-  allAccount: function allAccount(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      status: _validationSchema2.default.status
-    });
-    var result = _joi2.default.validate(req.query, schema);
-    if (result.error) {
-      return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
-    }
-    next();
-  },
-  email: function email(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      email: _validationSchema2.default.email
-    });
-    var result = _joi2.default.validate(req.params, schema);
-    if (result.error) {
-      return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
-    }
-    next();
-  },
-  checkStaff: function checkStaff(req, res, next) {
-    var schema = _joi2.default.object().keys({
-      firstName: _validationSchema2.default.name,
-      lastName: _validationSchema2.default.name,
-      email: _validationSchema2.default.email,
-      userType: _validationSchema2.default.userType
-    });
-    var result = _joi2.default.validate(req.body, schema);
-    if (result.error) {
-      return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
-    }
-    next();
-=======
 exports.signUp = function (req, res, next) {
   var schema = _joi2.default.object().keys({
     firstName: _validationSchema2.default.name,
@@ -165,7 +92,6 @@ exports.allAccount = function (req, res, next) {
   var result = _joi2.default.validate(req.query, schema);
   if (result.error) {
     return (0, _validationErrors2.default)(res, result.error.details[0], result.error.details[0].context.label);
->>>>>>> ch-refactor-165853483
   }
   next();
   return null;

@@ -1,14 +1,8 @@
 "use strict";
 
-<<<<<<< HEAD
-var _debug = require("debug");
-
-var _debug2 = _interopRequireDefault(_debug);
-=======
 var _dotenv = require("dotenv");
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
->>>>>>> ch-refactor-165853483
 
 var _app = require("./app");
 

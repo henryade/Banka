@@ -8,10 +8,6 @@ var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
 
-var _nodemailer = require("nodemailer");
-
-var _nodemailer2 = _interopRequireDefault(_nodemailer);
-
 var _transactionController = require("../controllers/transactionController");
 
 var _transactionController2 = _interopRequireDefault(_transactionController);
@@ -38,11 +34,7 @@ router.get("/accounts/:accountNumber/transactions", _authorization2.default.user
 // View Specific Transaction //
 // ///////////////////////////
 
-<<<<<<< HEAD
-router.get("/transactions/:transactionId", _authorization2.default.user, _transactionController2.default.viewSpecificTransaction);
-=======
 router.get("/transactions/:transactionId", _validation2.default.transaction, _authorization2.default.user, _transactionController2.default.viewSpecificTransaction);
->>>>>>> ch-refactor-165853483
 
 // ///////////////////
 // Debit Account //

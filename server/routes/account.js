@@ -10,11 +10,7 @@ const router = express.Router();
 // View All Account //
 // /////////////////
 
-<<<<<<< HEAD
-router.get("/accounts", isLoggedIn.staff_admin, validate.allAccount, checks.db, accountData.viewAllAccount)
-=======
 router.get("/accounts", isLoggedIn.staff_admin, validate.allAccount, checks.db, accountData.viewAllAccount);
->>>>>>> ch-refactor-165853483
 
 // /////////////////////////
 // View specific Account //
