@@ -1,0 +1,7 @@
+{
+  "nyc": {
+    "exclude": [
+      "utils/email.js"
+    ]
+  }
+}

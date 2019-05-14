@@ -20,6 +20,24 @@ class Email {
     });
   }
 
+  static staffSignUp(name, email, password) {
+    return {
+      from: process.env.EMAIL,
+      to: email,
+      subject: "New Banka Account",
+      html: `<div style="font-family:georgia">
+      <h1 style="background-color:#172A3A;color:white;padding-left:20px;border-radius:5% 90% 90% 5%;font-family:Comic Sans MS;">Banka </h1>
+      <p style="padding-bottom:10px;padding-left:5px;">Dear ${name},</p> 
+        <p style="padding-left:15px;">Banka electronic Notification Service (BeNS)
+        We wish to inform you that an account has been with us.</p>
+      
+        <p style="padding-left:15px;">The details of this account are shown below:</p>
+        <p style="padding-left:40px;"><strong>Email Address <span style="display:inline-block;width:40px;padding-left:20px;"> : </span>${email}</strong></p>
+        <p style="padding-left:40px;"><strong>Password <span style="display:inline-block;width:40px;padding-left:60px;"> : </span>${password}</strong></p> </div>
+        <p style="padding-left:15px;">Click <a href="https://henryade.github.io/Banka/">here</a> to sign into your account.</p>`,
+    };
+  }
+
   static message(transaction) {
     return {
       from: process.env.EMAIL,
@@ -28,7 +46,7 @@ class Email {
       html: `<div style="font-family:georgia">
       <h1 style="background-color:#172A3A;color:white;padding-left:20px;border-radius:5% 90% 90% 5%;font-family:Comic Sans MS;">Banka </h1>
       <p style="padding-bottom:10px;padding-left:5px;">Dear ${transaction.name},</p> 
-                          <p style="padding-left:15px;">Banka Bank eLectronic Notification Service (BeNS)
+                          <p style="padding-left:15px;">Banka electronic Notification Service (BeNS)
                           We wish to inform you that a  transaction occurred on your account with us.</p>
       
                           <p style="padding-left:15px;">The details of this transaction are shown below:</p>

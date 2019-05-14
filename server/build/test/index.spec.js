@@ -24,9 +24,7 @@ require("./routes/transaction.spec");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-
 _chai2.default.use(_chaiHttp2.default);
-
 
 describe("Other Route test", function () {
   it("should be able to see a home route", function (done) {

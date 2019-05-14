@@ -66,7 +66,25 @@ Route Testing prefix = localhost:(portname)api/v1
 | Create an admin account                |POST /user                                    |
 
 ## Configuration
+The build is run locally.
+To run build, copy the contents of the .babelrc file in the build folder and use it to replace the contents of the .babelrc file in the server folder.
+.babelrc in build folder
+```
+{
+    "presets": ["env"],
+    "plugins": ["transform-object-rest-spread"]
+}
+```
 
+ Then run the build command in the scripts section below from the server repository. After the command is done, undo the copy to get the initial contents of the .babelrc file in the server. OR paste this
+```
+{
+    "presets": ["@babel/preset-env"],
+}
+```
+in the file. 
+
+### Scripts:
 ```
 npm run dev   ------ To run app in development
 npm run test-dev --- To run development testing

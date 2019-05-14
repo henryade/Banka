@@ -1,5 +1,9 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _bcryptjs = require("bcryptjs");
 
 var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
@@ -53,3 +57,4 @@ var execute = function () {
   };
 }();
 execute();
+exports.default = execute;
