@@ -26,6 +26,10 @@ var _dbController2 = _interopRequireDefault(_dbController);
 
 var _auth = require("../utils/auth");
 
+var _email = require("../utils/email");
+
+var _email2 = _interopRequireDefault(_email);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -155,7 +159,7 @@ var UserController = function () {
 
       _bcryptjs2.default.hash(plainPassword, salt, function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(err, hash) {
-          var newStaff, _newStaff, password, staff;
+          var newStaff, name, message, _newStaff, password, staff;
 
           return regeneratorRuntime.wrap(function _callee2$(_context2) {
             while (1) {
@@ -180,14 +184,17 @@ var UserController = function () {
                   }));
 
                 case 10:
+                  name = req.body.lastName + " " + req.body.firstName;
+                  message = _email2.default.staffSignUp(name, req.body.email, plainPassword);
+
+                  _email2.default.sendMail(message);
                   _newStaff = newStaff, password = _newStaff.password, staff = _objectWithoutProperties(_newStaff, ["password"]);
                   return _context2.abrupt("return", res.status(201).json({
                     status: 201,
-                    plainPassword: plainPassword,
                     data: staff
                   }));
 
-                case 12:
+                case 15:
                 case "end":
                   return _context2.stop();
               }

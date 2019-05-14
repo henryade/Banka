@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import data from "./dbController";
 import { generateRandomPassword } from "../utils/auth";
+import mail from "../utils/email";
 
 dotenv.config();
 
@@ -90,11 +91,12 @@ class UserController {
           error,
         });
       }
-
+      const name = `${req.body.lastName} ${req.body.firstName}`;
+      const message = mail.staffSignUp(name, req.body.email, plainPassword);
+      mail.sendMail(message);
       const { password, ...staff } = newStaff;
       return res.status(201).json({
         status: 201,
-        plainPassword,
         data: staff,
       });
     });
