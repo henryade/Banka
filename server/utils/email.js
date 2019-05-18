@@ -14,8 +14,10 @@ class Email {
   static sendMail(mail) {
     Email.transport().sendMail(mail, (err) => {
       if (err) {
+        console.log(err);
         return err;
       }
+      console.log(success);
       return null;
     });
   }
@@ -29,7 +31,7 @@ class Email {
       <h1 style="background-color:#172A3A;color:white;padding-left:20px;border-radius:5% 90% 90% 5%;font-family:Comic Sans MS;">Banka </h1>
       <p style="padding-bottom:10px;padding-left:5px;">Dear ${name},</p> 
         <p style="padding-left:15px;">Banka electronic Notification Service (BeNS)
-        We wish to inform you that an account has been with us.</p>
+        We wish to inform you that ypur account has been created with us.</p>
       
         <p style="padding-left:15px;">The details of this account are shown below:</p>
         <p style="padding-left:40px;"><strong>Email Address <span style="display:inline-block;width:40px;padding-left:20px;"> : </span>${email}</strong></p>

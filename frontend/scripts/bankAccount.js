@@ -12,8 +12,6 @@ const SingleBankAccount = document.getElementById("viewOne"),
 	  createUserPopup = document.getElementById("pop-up12"),
 	  bankAccountClosebtn = document.getElementById("bankAccClosebtn");
 
-	  const pathh = window.location.href;
-	  const fileNamee = pathh.slice(pathh.lastIndexOf("/")+1, pathh.lastIndexOf(".html"));
 window.onload = function(){
 	SingleBankAccount.style.display = "none";
 	AllTransactions.style.display = "none";

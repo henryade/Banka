@@ -30,26 +30,29 @@
 							<span class="pop-upSpan"></span>
 								<div>
 									<h3 class="pop-upH3 center">Create User</h3>
-									<form onsubmit="createUserClosebtn();">
+									<p id="staffErrorBadge" class="errorBadge"></p>
+									<form id = "createStaffForm" action="javascript:void(0)" onsubmit="registerStaff()" method="POST">
 										<div id="createUser" class="sec-B">
-											<p>
-												<select>
+											<p class="center">
+												<select id="staffUsertype" required>
 												<option value="">--Choose User Type--</option>
 													<option value="staff">Staff</option>
 													<option value="admin">Admin</option>
 												</select>
 											</p>
 											<p>
-												<input type="text" id="firstName" placeholder="First name" name="firstName" class="authInput input-lg" required />
+												<input type="text" id="staffFirstname" placeholder="First name" name="firstName" class="authInput input-lg" required />
 																				
-												<input type="text" id="lastName" placeholder="Last name" name="lastName" class="authInput input-lg" required />
+												<input type="text" id="staffLastname" placeholder="Last name" name="lastName" class="authInput input-lg" required />
 											</p>		
 											<p>
-												<input type="email" id="email" placeholder="Email" name="email" required class="authInput input-lg" />	
+												<input type="email" id="staffEmail" placeholder="Email" name="email" required class="authInput input-lg" />	
 											</p>
 										</div>
-										<button id="submitcreateuser" class="btn btn-sm">Submit</button>
-										<button type="reset" id="closecreateuser" onclick="createUserClosebtn()" class="btn btn-sm">Close</button>
+										<div class="center">
+											<button id="submitcreateuser" class="btn btn-sm">Submit</button>
+											<button type="reset" id="closecreateuser" onclick="createUserClosebtn()" class="btn btn-sm">Close</button>
+										</div>
 									</form>
 								</div>
 						</div>
@@ -60,9 +63,9 @@
 							<a class="normal-link" href="#" onclick="Visibility(6);"><img src="../public/profile.png" alt="profile" />change picture</a>
 							<div>
 								<p>Welcome,</p>
-								<p class="capitalize">Mr. Riyad Suhg</p>
+								<p class="userFullname"></p>
 							<p id="usertype">Banka Admin</p>
-								<button id="createuser" onclick="createUserbtn()" >Create User</button>
+								<button id="createuser" class="createuser" onclick="createUserbtn()" >Create User</button>
 							</div>
 						</div>
 					</aside>
@@ -314,7 +317,6 @@
 		<footer>
 			&copy; 2019 Banka Plc. All Rights Reserved.
 		</footer>
-		<script type="text/javascript" src="../scripts/bankAccount.js"></script>
-		<script type="text/javascript" src="../scripts/index.js"></script>
+		<script type="text/javascript" src="../scripts/staff.js"></script>
 	</body>
 </html>

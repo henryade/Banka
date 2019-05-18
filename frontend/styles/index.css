@@ -82,7 +82,7 @@ tr:nth-child(even){
 
 th,td{
 	text-align: left;
-	padding: 10px 27px;
+	padding: 10px 20px;
 }
 select{
 	width: 200px;
@@ -168,7 +168,7 @@ input[type="date"]{
 	letter-spacing: 0.1em;
 }
 
-#createuser{
+.createuser{
 	margin-top: 10px;
 	width:80%;
 	min-height: 40px;
@@ -178,7 +178,7 @@ input[type="date"]{
 	font-size: 17px;
 	cursor: pointer;
 }
-#createuserbtn{
+.hidebtn{
 	display: none;
 	margin: 10px auto 0 auto;
 	width:30%;
@@ -200,6 +200,9 @@ input[type="date"]{
 	color: #FFFAFA;
 	font-size: 17px;
 	cursor: pointer;
+}
+.btn:disabled{
+	background-color: gray;
 }
 
 .input-lg{
@@ -311,7 +314,6 @@ button:hover, button:focus{
 	width: 100%;
 	opacity: 0;
 	z-index: 13;
-	overflow: scroll;
 	display: none;
 }
 .makeInvisible{
@@ -499,6 +501,15 @@ button:hover, button:focus{
 	text-decoration: underline;
 }
 
+#newUser{
+	font-size: 40px;
+	margin-top: 15%;
+}
+
+#existingUser{
+	display: none;
+}
+
 a {
 	text-decoration: none;
 	color: white;
@@ -575,6 +586,26 @@ header nav a:hover{
   color:#0074e1;
   font-weight:bolder;
 }
+
+.signInPassword{
+	position: relative;
+}
+#signInPassword{
+	padding-right: 35px;
+	z-index: 20;
+}
+
+.signInPassword:before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 0;
+	bottom: 0;
+	float: right;
+	width: 20px;
+  background: url("../public/eye-solid.svg") center / contain no-repeat;
+}
+
 
 
 /*** Section ***/
@@ -751,7 +782,6 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 }
 
 .profilePic p{
-	text-transform: uppercase;
 	padding-left: 5px;
 	padding-right: 5px;
 	font-size: 19px;
@@ -853,7 +883,7 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	margin-top: 4%;
 	width: 80%;
 }
-#createUser{
+.createUser{
 	width: 100%;
 	margin: 0 auto;
 }
@@ -914,6 +944,7 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 #tab-admin{
 	width:25%;
 }
+
 
 .tab-tran-acc{
 	width: 99%;
@@ -1069,7 +1100,7 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 	margin: 10px auto 0 auto;
 }
 
-#credentials{
+.errorBadge{
 	float: right;
 	text-align: center;
 	width: 100%;
@@ -1094,9 +1125,9 @@ footer{
 }
 
 @media screen and (max-width: 1245px) {
-	th,td{
-		padding: 5px 2px;
-	}
+	/* th,td{
+		padding: 5px;
+	} */
 	#closeSingle, #updateSingle{
 		min-width: 100px;
 		margin: 5px;
@@ -1111,15 +1142,18 @@ footer{
 @media screen and (max-width: 1005px) {
 
 
-	th,td{
-		padding: 5px 2px;
-	}
+	/* th,td{
+		padding: 5px;
+	} */
 
 }
 
 @media screen and (max-width: 830px) {
-	#createuserbtn{
+	.hidebtn{
 		display:block;
+	}
+	.makeInvisible{
+		display:none;
 	}
 
 	.img-icon-user{
@@ -1131,7 +1165,7 @@ footer{
 	}
 	.pop-upBody{
 		width:70%;
-		margin-top:15%;
+		margin-top:8%;
 	}
 	.user-header-div-user{
 		display: flex;

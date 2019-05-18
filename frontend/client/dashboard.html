@@ -29,10 +29,11 @@
 						<span class="pop-upSpan"></span>
 						<div>
 							<h3 class="pop-upH3 center">Create Account</h3>
-							<form onsubmit="Visibility(13);">
+							<p id="clientErrorBadge" class="errorBadge"></p>
+							<form id="createAccountForm" onsubmit="createAccount();" action="javascript:void(0)" method="POST">
 								<div>
 										<h4>Account Type</h4>
-										<div>
+										<div id="createAccountType">
 											<p>
 												<input type="radio" id="savings" name="accountType" value="savings">
 												<label for="savings">Savings</label>
@@ -48,18 +49,17 @@
 										<h4>Customer Information</h4>
 										<div>
 											<p>
-												<input value="Naomi" type="text" id="firstName" name="firstName" placeholder="First name" class="authInput input-lm" readonly/>
-												<input value="Peter" type="text" id="lastName" placeholder="Last name" name="lastName" class="authInput input-lm" readonly />
+												<input type="text" id="createAccountFullName" name="fullName" placeholder="Fullname" class="authInput input-lm" readonly/>
 											</p>											
 											<p>
-												<input value="naomipeter@gmail.com" type="email" id="email" name="email" placeholder="Email" readonly class="authInput input-lm" />	
+												<input type="email" id="createAccountEmail" name="email" placeholder="Email" readonly class="authInput input-lm" />	
 											</p>
 											<p>
-												<input type="number" id="OpeningBalance" name="balance" placeholder="Opening Balance" required class="authInput input-lm" />	
+												<input type="number" id="createAccountOpeningBalance" name="balance" placeholder="Opening Balance" required class="authInput input-lm" />	
 											</p>
 										</div>
 									</div>
-									<button class="btn btn-ms">Submit</button>
+									<button id="createAccountBtn" class="btn btn-ms">Submit</button>
 									<button type="button" onclick="Visibility(13)" class="btn btn-ms">Close</button>
 								</form>
 							</div>
@@ -71,14 +71,20 @@
 							<a class="normal-link" href="#" onclick="Visibility(8);"><img src="../public/profile.png" alt="profile" />change picture</a>
 							<div>
 								<p>Welcome,</p>
-								<p class="capitalize"> Miss Naomi Peter</p>
-								
+								<p class="userFullname"></p>
 							</div>
 						</div>
-						<button id="createuser" onclick="Visibility(13);" >Create Account</button>
+						<button id="createAccountBtn" class="createuser makeInvisible" onclick="Visibility(13);" >Create Account</button>
 					</aside>
 				<div class="col-9 profilePic">
-							<h1>Transaction History</h1>
+						<p id="clientDashboardErrorBadge" class="errorBadge"></p>
+						<button id="createuserbtn" class="makeInvisible hidebtn" onclick="Visibility(13);" >Create Account</button>	
+						<div id="newUser">
+								<h1>Create Account!</h1>
+						</div>
+						
+						<div id = "existingUser">
+						<h1>Transaction History</h1>
 							<div >
 								<div class="search">
 									<form action="#pop-up4">
@@ -279,6 +285,7 @@
 								</div>
 							</div>
 						</div>
+					</div>
 			</div>
 			<div id="pop-up8" class="pop-up">
 				<div class="pop-upBody">
@@ -302,6 +309,7 @@
 		<footer class="adjust-footer">
 			&copy; 2019 Banka Plc. All Rights Reserved.
 		</footer>
-		<script type="text/javascript" src="../scripts/index.js"></script>
+		<script type="text/javascript" src="../scripts/generateTable.js"></script>
+		<script type="text/javascript" src="../scripts/client.js"></script>
 	</body>
 </html>
