@@ -46,10 +46,6 @@ class Model {
       port: process.env.DBPORT,
       host: process.env.HOST,
     };
-    // if (obj.user !== "wwtenmmm") {
-    //   console.log(obj.user)
-    //   obj.ssl = true;
-    // }
     const pool = new Pool(obj);
     return pool;
   }
