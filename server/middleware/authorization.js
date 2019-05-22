@@ -106,7 +106,8 @@ exports.user = (req, res, next) => {
       }
     }
     if (req.params.accountNumber) {
-      if (data.findAccountByAccountNumber(req.params.accountNumber).owner !== decoded.id) {
+      const Account = await data.findAccountByAccountNumber(req.params.accountNumber)
+      if (Account.owner !== decoded.id) {
         return res.status(403).json({
           status: 403,
           message: "UnAuthorized User",

@@ -29,7 +29,7 @@ class UserController {
           email: req.body.User.email,
           type: req.body.User.type,
           isAdmin: req.body.User.isAdmin,
-        }, process.env.JWT_KEY);
+        }, process.env.JWT_KEY, { expiresIn: "10h" });
         const { password, ...user } = req.body.User;
         return res.status(200).json({
           status: 200,
@@ -59,7 +59,7 @@ class UserController {
         email: req.body.email,
         type,
         isAdmin,
-      }, process.env.JWT_KEY);
+      }, process.env.JWT_KEY, { expiresIn: "10h" });
       let newUser = {};
       try {
         newUser = await data.createUser(req.body.firstName.replace(/\s/g, ""), req.body.lastName.replace(/\s/g, ""), req.body.email, hash, type, isAdmin);
@@ -84,7 +84,7 @@ class UserController {
     bcrypt.hash(plainPassword, salt, async (err, hash) => {
       let newStaff = {};
       try {
-        newStaff = await data.createUser(req.body.firstName, req.body.lastName, req.body.email, hash, "staff", isAdmin);
+        newStaff = await data.createUser(req.body.firstName.replace(/\s/g, ""), req.body.lastName.replace(/\s/g, ""), req.body.email, hash, "staff", isAdmin);
       } catch (error) {
         return res.status(400).json({
           status: 400,
