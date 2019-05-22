@@ -1,7 +1,9 @@
 {
-  "nyc": {
-    "exclude": [
-      "utils/email.js"
-    ]
-  }
+  "exclude": [
+    "utils/email.js",
+    "coverage/",
+    "models/",
+    "controllers/userController.js",
+    "test/"
+  ]
 }

@@ -11,7 +11,7 @@ class AccountController {
   static viewAllAccount(req, res) {
     return res.status(200).json({
       status: 200,
-      data: req.body.datafield,
+      data: res.body.datafield,
     });
   }
 

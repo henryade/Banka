@@ -202,14 +202,14 @@ var Model = function () {
   }], [{
     key: "initConn",
     value: function initConn() {
-      var pool = new _pg.Pool({
+      var obj = {
         user: process.env.USER,
         password: process.env.PASSWORD,
         database: process.env.DATABASE,
         port: process.env.DBPORT,
-        host: process.env.HOST,
-        ssl: true
-      });
+        host: process.env.HOST
+      };
+      var pool = new _pg.Pool(obj);
       return pool;
     }
   }]);

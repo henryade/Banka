@@ -25,6 +25,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
+
+/* istanbul ignore logic */
 var logic = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(action, req, res) {
     var account, amount, newBalance, createdOn, type, depositor, phoneNumber, cashier, newTransaction, person, email, name, message;

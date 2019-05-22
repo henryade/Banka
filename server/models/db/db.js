@@ -1,4 +1,4 @@
-    
+
 import { Pool } from "pg";
 import dotenv from "dotenv";
 
@@ -39,14 +39,18 @@ class Model {
   }
 
   static initConn() {
-    const pool = new Pool({
+    const obj = {
       user: process.env.USER,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
       port: process.env.DBPORT,
       host: process.env.HOST,
-      ssl: true,
-    });
+    };
+    // if (obj.user !== "wwtenmmm") {
+    //   console.log(obj.user)
+    //   obj.ssl = true;
+    // }
+    const pool = new Pool(obj);
     return pool;
   }
 }
