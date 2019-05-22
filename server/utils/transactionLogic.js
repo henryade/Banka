@@ -8,6 +8,8 @@ import mail from "./email";
  * @param {obj} res - response to request from body
  * @return {obj}    - returns response object
  */
+
+ /* istanbul ignore logic */
 const logic = async (action, req, res) => {
   const account = await data.findAccountByAccountNumber(parseInt(req.params.accountNumber, 10));
   const amount = parseFloat(req.body.amount);
