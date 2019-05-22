@@ -43,7 +43,7 @@ exports.signin = async (req, res, next) => {
 };
 exports.db = async (req, res, next) => {
   try {
-    req.body.datafield = await data.getAccounts([req.query.status]);
+    res.body.datafield = await data.getAccounts([req.query.status]);
   } catch (err) {
     return res.status(400).json({
       status: 400,

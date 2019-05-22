@@ -39,14 +39,15 @@ class Model {
   }
 
   static initConn() {
-    const pool = new Pool({
+    const obj = {
       user: process.env.USER,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
       port: process.env.DBPORT,
       host: process.env.HOST,
-      ssl: true,
-    });
+    }
+    if (obj.user !== "wwtenmmm") obj.ssl = true;
+    const pool = new Pool(obj);
     return pool;
   }
 }

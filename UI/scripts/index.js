@@ -186,3 +186,31 @@ const removeAcc = () => {
 
 
 
+clientDashboard.onclick = () => {
+	if(document.getElementById("BankAccountOption")){
+		BankAccountOption = document.getElementById("BankAccountOption");
+		let currentBadge = document.getElementById("currentBadge");
+		let savingsBadge = document.getElementById("savingsBadge");
+		let currentAccount = document.getElementById("currentAccount");
+		let savingsAccount = document.getElementById("savingsAccount");
+		let currentAccountPage = document.getElementsByClassName[0]("currentAccount");
+		let savingsAccountPage = document.getElementsByClassName[0]("savingsAccount");
+		BankAccountOption.onchange = () => {
+			if(BankAccountOption.value.toLowerCase() === "savings"){
+				currentAccount.classList.add("makeInvisible");
+				savingsAccount.classList.remove("makeInvisible");
+				currentBadge.classList.add("makeInvisible");
+				savingsBadge.classList.remove("makeInvisible");
+				if(currentAccountPage) currentAccountPage.classList.add("makeInvisible")
+				if(savingsAccountPage) savingsAccountPage.classList.remove("makeInvisible")
+			}else{
+				currentAccount.classList.remove("makeInvisible");
+				savingsAccount.classList.add("makeInvisible");
+				currentBadge.classList.remove("makeInvisible");
+				savingsBadge.classList.add("makeInvisible");
+				if(currentAccountPage) currentAccountPage.classList.add("makeInvisible")
+				if(savingsAccountPage) savingsAccountPage.classList.remove("makeInvisibl
+			}
+		}
+	}
+}

@@ -35,23 +35,26 @@
 			<div class="modal">
 				<div class="modalbtn">
 					<button id="signUpBtn" class="current-auth" onclick="signUp()">SIGN UP</button>
-					<button id="signInBtn" onclick="signIn()">SIGN IN </button>
+					<button id="signInBtn" class= "" onclick="signIn()">SIGN IN </button>
 				</div>
 				<div class="modalBody">
-					<form action="user/Dashboard-user.html" class="authForm" method="GET">
+					<form action="javascript:void(0)" onsubmit="registerUser();" class="authForm" method="POST">
 						<h1>Sign up</h1>
+						<p id="SignUpErrorBadge" class="errorBadge"></p>
 						<div>
-							<input type="text" name="First name" placeholder="First name" class="authInput input-lg" required>
+							<input type="text" id="signUpFirstname" name="First name" placeholder="First name" class="authInput input-lg" required>
 	
-							<input type="text" name="Last name" placeholder="Last name" class="authInput input-lg" required>
+							<input type="text" id="signUpLastname" name="Last name" placeholder="Last name" class="authInput input-lg" required>
 								
-							<input type="text" name="email" placeholder="Email" class="authInput input-lg" required>
-	
-							<input type="password" name="password" placeholder="Password" class="authInput input-lg" required>
-	
-							<input type="password" name="confirmPassword" placeholder="Confirm password" class="authInput input-lg" required>
+							<input type="email" id="signUpEmail" name="email" placeholder="Email" class="authInput input-lg" required>
+							<div id="showSignUpPassword" class="signInPassword">
+								<input type="password" id="signUpPassword" name="password" placeholder="Password" class="authInput input-lg" required>
+							</div>
+							<div id="showSignUpConfirmPassword" class="signInPassword">
+								<input type="password" id="signUpConfirmPassword" name="confirmPassword" placeholder="Confirm password" class="authInput input-lg" required>
+							</div>
 							<p >
-								<button type="submit" class="btn btn-lg">Submit</button>
+								<button id="signup-btn" type="submit" class="btn btn-lg">Submit</button>
 							</p>
 						</div>
 					</form>
@@ -61,26 +64,23 @@
 		<div id="signInModal" class="pop-up">
 			<div class="modal">
 				<div class="modalbtn">
-					<button id="signUpBtn" onclick="signUp()">SIGN UP</button>
+					<button id="signUpBtn" class= "" onclick="signUp()">SIGN UP</button>
 					<button id="signInBtn" class="current-auth" onclick="signIn()">SIGN IN </button>
 				</div>
 				<div class="modalBody">
-					<form action="javascript:void(0)" onsubmit="selectUser(this);" id="submit" class="authForm" method="GET">
+					<form action="javascript:void(0)" onsubmit="accountAuth();" id="submit" class="authForm" method="POST">
 						<h1>Sign in</h1>
-						<p id="credentials">Wrong Username or Password</p>
+						<p id="SignInErrorBadge" class="errorBadge"></p>
 						<div>
 	
-							<input list="username" name="usernames" placeholder="Select UserType" id="usernames"  class="authInput input-lg" required />
-							<datalist id="username">
-								<option value="Admin">
-								<option value="Staff">
-								<option value="User">
-							</datalist>
-	
-							<input type="password" id="password" name="name" placeholder="Type any password" class="fa fa-user authInput input-lg" />
+							<input type="email" name="email" placeholder="Email" id="signInEmail"  class="authInput input-lg" required />	
+							<div id="showSignInPassword" class="signInPassword">
+								<input type="password" id="signInPassword" name="name" placeholder="Password"  class="authInput input-lg" />
+							</div>
+							
 	
 							<p id="sigin-in-btn">
-								<button class="btn btn-lg" >Submit</button>
+								<button id="signin-btn" class="btn btn-lg" >Submit</button>
 							</p>
 							<p class="authfooter">
 								<a class="normal-link" href="#" onclick="resetPasswordfn()">Forgotten password?</a>

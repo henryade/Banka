@@ -97,7 +97,7 @@ exports.user = function (req, res, next) {
   var token = req.headers.authorization.split(" ")[1];
   _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(err, decoded) {
-      var transactionAccount, tokenAccount;
+      var Account, transactionAccount, tokenAccount;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -141,12 +141,18 @@ exports.user = function (req, res, next) {
 
             case 7:
               if (!req.params.accountNumber) {
-                _context.next = 10;
+                _context.next = 13;
                 break;
               }
 
-              if (!(_dbController2.default.findAccountByAccountNumber(req.params.accountNumber).owner !== decoded.id)) {
-                _context.next = 10;
+              _context.next = 10;
+              return _dbController2.default.findAccountByAccountNumber(req.params.accountNumber);
+
+            case 10:
+              Account = _context.sent;
+
+              if (!(Account.owner !== decoded.id)) {
+                _context.next = 13;
                 break;
               }
 
@@ -155,20 +161,20 @@ exports.user = function (req, res, next) {
                 message: "UnAuthorized User"
               }));
 
-            case 10:
+            case 13:
               if (!req.params.transactionId) {
-                _context.next = 21;
+                _context.next = 24;
                 break;
               }
 
-              _context.next = 13;
+              _context.next = 16;
               return _dbController2.default.findTransactionById(req.params.transactionId);
 
-            case 13:
+            case 16:
               transactionAccount = _context.sent;
 
               if (!(transactionAccount === undefined)) {
-                _context.next = 16;
+                _context.next = 19;
                 break;
               }
 
@@ -177,15 +183,15 @@ exports.user = function (req, res, next) {
                 error: "Invalid Transaction Id"
               }));
 
-            case 16:
-              _context.next = 18;
+            case 19:
+              _context.next = 21;
               return _dbController2.default.findAccountByEmail(decoded.email);
 
-            case 18:
+            case 21:
               tokenAccount = _context.sent;
 
               if (!(transactionAccount.accountNumber !== tokenAccount[0].accountNumber)) {
-                _context.next = 21;
+                _context.next = 24;
                 break;
               }
 
@@ -194,13 +200,13 @@ exports.user = function (req, res, next) {
                 message: "UnAuthorized User"
               }));
 
-            case 21:
+            case 24:
 
               req.userData = decoded;
               next();
               return _context.abrupt("return", null);
 
-            case 24:
+            case 27:
             case "end":
               return _context.stop();
           }

@@ -69,7 +69,7 @@ var UserController = function () {
             email: req.body.User.email,
             type: req.body.User.type,
             isAdmin: req.body.User.isAdmin
-          }, process.env.JWT_KEY);
+          }, process.env.JWT_KEY, { expiresIn: "10h" });
 
           var _req$body$User = req.body.User,
               password = _req$body$User.password,
@@ -114,7 +114,7 @@ var UserController = function () {
                     email: req.body.email,
                     type: type,
                     isAdmin: isAdmin
-                  }, process.env.JWT_KEY);
+                  }, process.env.JWT_KEY, { expiresIn: "10h" });
                   newUser = {};
                   _context.prev = 4;
                   _context.next = 7;
@@ -168,7 +168,7 @@ var UserController = function () {
                   newStaff = {};
                   _context2.prev = 1;
                   _context2.next = 4;
-                  return _dbController2.default.createUser(req.body.firstName, req.body.lastName, req.body.email, hash, "staff", isAdmin);
+                  return _dbController2.default.createUser(req.body.firstName.replace(/\s/g, ""), req.body.lastName.replace(/\s/g, ""), req.body.email, hash, "staff", isAdmin);
 
                 case 4:
                   newStaff = _context2.sent;
