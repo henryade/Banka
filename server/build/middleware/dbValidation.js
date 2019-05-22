@@ -178,7 +178,7 @@ exports.db = function () {
             return _dbController2.default.getAccounts([req.query.status]);
 
           case 3:
-            req.body.datafield = _context5.sent;
+            res.body.datafield = _context5.sent;
             _context5.next = 9;
             break;
 
