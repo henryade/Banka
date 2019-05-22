@@ -102,10 +102,15 @@ var logic = function () {
             }));
 
           case 27:
-            _context.next = 29;
+            if (!account) {
+              _context.next = 35;
+              break;
+            }
+
+            _context.next = 30;
             return _dbController2.default.findOwner(account.owner);
 
-          case 29:
+          case 30:
             person = _context.sent;
             email = person.email;
             name = (person.lastName + " " + person.firstName).toUpperCase();
@@ -113,12 +118,13 @@ var logic = function () {
 
             _email2.default.sendMail(message);
 
+          case 35:
             return _context.abrupt("return", res.status(200).json({
               status: 200,
               data: newTransaction
             }));
 
-          case 35:
+          case 36:
           case "end":
             return _context.stop();
         }

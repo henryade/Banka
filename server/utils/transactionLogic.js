@@ -9,7 +9,7 @@ import mail from "./email";
  * @return {obj}    - returns response object
  */
 
- /* istanbul ignore logic */
+/* istanbul ignore logic */
 const logic = async (action, req, res) => {
   const account = await data.findAccountByAccountNumber(parseInt(req.params.accountNumber, 10));
   const amount = parseFloat(req.body.amount);
@@ -62,12 +62,14 @@ const logic = async (action, req, res) => {
       error: "Error Occured",
     });
   }
-  const person = await data.findOwner(account.owner);
-  const { email } = person;
-  const name = `${person.lastName} ${person.firstName}`.toUpperCase();
-  const message = mail.message({ name, email, ...newTransaction });
-  mail.sendMail(message);
 
+  if (account) {
+    const person = await data.findOwner(account.owner);
+    const { email } = person;
+    const name = `${person.lastName} ${person.firstName}`.toUpperCase();
+    const message = mail.message({ name, email, ...newTransaction });
+    mail.sendMail(message);
+  }
   return res.status(200).json({
     status: 200,
     data: newTransaction,

@@ -141,7 +141,7 @@ exports.user = function (req, res, next) {
 
             case 7:
               if (!req.params.accountNumber) {
-                _context.next = 13;
+                _context.next = 14;
                 break;
               }
 
@@ -151,8 +151,13 @@ exports.user = function (req, res, next) {
             case 10:
               Account = _context.sent;
 
+              if (!Account) {
+                _context.next = 14;
+                break;
+              }
+
               if (!(Account.owner !== decoded.id)) {
-                _context.next = 13;
+                _context.next = 14;
                 break;
               }
 
@@ -161,20 +166,20 @@ exports.user = function (req, res, next) {
                 message: "UnAuthorized User"
               }));
 
-            case 13:
+            case 14:
               if (!req.params.transactionId) {
-                _context.next = 24;
+                _context.next = 25;
                 break;
               }
 
-              _context.next = 16;
+              _context.next = 17;
               return _dbController2.default.findTransactionById(req.params.transactionId);
 
-            case 16:
+            case 17:
               transactionAccount = _context.sent;
 
               if (!(transactionAccount === undefined)) {
-                _context.next = 19;
+                _context.next = 20;
                 break;
               }
 
@@ -183,15 +188,15 @@ exports.user = function (req, res, next) {
                 error: "Invalid Transaction Id"
               }));
 
-            case 19:
-              _context.next = 21;
+            case 20:
+              _context.next = 22;
               return _dbController2.default.findAccountByEmail(decoded.email);
 
-            case 21:
+            case 22:
               tokenAccount = _context.sent;
 
               if (!(transactionAccount.accountNumber !== tokenAccount[0].accountNumber)) {
-                _context.next = 24;
+                _context.next = 25;
                 break;
               }
 
@@ -200,13 +205,13 @@ exports.user = function (req, res, next) {
                 message: "UnAuthorized User"
               }));
 
-            case 24:
+            case 25:
 
               req.userData = decoded;
               next();
               return _context.abrupt("return", null);
 
-            case 27:
+            case 28:
             case "end":
               return _context.stop();
           }

@@ -28,18 +28,17 @@ var testAccountNumber = 9000240793;
 var token = null;
 var token2 = null;
 
-before(function () {
+beforeEach(function () {
   token = _jsonwebtoken2.default.sign({
     id: 1,
     email: "staff5@gmail.com",
-    password: "staff0001",
     type: "staff",
     isAdmin: false
   }, process.env.JWT_KEY);
 
   token2 = _jsonwebtoken2.default.sign({
+    id: 2,
     email: "user5@gmail.com",
-    password: "password",
     type: "client",
     isAdmin: false
   }, process.env.JWT_KEY);
@@ -58,8 +57,8 @@ describe("View all account transaction test", function () {
       (0, _chai.expect)(response.body.data[0]).to.have.property("amount");
       (0, _chai.expect)(response.body.data[0]).to.have.property("oldbalance");
       (0, _chai.expect)(response.body.data[0]).to.have.property("newbalance");
+      done();
     });
-    done();
   });
 
   it("should not display any transaction if account number is invalid", function (done) {
@@ -82,8 +81,8 @@ describe("View specific transaction test", function () {
       (0, _chai.expect)(response.body.data).to.have.property("amount");
       (0, _chai.expect)(response.body.data).to.have.property("oldbalance");
       (0, _chai.expect)(response.body.data).to.have.property("newbalance");
+      done();
     });
-    done();
   });
 
   it("should not display a transaction if id is invalid", function (done) {
@@ -190,8 +189,8 @@ describe("Credit Account test", function () {
   it("should not credit account if there are no parameters", function (done) {
     _chai2.default.request(_app2.default).post("/api/v1/transactions/" + testAccountNumber2 + "/credit").set("authorization", "Bearer " + token).send({}).end(function (error, response) {
       (0, _chai.expect)(response).to.have.status(400);
+      done();
     });
-    done();
   });
 
   it("should credit a user when the parameters are correct", function (done) {
@@ -205,8 +204,8 @@ describe("Credit Account test", function () {
       (0, _chai.expect)(response.body.data).to.have.property("createdOn");
       (0, _chai.expect)(response.body.data).to.have.property("type");
       (0, _chai.expect)(response.body.data).to.have.property("cashier");
+      done();
     });
-    done();
   });
 
   it("should not credit if a user types a wrong amount format  ", function (done) {
@@ -217,8 +216,8 @@ describe("Credit Account test", function () {
     }).end(function (error, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("Invalid amount");
+      done();
     });
-    done();
   });
 
   it("should not credit a user if the account status is dormant", function (done) {
@@ -229,8 +228,8 @@ describe("Credit Account test", function () {
     }).end(function (error, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("Account is Inactive");
+      done();
     });
-    done();
   });
 
   it("should not credit a user if the account number is invalid", function (done) {
@@ -241,8 +240,8 @@ describe("Credit Account test", function () {
     }).end(function (error, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("Invalid Account Number");
+      done();
     });
-    done();
   });
 
   it("should not credit a user if the phone number is invalid", function (done) {
@@ -253,7 +252,7 @@ describe("Credit Account test", function () {
     }).end(function (error, response) {
       (0, _chai.expect)(response).to.have.status(400);
       (0, _chai.expect)(response.body.error).to.equal("depositor phone number contains incorrect parameters");
+      done();
     });
-    done();
   });
 });

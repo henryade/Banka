@@ -14,19 +14,18 @@ const testAccountNumber = 9000240793;
 let token = null;
 let token2 = null;
 
-before(() => {
+beforeEach(() => {
   token = jwt.sign({
     id: 1,
     email: "staff5@gmail.com",
-    password: "staff0001",
     type: "staff",
     isAdmin: false,
   }, process.env.JWT_KEY);
 
 
   token2 = jwt.sign({
+    id: 2,
     email: "user5@gmail.com",
-    password: "password",
     type: "client",
     isAdmin: false,
   }, process.env.JWT_KEY);
@@ -48,8 +47,8 @@ describe("View all account transaction test", () => {
         expect(response.body.data[0]).to.have.property("amount");
         expect(response.body.data[0]).to.have.property("oldbalance");
         expect(response.body.data[0]).to.have.property("newbalance");
+        done();
       });
-    done();
   });
 
   it("should not display any transaction if account number is invalid", (done) => {
@@ -78,8 +77,8 @@ describe("View specific transaction test", () => {
         expect(response.body.data).to.have.property("amount");
         expect(response.body.data).to.have.property("oldbalance");
         expect(response.body.data).to.have.property("newbalance");
+        done();
       });
-    done();
   });
 
   it("should not display a transaction if id is invalid", (done) => {
@@ -226,8 +225,8 @@ describe("Credit Account test", () => {
       .send({})
       .end((error, response) => {
         expect(response).to.have.status(400);
+        done();
       });
-    done();
   });
 
   it("should credit a user when the parameters are correct", (done) => {
@@ -246,8 +245,8 @@ describe("Credit Account test", () => {
         expect(response.body.data).to.have.property("createdOn");
         expect(response.body.data).to.have.property("type");
         expect(response.body.data).to.have.property("cashier");
+        done();
       });
-    done();
   });
 
   it("should not credit if a user types a wrong amount format  ", (done) => {
@@ -262,8 +261,8 @@ describe("Credit Account test", () => {
       .end((error, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Invalid amount");
+        done();
       });
-    done();
   });
 
   it("should not credit a user if the account status is dormant", (done) => {
@@ -278,8 +277,8 @@ describe("Credit Account test", () => {
       .end((error, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Account is Inactive");
+        done();
       });
-    done();
   });
 
   it("should not credit a user if the account number is invalid", (done) => {
@@ -295,8 +294,8 @@ describe("Credit Account test", () => {
       .end((error, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("Invalid Account Number");
+        done();
       });
-    done();
   });
 
   it("should not credit a user if the phone number is invalid", (done) => {
@@ -312,7 +311,7 @@ describe("Credit Account test", () => {
       .end((error, response) => {
         expect(response).to.have.status(400);
         expect(response.body.error).to.equal("depositor phone number contains incorrect parameters");
+        done();
       });
-    done();
   });
 });
