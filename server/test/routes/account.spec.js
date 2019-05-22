@@ -353,8 +353,8 @@ describe("Deactivate account test", () => {
       .end((err, response) => {
         expect(response).to.have.status(200);
         expect(response.body.data.status).to.equal("dormant");
+        done();
       });
-    done();
   });
 
   it("should not deactivate if account number is invalid", (done) => {

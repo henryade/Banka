@@ -285,8 +285,8 @@ describe("Deactivate account test", function () {
     _chai2.default.request(_app2.default).patch("/api/v1/accounts/" + activeAccount).set("authorization", "Bearer " + token).end(function (err, response) {
       (0, _chai.expect)(response).to.have.status(200);
       (0, _chai.expect)(response.body.data.status).to.equal("dormant");
+      done();
     });
-    done();
   });
 
   it("should not deactivate if account number is invalid", function (done) {

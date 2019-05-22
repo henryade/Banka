@@ -9,7 +9,7 @@ const year = currentDate.getFullYear() - minimumAge;
 
 const SchemaObject = {
   name: Joi.string().trim().regex(/^[A-Za-z][^0-9]+$/).min(3)
-    .max(25)
+    .max(45)
     .required(),
   email: Joi.string().trim().email().regex(/^.+[.]\w{2,3}$/)
     .required(),
