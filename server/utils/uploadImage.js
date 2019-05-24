@@ -6,13 +6,13 @@ const cloudinary = Cloudinary.v2;
 
 const downloadImage = (req, res) => {
   try {
-    if (!req.body) {
+    if (!req.files) {
       res.status(400).json({
         status: 400,
         message: "No file uploaded",
       });
     } else {
-      const { Image } = req.body;
+      const { Image } = req.files;
       Image.mv(`./uploads/${Image.name}`);
 
       return `./uploads/${Image.name}`;

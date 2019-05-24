@@ -175,7 +175,6 @@ class Table{
         div.appendChild(select);
         if(element) div.appendChild(element);
         this.newTable = div;
-        console.log(div)
         return this.newTable;
     }
     static noOfPages(array, user){

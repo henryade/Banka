@@ -12,7 +12,8 @@
 		<header>
 			<img id="small-img" class="img-icon" src="../public/profile.png" alt="profile" />
 			<div class="container user-header-div">
-				<div id="brand">				
+
+				<div id="brand">
 					<a href="../index.html"><img src="../public/banka.png">
 					<h1>Banka </h1></a><span id="toggle" class="toggle-color fa fa-chevron-circle-down"></span>	
 				</div>
@@ -87,7 +88,7 @@
 					</div>
 				</div>				
 				<div id="pop-up8" onclick="hideBadge();" class="pop-up makeInvisible">
-					<div class="pop-upBody2">
+					<div class="pop-upBody">
 						<span class="pop-upSpan"></span>
 						<div>
 							<a class="closePop-up" href="#"  onclick="Visibility(8);"><i class="fas fa-times-circle"></i></a>
@@ -96,8 +97,8 @@
 								<h3>CHANGE PICTURE</h3>
 								<form action="javascript:void(0)" method="POST" enctype="multipart/form-data">
 									<div class="changePicture">
-										<img src="../public/profile.png" alt="profile" />
-										<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
+										<img id="other-img" src="../public/profile.png" alt="profile" />
+										<input type="file" class="authUpload" multiple="false" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
 									</div>
 									<button onclick="changeProficPicture();" id="changebtn" class="btn btn-ms">Submit</button>
 								</form>

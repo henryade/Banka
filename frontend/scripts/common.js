@@ -103,30 +103,46 @@ const confirmDeleteAction = (a) => {
 }
 
 const largeImg = document.getElementById("large-img");
+const otherImg = document.getElementById("other-img");
 const smallImg = document.getElementById("small-img");
 const avatar = document.getElementById("avatar");
 const uploadErrorBadge = document.getElementById("uploadErrorBadge");
 const popUp = document.getElementById("pop-up8");
+const uploadButton = document.getElementById("changebtn");
 
 const imageURL = sessionStorage.getItem("profilePic");
 
 const URL = "https://bankaproject.herokuapp.com/api/v1";
 const accessToken = sessionStorage.getItem("token");
 const head = new Headers({
-	'Content-Type': 'multipart/form-data',
+	'Accept': 'application/json',
 	'Authorization': `Bearer ${accessToken}`,
 });
 const Init = (method,body) => ({ 
 	method,
 	headers: head,
 	mode: 'cors',
-	body, 
+  body,  
 });
 
 
 const defaultImageURL = "../public/profile.png";
-largeImg.src = (imageURL) ? imageURL : defaultImageURL;
-smallImg.src = (imageURL) ? imageURL : defaultImageURL;
+largeImg.src = (imageURL && imageURL !== "null") ? imageURL : defaultImageURL;
+smallImg.src = (imageURL && imageURL !== "null") ? imageURL : defaultImageURL;
+otherImg.src = (imageURL && imageURL !== "null") ? imageURL : defaultImageURL;
+
+const uploading = (element,disable) => {
+	element.classList.add("disabled");
+	element.style.backgroundColor = "gray";
+	if(!disable) element.textContent = "Loading...";
+}
+
+const finished = (element, disable) => {
+	element.classList.remove("disabled");
+	if(!disable) element.textContent = "Submit";
+	element.style.backgroundColor = "#09BC8A";
+}
+
 
 const showBadge = (error) => {
     uploadErrorBadge.innerHTML= error;
@@ -139,15 +155,19 @@ const hideBadge = () => {
 }
 
 const onSuccess = (data) => {
-    sessionStorage.setItem("imageURL", data.data.imageURL);
-    window.location.href = "../index.html";
+    finished(uploadButton);
+    sessionStorage.setItem("profilePic", data.data.imageurl);
+    window.location.href = "./dashboard.html";
 }
-const onFailure = (data) => {
+const onFailure = (data) => { 
+    finished(uploadButton);
     showBadge(data.error || data.message || data);
 }
 
 const uploadPicture = (Image) => {
-    const request = new Request(`${URL}/upload`, Init("PATCH", {Image}));
+    const request = new Request(`${URL}/upload`, Init("POST", Image));
+    uploading(uploadButton);
+  
 	fetch(request)
 	.then(response => response.json())
 	.then(data => {
@@ -171,6 +191,9 @@ const uploadPicture = (Image) => {
 }
 
 const changeProficPicture = () => { 
-    if(avatar.files.length === 0) return showBadge("Choose a picture")     
-    uploadPicture(avatar.files[0]);
+    if(avatar.files.length === 0) return showBadge("Choose a picture"); 
+    let formdata = new FormData();
+    formdata.append("avatar", avatar.value);
+    formdata.append("Image", avatar.files[0], `${sessionStorage.getItem("email")}.png`);
+    uploadPicture(formdata);
 }

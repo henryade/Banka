@@ -20,13 +20,13 @@ var cloudinary = _cloudinary2.default.v2;
 
 var downloadImage = function downloadImage(req, res) {
   try {
-    if (!req.body) {
+    if (!req.files) {
       res.status(400).json({
         status: 400,
         message: "No file uploaded"
       });
     } else {
-      var Image = req.body.Image;
+      var Image = req.files.Image;
 
       Image.mv("./uploads/" + Image.name);
 
@@ -58,6 +58,7 @@ exports.uploadImage = function () {
             }
 
             return _context2.abrupt("return", res.status(400).json({ message: "Only image files are allowed!" }));
+            
           case 6:
 
             cloudinary.config({
@@ -77,6 +78,7 @@ exports.uploadImage = function () {
                           _context.next = 3;
                           break;
                         }
+
                         return _context.abrupt("return", res.status(400).json({
                           status: 400,
                           error: "Error Occured"

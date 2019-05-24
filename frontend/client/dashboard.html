@@ -94,10 +94,10 @@
 							<h3>CHANGE PICTURE</h3>
 							<form action="javascript:void(0)" method="POST" enctype="multipart/form-data">
 								<div class="profilePic">
-									<img src="../public/profile.png" alt="profile" />
+									<img id="other-img" src="../public/profile.png" alt="profile" />
 									<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/*" required>
 								</div>
-								<button onclick="changeProficPicture()" class="btn btn-md">Submit</button>
+								<button id="changebtn" onclick="changeProficPicture()" class="btn btn-md">Submit</button>
 							</form>
 						</div>
 					</div>

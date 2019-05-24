@@ -34,6 +34,6 @@ var router = _express2.default.Router();
 
 router.post("/auth/signup", _validation2.default.signUp, _dbValidation2.default.checkUser, _userController2.default.signup);
 router.post("/auth/signin", _validation2.default.signIn, _dbValidation2.default.signin, _userController2.default.signin);
-router.patch("/upload", _authorization2.default.basicAuth, _dbValidation2.default.uploadImage, _uploadImage2.default.uploadImage);
+router.post("/upload", _authorization2.default.basicAuth, _dbValidation2.default.uploadImage, _uploadImage2.default.uploadImage);
 
 exports.default = router;

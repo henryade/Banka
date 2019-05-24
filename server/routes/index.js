@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/auth/signup", validate.signUp, checks.checkUser, userData.signup);
 router.post("/auth/signin", validate.signIn, checks.signin, userData.signin);
-router.patch("/upload", isLoggedIn.basicAuth, checks.uploadImage, utils.uploadImage);
+router.post("/upload", isLoggedIn.basicAuth, checks.uploadImage, utils.uploadImage);
 
 export default router;
