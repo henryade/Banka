@@ -210,10 +210,6 @@ var Model = function () {
         host: process.env.HOST,
         ssl: true
       };
-      // if (obj.user !== "wwtenmmm") {
-      //   console.log(obj.user)
-      //   obj.ssl = true;
-      // }
       var pool = new _pg.Pool(obj);
       return pool;
     }

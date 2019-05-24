@@ -67,20 +67,9 @@ const createAccountModal = (a, table, status) => {
     const div = document.createElement("div");
     div.classList.add("col-5-5");
         const div1 = document.createElement("div");
-    if(status !== "transaction"){
-        div1.classList.add("col-5");
-            const divImg = document.createElement("div");
-            divImg.classList.add("accountImage");
-                const img = document.createElement("img");
-                img.src = "../public/images.png";
-                img.style.minWidth = "100px";
-            divImg.appendChild(img);
-        div1.appendChild(divImg);
-        div.appendChild(div1);
-    }
         const div2 = document.createElement("div");
-       if(status === "transaction") div2.classList.add("col-5-5");
-       else div2.classList.add("col-5");
+
+        div2.classList.add("col-5-5");    
         div2.id = "modalBody"+a;
         div2.appendChild(table);
     if(status !== "transaction"){
@@ -111,4 +100,76 @@ const confirmDeleteAction = (a) => {
     divContainer.appendChild(yesBtn);
     const text = "confirmAction";
     return createAccountModalTemplate(text, a, divContainer)
+}
+
+const largeImg = document.getElementById("large-img");
+const smallImg = document.getElementById("small-img");
+const avatar = document.getElementById("avatar");
+const uploadErrorBadge = document.getElementById("uploadErrorBadge");
+const popUp = document.getElementById("pop-up8");
+const imageURL = sessionStorage.getItem("imageURL");
+
+const URL = "http://localhost:3030/api/v1";
+const accessToken = sessionStorage.getItem("token");
+const head = new Headers({
+	'Content-Type': 'application/json',
+	'Authorization': `Bearer ${accessToken}`,
+});
+const Init = (method,body) => ({ 
+	method,
+	head,
+	mode: 'cors',
+	body, 
+});
+
+
+const defaultImageURL = "../public/profile.png";
+
+largeImg.src = (imageURL) ? imageURL : defaultImageURL;
+smallImg.src = (imageURL) ? imageURL : defaultImageURL;
+
+const showBadge = (error) => {
+    uploadErrorBadge.innerHTML= error;
+    uploadErrorBadge.style.display = "block";
+}
+
+const hideBadge = () => {
+    uploadErrorBadge.style.display = "none";
+    uploadErrorBadge.innerHTML= "";
+}
+
+const onSuccess = (data) => {
+    sessionStorage.setItem("imageURL", data.data.imageURL);
+    window.location.href = "../index.html";
+}
+const onFailure = (data) => {
+    showBadge(data.error || data.message || data);
+}
+
+const uploadPicture = async (Image) => {
+	await fetch(new Request(`${URL}/upload`, Init("PATCH", {Image})))
+	.then(response => response.json())
+	.then(data => {
+		switch(data.status){
+			case 200:
+				return onSuccess(data);
+			case 401:			
+			case 403:
+			case 407:
+				window.location.href = "../index.html";
+				break;
+			case 400:
+			case 404:
+                return onFailure(data);
+			default:
+				break;
+		}
+	}).catch(error => {
+		console.log(error)
+		return onFailure(error);
+	})
+}
+
+const changeProficPicture = () => {
+    uploadPicture(avatar.files)
 }
