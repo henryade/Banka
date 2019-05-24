@@ -41,6 +41,14 @@ exports.signin = async (req, res, next) => {
   next();
   return null;
 };
+exports.uploadImage = async (req, res, next) => {
+  const User = await dbs.queryDb(DBQUERY.SELECT.USER.EMAIL([req.userData.email]));
+  if (User === undefined) {
+    return error(res, 400, "email does not exist");
+  }
+  next();
+  return null;
+};
 exports.db = async (req, res, next) => {
   try {
     req.body.datafield = await data.getAccounts([req.query.status]);

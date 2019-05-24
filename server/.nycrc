@@ -1,6 +1,6 @@
 {
   "exclude": [
-    "utils/email.js",
+    "utils/uploadImage.js",
     "coverage/",
     "models/",
     "controllers/userController.js",

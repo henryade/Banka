@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS
         email VARCHAR NOT NULL UNIQUE,
         password TEXT NOT NULL,
         type TEXT NOT NULL,
-        "isAdmin" boolean NOT NULL
+        "isAdmin" boolean NOT NULL,
+        imageURL TEXT 
         );
     CREATE TABLE IF NOT EXISTS
       accounts(
@@ -55,7 +56,8 @@ CREATE TABLE IF NOT EXISTS
         email VARCHAR NOT NULL UNIQUE,
         password TEXT NOT NULL,
         type TEXT NOT NULL,
-        "isAdmin" boolean NOT NULL
+        "isAdmin" boolean NOT NULL,
+        imageURL TEXT 
         );
     CREATE TABLE IF NOT EXISTS
       accounts(
@@ -166,6 +168,10 @@ const DBQUERY = {
     }),
     BALANCE: values => ({
       text: "UPDATE accounts SET balance = $1 WHERE \"accountNumber\" = $2 RETURNING *",
+      values,
+    }),
+    USER: values => ({
+      text: "UPDATE users SET imageURL = $1 WHERE \"email\" = $2 RETURNING *",
       values,
     }),
   },

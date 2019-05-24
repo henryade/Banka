@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import fileUpload from "express-fileupload";
 import Cors from "cors";
 import accountRoutes from "./routes/account";
 import transactionRoutes from "./routes/transaction";
@@ -9,6 +10,10 @@ import userRoutes from "./routes/user";
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+  createParentPath: true,
+}));
 app.use(Cors());
 
 app.use("/api/v1", transactionRoutes);

@@ -129,10 +129,10 @@ const selectUser = (data) => {
 	sessionStorage.setItem('token', data.token);
 	sessionStorage.setItem('fullname', fullname);
 	sessionStorage.setItem('email', data.email);
+	sessionStorage.setItem('profilePic', data.imageurl);
 	sessionStorage.setItem("pageNumber", "1");
 	sessionStorage.setItem("loaded", "1");
 	sessionStorage.setItem("label", "current")
-	console.log(data)
 	if(data.type === "staff" && data.isAdmin) window.location.href = "admin/dashboard.html";
 	else if (data.type === "staff" && !data.isAdmin) window.location.href = "cashier/dashboard.html";
 	else window.location.href = "client/dashboard.html";
