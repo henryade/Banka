@@ -6,13 +6,13 @@ const cloudinary = Cloudinary.v2;
 
 const downloadImage = (req, res) => {
   try {
-    if (!req.files) {
+    if (!req.body) {
       res.status(400).json({
         status: 400,
         message: "No file uploaded",
       });
     } else {
-      const { Image } = req.files;
+      const { Image } = req.body;
       Image.mv(`./uploads/${Image.name}`);
 
       return `./uploads/${Image.name}`;
@@ -58,6 +58,5 @@ exports.uploadImage = async (req, res) => {
   } catch (error) {
     res.status(500).send(error);
   }
-
   return null;
 };

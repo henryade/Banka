@@ -1147,6 +1147,13 @@ footer{
 	#newTransaction{
 		width: 50%;
 	}
+	.img-icon{
+		display: block;
+		width: 30px;
+		float: left;
+		margin: 0 0 0 10px;
+		border-radius: 100%;
+	}
 	.img-icon-user{
 		display: block;
 		position: absolute;

@@ -107,26 +107,24 @@ const smallImg = document.getElementById("small-img");
 const avatar = document.getElementById("avatar");
 const uploadErrorBadge = document.getElementById("uploadErrorBadge");
 const popUp = document.getElementById("pop-up8");
-const imageURL = sessionStorage.getItem("imageURL");
 
+const imageURL = sessionStorage.getItem("profilePic");
 
 const URL = "https://bankaproject.herokuapp.com/api/v1";
-
 const accessToken = sessionStorage.getItem("token");
 const head = new Headers({
-	'Content-Type': 'application/json',
+	'Content-Type': 'multipart/form-data',
 	'Authorization': `Bearer ${accessToken}`,
 });
 const Init = (method,body) => ({ 
 	method,
-	head,
+	headers: head,
 	mode: 'cors',
 	body, 
 });
 
 
 const defaultImageURL = "../public/profile.png";
-
 largeImg.src = (imageURL) ? imageURL : defaultImageURL;
 smallImg.src = (imageURL) ? imageURL : defaultImageURL;
 
@@ -148,8 +146,9 @@ const onFailure = (data) => {
     showBadge(data.error || data.message || data);
 }
 
-const uploadPicture = async (Image) => {
-	await fetch(new Request(`${URL}/upload`, Init("PATCH", {Image})))
+const uploadPicture = (Image) => {
+    const request = new Request(`${URL}/upload`, Init("PATCH", {Image}));
+	fetch(request)
 	.then(response => response.json())
 	.then(data => {
 		switch(data.status){
@@ -162,17 +161,16 @@ const uploadPicture = async (Image) => {
 				break;
 			case 400:
 			case 404:
-                return onFailure(data);
+        return onFailure(data);
 			default:
 				break;
 		}
 	}).catch(error => {
-		console.log(error)
 		return onFailure(error);
 	})
 }
 
-const changeProficPicture = () => {        
-    return uploadPicture(avatar.files);
-
+const changeProficPicture = () => { 
+    if(avatar.files.length === 0) return showBadge("Choose a picture")     
+    uploadPicture(avatar.files[0]);
 }

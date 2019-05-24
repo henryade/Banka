@@ -20,13 +20,13 @@ var cloudinary = _cloudinary2.default.v2;
 
 var downloadImage = function downloadImage(req, res) {
   try {
-    if (!req.files) {
+    if (!req.body) {
       res.status(400).json({
         status: 400,
         message: "No file uploaded"
       });
     } else {
-      var Image = req.files.Image;
+      var Image = req.body.Image;
 
       Image.mv("./uploads/" + Image.name);
 
@@ -45,20 +45,20 @@ exports.uploadImage = function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.next = 2;
+            _context2.prev = 0;
+            _context2.next = 3;
             return downloadImage(req, res);
 
-          case 2:
+          case 3:
             imageURL = _context2.sent;
 
             if (imageURL.match(/\.(jpg|jpeg|png|gif)$/i)) {
-              _context2.next = 5;
+              _context2.next = 6;
               break;
             }
 
             return _context2.abrupt("return", res.status(400).json({ message: "Only image files are allowed!" }));
-
-          case 5:
+          case 6:
 
             cloudinary.config({
               cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -74,25 +74,23 @@ exports.uploadImage = function () {
                     switch (_context.prev = _context.next) {
                       case 0:
                         if (!err) {
-                          _context.next = 2;
+                          _context.next = 3;
                           break;
                         }
-
                         return _context.abrupt("return", res.status(400).json({
                           status: 400,
                           error: "Error Occured"
                         }));
 
-                      case 2:
-                        _context.next = 4;
+                      case 3:
+                        _context.next = 5;
                         return result.secure_url;
 
-                      case 4:
+                      case 5:
                         image = _context.sent;
 
                         _fs2.default.unlinkSync(imageURL);
                         user = void 0;
-                        _context.prev = 7;
 
                         if (!image) {
                           _context.next = 13;
@@ -110,35 +108,38 @@ exports.uploadImage = function () {
                         }));
 
                       case 13:
-                        _context.next = 18;
-                        break;
+                        return _context.abrupt("return", null);
 
-                      case 15:
-                        _context.prev = 15;
-                        _context.t0 = _context["catch"](7);
-
-                        console.log(_context.t0);
-
-                      case 18:
+                      case 14:
                       case "end":
                         return _context.stop();
                     }
                   }
-                }, _callee, undefined, [[7, 15]]);
+                }, _callee, undefined);
               }));
 
               return function (_x3, _x4) {
                 return _ref2.apply(this, arguments);
               };
             }());
+            _context2.next = 14;
+            break;
+
+          case 11:
+            _context2.prev = 11;
+            _context2.t0 = _context2["catch"](0);
+
+            res.status(500).send(_context2.t0);
+
+          case 14:
             return _context2.abrupt("return", null);
 
-          case 9:
+          case 15:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, undefined);
+    }, _callee2, undefined, [[0, 11]]);
   }));
 
   return function (_x, _x2) {
