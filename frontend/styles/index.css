@@ -774,7 +774,7 @@ header #brand .img-icon img, header #brand .img-icon-user img{
 .profilePic img{
 	width: 130px;
 	padding: 0;
-	margin: 20px auto 10px; auto;
+	margin: 20px auto 10px auto;
 	border-radius: 100px;
 	display: block;
 }

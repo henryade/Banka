@@ -167,78 +167,114 @@ exports.signin = function () {
     return _ref4.apply(this, arguments);
   };
 }();
-exports.db = function () {
+exports.uploadImage = function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res, next) {
+    var User;
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            _context5.prev = 0;
-            _context5.next = 3;
-            return _dbController2.default.getAccounts([req.query.status]);
+            _context5.next = 2;
+            return _db2.default.queryDb(_controller.DBQUERY.SELECT.USER.EMAIL([req.userData.email]));
 
-          case 3:
-            req.body.datafield = _context5.sent;
-            _context5.next = 9;
-            break;
+          case 2:
+            User = _context5.sent;
 
-          case 6:
-            _context5.prev = 6;
-            _context5.t0 = _context5["catch"](0);
-            return _context5.abrupt("return", res.status(400).json({
-              status: 400,
-              err: _context5.t0
-            }));
+            if (!(User === undefined)) {
+              _context5.next = 5;
+              break;
+            }
 
-          case 9:
+            return _context5.abrupt("return", error(res, 400, "email does not exist"));
+
+          case 5:
             next();
             return _context5.abrupt("return", null);
 
-          case 11:
+          case 7:
           case "end":
             return _context5.stop();
         }
       }
-    }, _callee5, undefined, [[0, 6]]);
+    }, _callee5, undefined);
   }));
 
   return function (_x13, _x14, _x15) {
     return _ref5.apply(this, arguments);
   };
 }();
-exports.email = function () {
+exports.db = function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res, next) {
-    var response;
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
-            _context6.next = 2;
-            return _dbController2.default.findAccountByEmail(req.params.email);
+            _context6.prev = 0;
+            _context6.next = 3;
+            return _dbController2.default.getAccounts([req.query.status]);
 
-          case 2:
-            response = _context6.sent;
+          case 3:
+            req.body.datafield = _context6.sent;
+            _context6.next = 9;
+            break;
 
-            if (!(response.length === 0 || response[0] === undefined)) {
-              _context6.next = 5;
-              break;
-            }
+          case 6:
+            _context6.prev = 6;
+            _context6.t0 = _context6["catch"](0);
+            return _context6.abrupt("return", res.status(400).json({
+              status: 400,
+              err: _context6.t0
+            }));
 
-            return _context6.abrupt("return", error(res, 404, "Email not found"));
-
-          case 5:
+          case 9:
             next();
             return _context6.abrupt("return", null);
 
-          case 7:
+          case 11:
           case "end":
             return _context6.stop();
         }
       }
-    }, _callee6, undefined);
+    }, _callee6, undefined, [[0, 6]]);
   }));
 
   return function (_x16, _x17, _x18) {
     return _ref6.apply(this, arguments);
+  };
+}();
+exports.email = function () {
+  var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res, next) {
+    var response;
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.next = 2;
+            return _dbController2.default.findAccountByEmail(req.params.email);
+
+          case 2:
+            response = _context7.sent;
+
+            if (!(response.length === 0 || response[0] === undefined)) {
+              _context7.next = 5;
+              break;
+            }
+
+            return _context7.abrupt("return", error(res, 404, "Email not found"));
+
+          case 5:
+            next();
+            return _context7.abrupt("return", null);
+
+          case 7:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7, undefined);
+  }));
+
+  return function (_x19, _x20, _x21) {
+    return _ref7.apply(this, arguments);
   };
 }();

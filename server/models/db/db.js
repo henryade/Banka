@@ -47,10 +47,6 @@ class Model {
       host: process.env.HOST,
       ssl: true,
     };
-    // if (obj.user !== "wwtenmmm") {
-    //   console.log(obj.user)
-    //   obj.ssl = true;
-    // }
     const pool = new Pool(obj);
     return pool;
   }

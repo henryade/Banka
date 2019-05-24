@@ -225,3 +225,47 @@ exports.user = function (req, res, next) {
   }());
   return null;
 };
+
+exports.basicAuth = function (req, res, next) {
+  if (!req.headers.authorization) {
+    return res.status(407).json({
+      status: 407,
+      message: "Missing Authorization"
+    });
+  }
+  var token = req.headers.authorization.split(" ")[1];
+  _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(err, decoded) {
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!err) {
+                _context2.next = 2;
+                break;
+              }
+
+              return _context2.abrupt("return", res.status(401).json({
+                status: 401,
+                message: "Not Authorized"
+              }));
+
+            case 2:
+              req.userData = decoded;
+              next();
+              return _context2.abrupt("return", null);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, undefined);
+    }));
+
+    return function (_x3, _x4) {
+      return _ref2.apply(this, arguments);
+    };
+  }());
+  return null;
+};

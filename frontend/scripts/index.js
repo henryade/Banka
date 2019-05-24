@@ -129,6 +129,7 @@ const selectUser = (data) => {
 	sessionStorage.setItem('token', data.token);
 	sessionStorage.setItem('fullname', fullname);
 	sessionStorage.setItem('email', data.email);
+	sessionStorage.setItem('profilePic', data.imageURL);
 	sessionStorage.setItem("pageNumber", "1");
 	sessionStorage.setItem("loaded", "1");
 	sessionStorage.setItem("label", "current")
