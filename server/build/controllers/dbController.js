@@ -466,22 +466,24 @@ module.exports = {
 
 
   /**
-  * Delete object from database
-  * @param {obj} specificAccount - the account obj to be deleted
+  * Find objects from database
+  * @param {string} imageURL - the status to be assigned
+  * @param {email} email - the string to be matched
+  * @return {array}    - returns an array of account that meets the pararmeters specified
   */
-  deleteAccount: function () {
-    var _ref14 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(specificAccountNumber) {
-      var response;
+  findUserByEmail: function () {
+    var _ref14 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(image, email) {
+      var res;
       return regeneratorRuntime.wrap(function _callee14$(_context14) {
         while (1) {
           switch (_context14.prev = _context14.next) {
             case 0:
               _context14.next = 2;
-              return _db2.default.modifyDb(_controller.DBQUERY.DELETE.ACCOUNT([specificAccountNumber]));
+              return _db2.default.modifyDb(_controller.DBQUERY.UPDATE.USER([image, email]));
 
             case 2:
-              response = _context14.sent;
-              return _context14.abrupt("return", response);
+              res = _context14.sent;
+              return _context14.abrupt("return", res);
 
             case 4:
             case "end":
@@ -491,21 +493,27 @@ module.exports = {
       }, _callee14, this);
     }));
 
-    function deleteAccount(_x36) {
+    function findUserByEmail(_x36, _x37) {
       return _ref14.apply(this, arguments);
     }
 
-    return deleteAccount;
+    return findUserByEmail;
   }(),
-  deleteUser: function () {
-    var _ref15 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15(email) {
+
+
+  /**
+  * Delete object from database
+  * @param {obj} specificAccount - the account obj to be deleted
+  */
+  deleteAccount: function () {
+    var _ref15 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15(specificAccountNumber) {
       var response;
       return regeneratorRuntime.wrap(function _callee15$(_context15) {
         while (1) {
           switch (_context15.prev = _context15.next) {
             case 0:
               _context15.next = 2;
-              return _db2.default.modifyDb(_controller.DBQUERY.DELETE.USER([email]));
+              return _db2.default.modifyDb(_controller.DBQUERY.DELETE.ACCOUNT([specificAccountNumber]));
 
             case 2:
               response = _context15.sent;
@@ -519,8 +527,36 @@ module.exports = {
       }, _callee15, this);
     }));
 
-    function deleteUser(_x37) {
+    function deleteAccount(_x38) {
       return _ref15.apply(this, arguments);
+    }
+
+    return deleteAccount;
+  }(),
+  deleteUser: function () {
+    var _ref16 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(email) {
+      var response;
+      return regeneratorRuntime.wrap(function _callee16$(_context16) {
+        while (1) {
+          switch (_context16.prev = _context16.next) {
+            case 0:
+              _context16.next = 2;
+              return _db2.default.modifyDb(_controller.DBQUERY.DELETE.USER([email]));
+
+            case 2:
+              response = _context16.sent;
+              return _context16.abrupt("return", response);
+
+            case 4:
+            case "end":
+              return _context16.stop();
+          }
+        }
+      }, _callee16, this);
+    }));
+
+    function deleteUser(_x39) {
+      return _ref16.apply(this, arguments);
     }
 
     return deleteUser;
@@ -533,29 +569,29 @@ module.exports = {
   * @param {string} key - the key to be matched
   */
   updateBalance: function () {
-    var _ref16 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(balance, accountNumber) {
+    var _ref17 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17(balance, accountNumber) {
       var res;
-      return regeneratorRuntime.wrap(function _callee16$(_context16) {
+      return regeneratorRuntime.wrap(function _callee17$(_context17) {
         while (1) {
-          switch (_context16.prev = _context16.next) {
+          switch (_context17.prev = _context17.next) {
             case 0:
-              _context16.next = 2;
+              _context17.next = 2;
               return _db2.default.queryDb(_controller.DBQUERY.UPDATE.BALANCE([balance, accountNumber]));
 
             case 2:
-              res = _context16.sent;
-              return _context16.abrupt("return", res);
+              res = _context17.sent;
+              return _context17.abrupt("return", res);
 
             case 4:
             case "end":
-              return _context16.stop();
+              return _context17.stop();
           }
         }
-      }, _callee16, this);
+      }, _callee17, this);
     }));
 
-    function updateBalance(_x38, _x39) {
-      return _ref16.apply(this, arguments);
+    function updateBalance(_x40, _x41) {
+      return _ref17.apply(this, arguments);
     }
 
     return updateBalance;

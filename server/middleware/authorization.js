@@ -106,7 +106,7 @@ exports.user = (req, res, next) => {
       }
     }
     if (req.params.accountNumber) {
-      const Account = await data.findAccountByAccountNumber(req.params.accountNumber)
+      const Account = await data.findAccountByAccountNumber(req.params.accountNumber);
       if (Account) {
         if (Account.owner !== decoded.id) {
           return res.status(403).json({
@@ -135,6 +135,28 @@ exports.user = (req, res, next) => {
     }
 
 
+    req.userData = decoded;
+    next();
+    return null;
+  });
+  return null;
+};
+
+exports.basicAuth = (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(407).json({
+      status: 407,
+      message: "Missing Authorization",
+    });
+  }
+  const token = req.headers.authorization.split(" ")[1];
+  jwt.verify(token, process.env.JWT_KEY, async (err, decoded) => {
+    if (err) {
+      return res.status(401).json({
+        status: 401,
+        message: "Not Authorized",
+      });
+    }
     req.userData = decoded;
     next();
     return null;

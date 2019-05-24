@@ -12,7 +12,7 @@
 		<header>
 			<div class="container user-header-div">
 				<div id="brand">
-					<span class="img-icon"><img src="../public/profile.png" alt="profile" /></span>
+					<span class="img-icon"><img id="small-img" src="../public/profile.png" alt="profile" /></span>
 				
 					<a href="../index.html"><img src="../public/banka.png">
 					<h1>Banka </h1></a><span id="toggle" class="toggle-color fa fa-chevron-circle-down"></span>	
@@ -60,7 +60,7 @@
 			<div class="col-9-1 dashboard-full">
 				<aside class="col-1">
 					<div class="profilePic">
-						<a class="normal-link" href="#" onclick="Visibility(6);"><img src="../public/profile.png" alt="profile" />change picture</a>
+						<a class="normal-link" href="#" onclick="Visibility(8);"><img id="large-img" src="../public/profile.png" alt="profile" />change picture</a>
 						<div>
 							<p>Welcome,</p>
 							<p class="userFullname"></p>
@@ -87,19 +87,20 @@
 						</div>
 					</div>
 				</div>				
-				<div id="pop-up6" class="pop-up makeInvisible">
+				<div id="pop-up8" onclick="hideBadge();" class="pop-up makeInvisible">
 					<div class="pop-upBody2">
 						<span class="pop-upSpan"></span>
 						<div>
-							<a class="closePop-up" href="#"  onclick="Visibility(6);"><i class="fas fa-times-circle"></i></a>
+							<a class="closePop-up" href="#"  onclick="Visibility(8);"><i class="fas fa-times-circle"></i></a>
 							<div>
+								<p id="uploadErrorBadge" class="errorBadge"></p>
 								<h3>CHANGE PICTURE</h3>
-								<form action="#">
+								<form action="javascript:void(0)" method="POST" enctype="multipart/form-data">
 									<div class="changePicture">
 										<img src="../public/profile.png" alt="profile" />
 										<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
 									</div>
-									<button onclick="Visibility(6);" id="changebtn" class="btn btn-ms">Submit</button>
+									<button onclick="changeProficPicture();" id="changebtn" class="btn btn-ms">Submit</button>
 								</form>
 							</div>
 						</div>
