@@ -58,7 +58,7 @@ exports.uploadImage = function () {
             }
 
             return _context2.abrupt("return", res.status(400).json({ message: "Only image files are allowed!" }));
-
+            
           case 6:
 
             cloudinary.config({
@@ -79,7 +79,6 @@ exports.uploadImage = function () {
                           break;
                         }
 
-                        console.log(err);
                         return _context.abrupt("return", res.status(400).json({
                           status: 400,
                           error: "Error Occured"

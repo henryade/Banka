@@ -109,6 +109,7 @@ const avatar = document.getElementById("avatar");
 const uploadErrorBadge = document.getElementById("uploadErrorBadge");
 const popUp = document.getElementById("pop-up8");
 const uploadButton = document.getElementById("changebtn");
+
 const imageURL = sessionStorage.getItem("profilePic");
 
 const URL = "https://bankaproject.herokuapp.com/api/v1";
@@ -121,7 +122,7 @@ const Init = (method,body) => ({
 	method,
 	headers: head,
 	mode: 'cors',
-    body,  
+  body,  
 });
 
 
@@ -141,6 +142,7 @@ const finished = (element, disable) => {
 	if(!disable) element.textContent = "Submit";
 	element.style.backgroundColor = "#09BC8A";
 }
+
 
 const showBadge = (error) => {
     uploadErrorBadge.innerHTML= error;
@@ -165,6 +167,7 @@ const onFailure = (data) => {
 const uploadPicture = (Image) => {
     const request = new Request(`${URL}/upload`, Init("POST", Image));
     uploading(uploadButton);
+  
 	fetch(request)
 	.then(response => response.json())
 	.then(data => {
@@ -178,7 +181,7 @@ const uploadPicture = (Image) => {
 				break;
 			case 400:
 			case 404:
-                return onFailure(data);
+        return onFailure(data);
 			default:
 				break;
 		}
