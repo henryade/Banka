@@ -38,7 +38,6 @@ exports.uploadImage = async (req, res) => {
     cloudinary.url(`${req.body.email}`, { width: 300, height: 300, crop: "fill" });
     cloudinary.uploader.upload(imageURL, async (err, result) => {
       if (err) {
-        console.log(err)
         return res.status(400).json({
           status: 400,
           error: "Error Occured",

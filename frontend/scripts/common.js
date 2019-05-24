@@ -107,6 +107,7 @@ const smallImg = document.getElementById("small-img");
 const avatar = document.getElementById("avatar");
 const uploadErrorBadge = document.getElementById("uploadErrorBadge");
 const popUp = document.getElementById("pop-up8");
+
 const imageURL = sessionStorage.getItem("profilePic");
 
 const URL = "https://bankaproject.herokuapp.com/api/v1";
@@ -124,7 +125,6 @@ const Init = (method,body) => ({
 
 
 const defaultImageURL = "../public/profile.png";
-console.log(imageURL)
 largeImg.src = (imageURL) ? imageURL : defaultImageURL;
 smallImg.src = (imageURL) ? imageURL : defaultImageURL;
 
@@ -143,14 +143,11 @@ const onSuccess = (data) => {
     window.location.href = "../index.html";
 }
 const onFailure = (data) => {
-    console.log(data)
     showBadge(data.error || data.message || data);
 }
 
 const uploadPicture = (Image) => {
     const request = new Request(`${URL}/upload`, Init("PATCH", {Image}));
-    console.log(request)
-
 	fetch(request)
 	.then(response => response.json())
 	.then(data => {
@@ -164,13 +161,11 @@ const uploadPicture = (Image) => {
 				break;
 			case 400:
 			case 404:
-                console.log(data);
-                return onFailure(data);
+        return onFailure(data);
 			default:
 				break;
 		}
 	}).catch(error => {
-		console.log(error)
 		return onFailure(error);
 	})
 }
