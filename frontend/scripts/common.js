@@ -109,7 +109,9 @@ const uploadErrorBadge = document.getElementById("uploadErrorBadge");
 const popUp = document.getElementById("pop-up8");
 const imageURL = sessionStorage.getItem("imageURL");
 
-const URL = "http://localhost:3030/api/v1";
+
+const URL = "https://bankaproject.herokuapp.com/api/v1";
+
 const accessToken = sessionStorage.getItem("token");
 const head = new Headers({
 	'Content-Type': 'application/json',
@@ -170,6 +172,7 @@ const uploadPicture = async (Image) => {
 	})
 }
 
-const changeProficPicture = () => {
-    uploadPicture(avatar.files)
+const changeProficPicture = () => {        
+    return uploadPicture(avatar.files);
+
 }

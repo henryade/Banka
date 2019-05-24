@@ -24,28 +24,28 @@ const downloadImage = (req, res) => {
 };
 
 exports.uploadImage = async (req, res) => {
-  const imageURL = await downloadImage(req, res);
-  if (!imageURL.match(/\.(jpg|jpeg|png|gif)$/i)) {
-    return res.status(400).json({ message: "Only image files are allowed!" });
-  }
-
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-  });
-  cloudinary.url(`${req.body.email}`, { width: 300, height: 300, crop: "fill" });
-  cloudinary.uploader.upload(imageURL, async (err, result) => {
-    if (err) {
-      return res.status(400).json({
-        status: 400,
-        error: "Error Occured",
-      });
+  try {
+    const imageURL = await downloadImage(req, res);
+    if (!imageURL.match(/\.(jpg|jpeg|png|gif)$/i)) {
+      return res.status(400).json({ message: "Only image files are allowed!" });
     }
-    const image = await result.secure_url;
-    fs.unlinkSync(imageURL);
-    let user;
-    try {
+
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+    cloudinary.url(`${req.body.email}`, { width: 300, height: 300, crop: "fill" });
+    cloudinary.uploader.upload(imageURL, async (err, result) => {
+      if (err) {
+        return res.status(400).json({
+          status: 400,
+          error: "Error Occured",
+        });
+      }
+      const image = await result.secure_url;
+      fs.unlinkSync(imageURL);
+      let user;
       if (image) {
         user = await data.findUserByEmail(image, req.userData.email);
         return res.status(200).json({
@@ -53,9 +53,11 @@ exports.uploadImage = async (req, res) => {
           data: user,
         });
       }
-    } catch (err) {
-      console.log(err);
-    }
-  });
+      return null;
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+
   return null;
 };
