@@ -69,7 +69,6 @@ const paginationLogic = (e, pgNo) => {
 	let previousPage = Number(pageNumber) - 1;
 	let nextPage = Number(pageNumber) + 1;
 	const previousDivArray = Array.from(document.getElementsByClassName(`page${pageNumber}`));
-	console.log(previousPage, nextPage)
 	if(/\D/.test(e)){
 		if (e === "left" && pageNumber > 1){
 			switchPage(previousPage, pageNumber, Array.from(document.getElementsByClassName(`page${previousPage}`)), previousDivArray);
@@ -213,7 +212,6 @@ const tableLogic = (table) => {
 
 const showPage = async (data) => {
 	const AccountTransactions = await allTransactions(data.data[0].accountNumber, data.data);
-	console.log(AccountTransactions)
 	if(AccountTransactions === "No Transactions") bankAccounts(data);
 }
 
@@ -237,10 +235,6 @@ const viewSpecificTransaction = (data) => {
 	document.getElementById(`Loading${data.id}`).style.margin = "0";
 	modalBody.append(table);
 	return;
-}
-
-const searchTransaction = () => {
-	console.log(queryDate.value)
 }
 
 const modal = (a, status) => {
@@ -280,9 +274,7 @@ const successLogic = (data, action, parsedData) => {
         }
     } else if(action === "allTransactions"){
 		return "No Transactions";
-    } else if(action === "specificTransaction"){
-		console.log(data)
-	}
+    }
 	else if(action === "getAccountByEmail" && data.error){
 		clientDashboard.innerHTML = clientDashboardOld;
 	} else {

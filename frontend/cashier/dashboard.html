@@ -11,8 +11,8 @@
 	<body>
 		<header>
 			<div class="container user-header-div">
+				<span class="img-icon"><img id="small-img" src="../public/profile.png" alt="profile" /></span>
 				<div id="brand">
-					<span class="img-icon"><img src="../public/profile.png" alt="profile" /></span>
 					<a href="../index.html"><img src="../public/banka.png">
 					<h1>Banka </h1></a><span id="toggle" class="toggle-color fa fa-chevron-circle-down"></span>	
 				</div>
@@ -28,7 +28,7 @@
 				<div class="col-9-1 dashboard-full">
 					<aside class="col-1">
 						<div class="profilePic">
-							<a class="normal-link" href="#" onclick="Visibility(7);"><img src="../public/profile.png" alt="profile" />change picture</a>
+							<a class="normal-link" href="#" onclick="Visibility(8);"><img id="large-img" src="../public/profile.png" alt="profile" />change picture</a>
 							<div>
 								<p>Welcome,</p>
 								<p class="userFullname"></p>
@@ -87,19 +87,20 @@
 						</div>
 					</div>
 				</div>
-				<div id="pop-up7" class="pop-up makeInvisible">
-					<div class="pop-upBody2">
+				<div id="pop-up8" onclick="hideBadge();" class="pop-up makeInvisible">
+					<div class="pop-upBody">
 						<span class="pop-upSpan"></span>
 						<div>
-							<a class="closePop-up" href="#" onclick="Visibility(7);"><i class="fas fa-times-circle"></i></a>
+							<a class="closePop-up" href="#" onclick="Visibility(8);"><i class="fas fa-times-circle"></i></a>
 							<div>
+								<p id="uploadErrorBadge" class="errorBadge"></p>
 								<h3>CHANGE PICTURE</h3>
-								<form action="#">
+								<form action="javascript:void(0)" method="POST" enctype="multipart/form-data">
 									<div class="changePicture">
-										<img src="../public/profile.png" alt="profile" />
+										<img id="other-img" src="../public/profile.png" alt="profile" />
 										<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
 									</div>
-									<button id="changebtn" onclick="Visibility(7);" class="btn btn-sm">Submit</button>
+									<button id="changebtn" onclick="changeProficPicture();" class="btn btn-sm">Submit</button>
 								</form>
 							</div>
 						</div>

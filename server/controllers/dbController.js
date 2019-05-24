@@ -179,6 +179,17 @@ module.exports = {
   },
 
   /**
+ * Find objects from database
+ * @param {string} imageURL - the status to be assigned
+ * @param {email} email - the string to be matched
+ * @return {array}    - returns an array of account that meets the pararmeters specified
+ */
+  async findUserByEmail(image, email) {
+    const res = await dbs.modifyDb(DBQUERY.UPDATE.USER([image, email]));
+    return res;
+  },
+
+  /**
  * Delete object from database
  * @param {obj} specificAccount - the account obj to be deleted
  */

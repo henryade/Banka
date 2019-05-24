@@ -67,20 +67,9 @@ const createAccountModal = (a, table, status) => {
     const div = document.createElement("div");
     div.classList.add("col-5-5");
         const div1 = document.createElement("div");
-    if(status !== "transaction"){
-        div1.classList.add("col-5");
-            const divImg = document.createElement("div");
-            divImg.classList.add("accountImage");
-                const img = document.createElement("img");
-                img.src = "../public/images.png";
-                img.style.minWidth = "100px";
-            divImg.appendChild(img);
-        div1.appendChild(divImg);
-        div.appendChild(div1);
-    }
         const div2 = document.createElement("div");
-       if(status === "transaction") div2.classList.add("col-5-5");
-       else div2.classList.add("col-5");
+
+        div2.classList.add("col-5-5");    
         div2.id = "modalBody"+a;
         div2.appendChild(table);
     if(status !== "transaction"){
@@ -111,4 +100,97 @@ const confirmDeleteAction = (a) => {
     divContainer.appendChild(yesBtn);
     const text = "confirmAction";
     return createAccountModalTemplate(text, a, divContainer)
+}
+
+const largeImg = document.getElementById("large-img");
+const otherImg = document.getElementById("other-img");
+const smallImg = document.getElementById("small-img");
+const avatar = document.getElementById("avatar");
+const uploadErrorBadge = document.getElementById("uploadErrorBadge");
+const popUp = document.getElementById("pop-up8");
+const uploadButton = document.getElementById("changebtn");
+const imageURL = sessionStorage.getItem("profilePic");
+
+const URL = "https://bankaproject.herokuapp.com/api/v1";
+const accessToken = sessionStorage.getItem("token");
+const head = new Headers({
+	'Accept': 'application/json',
+	'Authorization': `Bearer ${accessToken}`,
+});
+const Init = (method,body) => ({ 
+	method,
+	headers: head,
+	mode: 'cors',
+    body,  
+});
+
+
+const defaultImageURL = "../public/profile.png";
+largeImg.src = (imageURL && imageURL !== "null") ? imageURL : defaultImageURL;
+smallImg.src = (imageURL && imageURL !== "null") ? imageURL : defaultImageURL;
+otherImg.src = (imageURL && imageURL !== "null") ? imageURL : defaultImageURL;
+
+const uploading = (element,disable) => {
+	element.classList.add("disabled");
+	element.style.backgroundColor = "gray";
+	if(!disable) element.textContent = "Loading...";
+}
+
+const finished = (element, disable) => {
+	element.classList.remove("disabled");
+	if(!disable) element.textContent = "Submit";
+	element.style.backgroundColor = "#09BC8A";
+}
+
+const showBadge = (error) => {
+    uploadErrorBadge.innerHTML= error;
+    uploadErrorBadge.style.display = "block";
+}
+
+const hideBadge = () => {
+    uploadErrorBadge.style.display = "none";
+    uploadErrorBadge.innerHTML= "";
+}
+
+const onSuccess = (data) => {
+    finished(uploadButton);
+    sessionStorage.setItem("profilePic", data.data.imageurl);
+    window.location.href = "./dashboard.html";
+}
+const onFailure = (data) => { 
+    finished(uploadButton);
+    showBadge(data.error || data.message || data);
+}
+
+const uploadPicture = (Image) => {
+    const request = new Request(`${URL}/upload`, Init("POST", Image));
+    uploading(uploadButton);
+	fetch(request)
+	.then(response => response.json())
+	.then(data => {
+		switch(data.status){
+			case 200:
+				return onSuccess(data);
+			case 401:			
+			case 403:
+			case 407:
+				window.location.href = "../index.html";
+				break;
+			case 400:
+			case 404:
+                return onFailure(data);
+			default:
+				break;
+		}
+	}).catch(error => {
+		return onFailure(error);
+	})
+}
+
+const changeProficPicture = () => { 
+    if(avatar.files.length === 0) return showBadge("Choose a picture"); 
+    let formdata = new FormData();
+    formdata.append("avatar", avatar.value);
+    formdata.append("Image", avatar.files[0], `${sessionStorage.getItem("email")}.png`);
+    uploadPicture(formdata);
 }

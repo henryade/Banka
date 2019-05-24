@@ -24,11 +24,16 @@ var _dbValidation = require("../middleware/dbValidation");
 
 var _dbValidation2 = _interopRequireDefault(_dbValidation);
 
+var _uploadImage = require("../utils/uploadImage");
+
+var _uploadImage2 = _interopRequireDefault(_uploadImage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = _express2.default.Router();
 
 router.post("/auth/signup", _validation2.default.signUp, _dbValidation2.default.checkUser, _userController2.default.signup);
 router.post("/auth/signin", _validation2.default.signIn, _dbValidation2.default.signin, _userController2.default.signin);
+router.post("/upload", _authorization2.default.basicAuth, _dbValidation2.default.uploadImage, _uploadImage2.default.uploadImage);
 
 exports.default = router;

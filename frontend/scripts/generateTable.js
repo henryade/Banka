@@ -173,9 +173,8 @@ class Table{
         select.appendChild(Table.addOption("active"));
         select.appendChild(Table.addOption("dormant"));
         div.appendChild(select);
-        div.appendChild(element);
+        if(element) div.appendChild(element);
         this.newTable = div;
-        console.log(div)
         return this.newTable;
     }
     static noOfPages(array, user){
