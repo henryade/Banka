@@ -55,6 +55,23 @@ exports.signUp = function (req, res, next) {
 
   footer(req, res, schema, next);
 };
+exports.forgotPassword = function (req, res, next) {
+  var schema = _joi2.default.object().keys({
+    id: _validationSchema2.default.cashier,
+    email: _validationSchema2.default.email,
+    password: _validationSchema2.default.password,
+    confirmPassword: _validationSchema2.default.confirmPassword
+  });
+
+  footer(req, res, schema, next);
+};
+exports.reset = function (req, res, next) {
+  var schema = _joi2.default.object().keys({
+    email: _validationSchema2.default.email
+  });
+
+  footer(req, res, schema, next);
+};
 
 exports.signIn = function (req, res, next) {
   var schema = _joi2.default.object().keys({

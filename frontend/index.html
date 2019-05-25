@@ -92,9 +92,10 @@
 								<span id="closeReset" class="closePop-up small"><i class="fas fa-times-circle"></i></span>
 							<div id="email-form">
 								<h3>RESET PASSWORD</h3>
-								<form action="#">
-									<input type="email" id="email" name="email" placeholder="Email address" class="authInput input-md" />	
-									<button class="btn btn-sml">Submit</button>
+								<p id="resetErrorBadge" class="errorBadge"></p>
+								<form action="javascript:void(0)" onsubmit="forgottPassword();">
+									<input type="email" id="resetEmail" name="email" placeholder="Email address" class="authInput input-md" />	
+									<button id="resetPasswordBtn" class="btn btn-md">Submit</button>
 								</form>
 							</div>
 						</div>

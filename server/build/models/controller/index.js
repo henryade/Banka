@@ -130,6 +130,12 @@ var DBQUERY = {
         text: "UPDATE users SET imageURL = $1 WHERE \"email\" = $2 RETURNING *",
         values: values
       };
+    },
+    PASSWORD: function PASSWORD(values) {
+      return {
+        text: "UPDATE users SET password = $1 WHERE \"email\" = $2 RETURNING *",
+        values: values
+      };
     }
   },
   DELETE: {
