@@ -111,6 +111,13 @@ select{
 	
 }
 
+.forgotBody{
+	background-color: white;
+}
+.forgotHeader{
+	background-color: #172A3A;
+	height: 50px;
+}
 .pageNumbers .active {
   background-color: #09BC8A;
 	color: white;
@@ -148,7 +155,21 @@ select{
 	outline: none;
 	background-color: white;
 }
-
+.forgotInput{
+	border: 2px solid #3aafa9;
+	width: 100%;
+}
+.forgotForm{
+	width: 80%;
+	margin: 20px auto ;
+}
+.forgotForm h2{
+	text-align: center;
+	margin-bottom: 20px;
+}
+.forgotForm *{
+	margin: 5px 0;
+}
 textarea:hover, .authInput:hover, select:hover{
 	border: 1.5px solid #3AAfa9;
 }
@@ -256,6 +277,10 @@ button:hover, button:focus{
 
 .btn-lg, .textarea-lg{
 	width: 100%;
+}
+
+.btn-lm{
+	width: 80%;
 }
 
 .btn-md{
@@ -551,6 +576,16 @@ header li{
 	padding: 0 15px;
 }
 
+#header img{
+	width: 30px;
+	height: 30px;
+}
+
+#header h1{
+	display: inline;
+	font-family: Comic Sans MS;
+}
+
 header #brand{
 	float: left;
 
@@ -727,6 +762,13 @@ header nav a:hover{
 .dashboard{
 	width: 100%;
 	background-color: white;	
+}
+.sectionDashboard{
+	width: 50%;
+	background-color: white;
+	min-height: 200px;
+	margin: 60px auto 0 auto;
+
 }
 .dashboard-full{
 	height: 100%;
@@ -1230,6 +1272,9 @@ footer{
 	table{
 		font-size: 12px;
 	}
+	.sectionDashboard{
+		width: 80%;	
+	}
 	.modal{
 		width: 60%;
 		margin: 20% auto;
@@ -1275,6 +1320,11 @@ footer{
 	}
 	header .nav-index *{
 		background-color: #DCDCDC;
+	}
+
+	.forgotContainer{
+		margin: 40px auto;
+		width: 300px;
 	}
 
 	.container{
@@ -1452,6 +1502,11 @@ footer{
 	br{
 		display: none;
 	}
+	.sectionDashboard{
+		width: 95%;
+		height: 100%;
+	}
+
 	table *, .normal-link-user{
 		font-size: 12px;
 	}
@@ -1567,8 +1622,12 @@ footer{
 .modal h1{
 	font-size: 18px;
 }
+
 .modalBody input, #sigin-in-btn button, .modalbtn button, .modalbtn button{
 	padding: 0 0 0 10px;
 	min-height: 25px;
+}
+#resetEmail{
+	min-height: 40px;
 }
 }

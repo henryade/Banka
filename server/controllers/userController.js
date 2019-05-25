@@ -108,6 +108,76 @@ class UserController {
       data: await data.findAccountByEmail(req.params.email),
     });
   }
+
+  static async getUser(req, res) {
+    return res.status(200).json({
+      status: 200,
+      data: await data.findOneUser(req.params.email),
+    });
+  }
+
+  static async reset(req, res) {
+    if (parseInt(req.body.id, 10) !== req.User.id) {
+      return res.status(400).json({
+        status: 400,
+        error: "Bad URL. Reload link from email if not expired",
+      });
+    }
+    bcrypt.compare(req.body.password, req.User.password, (err, response) => {
+      if (response) {
+        return res.status(400).json({
+          status: 400,
+          error: "New password must be different from the old password",
+        });
+      }
+      bcrypt.hash(req.body.password, salt, async (error, hash) => {
+        if (error) {
+          return res.status(400).json({
+            status: 400,
+            error: "Error Occured",
+          });
+        }
+        data.findUserByEmailAndUpdate(hash, req.body.email);
+        return res.status(200).json({
+          status: 200,
+          message: "Password Change Successful",
+        });
+      });
+      return null;
+    });
+    return null;
+  }
+
+  static async forgotPassword(req, res) {
+    const token = jwt.sign({
+      id: req.User.id,
+      email: req.body.email,
+    }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+
+    const name = `${req.User.lastName} ${req.User.firstName}`;
+    const message = mail.resetPassword(token, name, req.body.email);
+    const result = await mail.sendMail(message);
+    if (result === "Success" || result === undefined) {
+      return res.status(200).json({
+        status: 200,
+        message: "Email Sent",
+      });
+    }
+    return res.status(400).json({
+      status: 400,
+      error: result,
+    });
+  }
+
+  static async passwordReset(req, res) {
+    jwt.verify(req.params.token, process.env.JWT_KEY, async (err, decoded) => {
+      if (err) {
+        res.send("link expired");
+        return null;
+      }
+      res.redirect(`https://henryade.github.io/Banka/forgot.html?email=${decoded.email}&id=${decoded.id}`);
+    });
+  }
 }
 
 export default UserController;

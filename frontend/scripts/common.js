@@ -6,7 +6,7 @@ const createAccountModalTemplate = (text, input, content) => {
     div.classList.add("makeVisible");
 
         const div1 = document.createElement("div");
-        div1.classList.add("pop-upBody");
+        div1.classList.add("pop-upBodyTransaction");
         if(text === "transaction") {
             div1.style.marginTop = "2%";
         }
@@ -67,9 +67,21 @@ const createAccountModal = (a, table, status) => {
     const div = document.createElement("div");
     div.classList.add("col-5-5");
         const div1 = document.createElement("div");
+        if(status !== "transaction"){
+            div1.classList.add("col-5");
+                const divImg = document.createElement("div");
+                divImg.classList.add("accountImage");
+                    const img = document.createElement("img");
+                    img.src = "../public/images.png";
+                    img.style.minWidth = "100px";
+                    img.id = "accountImg";
+                divImg.appendChild(img);
+            div1.appendChild(divImg);
+            div.appendChild(div1);
+        }
         const div2 = document.createElement("div");
-
-        div2.classList.add("col-5-5");    
+        if(status === "transaction") div2.classList.add("col-5-5");
+        else div2.classList.add("col-5");  
         div2.id = "modalBody"+a;
         div2.appendChild(table);
     if(status !== "transaction"){

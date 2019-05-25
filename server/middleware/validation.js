@@ -43,6 +43,23 @@ exports.signUp = (req, res, next) => {
 
   footer(req, res, schema, next);
 };
+exports.forgotPassword = (req, res, next) => {
+  const schema = Joi.object().keys({
+    id: check.cashier,
+    email: check.email,
+    password: check.password,
+    confirmPassword: check.confirmPassword,
+  });
+
+  footer(req, res, schema, next);
+};
+exports.reset = (req, res, next) => {
+  const schema = Joi.object().keys({
+    email: check.email,
+  });
+
+  footer(req, res, schema, next);
+};
 
 exports.signIn = (req, res, next) => {
   const schema = Joi.object().keys({

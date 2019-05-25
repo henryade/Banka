@@ -18,4 +18,6 @@ router.get("/user/:email/accounts", isLoggedIn.user, validate.email, checks.emai
 
 router.post("/users", isLoggedIn.admin, validate.checkStaff, checks.checkStaff, userData.createUser);
 
+router.get("/:email/user", isLoggedIn.staff_admin, validate.email, checks.email, userData.getUser);
+
 export default router;

@@ -221,7 +221,7 @@ class Table{
                     let cell = row.insertCell();
                     let content = document.createTextNode(this.objCount);
                     cell.appendChild(content);
-                    if(!this.button)row.classList.add("makeInvisible")
+                    if(!this.button && pages>1)row.classList.add("makeInvisible")
                 }else{
                     const number = (user === "staff") ? 6 : 8;
                     if(Math.ceil(this.objCount/number) > 1) row.classList.add("makeInvisible")
@@ -251,7 +251,7 @@ class Table{
         }  
         if (this.button) return this.tableWithButton();
         if(pages > 1) return this.tableWithPages(pages, bodyid, user);
-        if(user === "staff") return Table.fullElement();
+        if(user === "staff") return Table.fullElement(this.table);
     }
     createTable(user){ 
         if(this.ownerObject === "Transactions" && this.tableObject.length < 1) return "No Transactions";
@@ -340,11 +340,12 @@ class specificTransactionTable{
         return;
     }
     generateBody(){
+        let tbody = this.table.createTBody();
         const exception = ["cashier"]
             for (let key in this.tableObject[0]) {
                 let row ;
                 if(exception.indexOf(key) === -1){
-                    row = this.table.insertRow();
+                    row = tbody.insertRow();
                     newAccountTable.createBodyRow("_", key, row);
                     newAccountTable.createBodyRow(key, this.tableObject[0][key], row);
                 }
@@ -376,11 +377,13 @@ class specificAccountTable{
         return;
     }
     generateBody(){
+        let tbody = this.table.createTBody();
         const exception = ["owner"]
+        console.log(this.tableObject)
             for (let key in this.tableObject[0]) {
                 let row ;
                 if(exception.indexOf(key) === -1){
-                    row = this.table.insertRow();
+                    row = tbody.insertRow();
                     newAccountTable.createBodyRow("_", key, row);
                     newAccountTable.createBodyRow(key, this.tableObject[0][key], row);
                 }

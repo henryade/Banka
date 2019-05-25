@@ -174,6 +174,10 @@ const DBQUERY = {
       text: "UPDATE users SET imageURL = $1 WHERE \"email\" = $2 RETURNING *",
       values,
     }),
+    PASSWORD: values => ({
+      text: "UPDATE users SET password = $1 WHERE \"email\" = $2 RETURNING *",
+      values,
+    }),
   },
   DELETE: {
     ACCOUNT: values => ({

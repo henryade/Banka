@@ -1,0 +1,9 @@
+{
+  "exclude": [
+    "utils/uploadImage.js",
+    "coverage/",
+    "models/",
+    "controllers/userController.js",
+    "test/"
+  ]
+}

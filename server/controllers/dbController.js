@@ -188,6 +188,16 @@ module.exports = {
     const res = await dbs.modifyDb(DBQUERY.UPDATE.USER([image, email]));
     return res;
   },
+  /**
+ * Find objects from database
+ * @param {string} imageURL - the status to be assigned
+ * @param {email} email - the string to be matched
+ * @return {array}    - returns an array of account that meets the pararmeters specified
+ */
+  async findUserByEmailAndUpdate(password, email) {
+    const res = await dbs.modifyDb(DBQUERY.UPDATE.PASSWORD([password, email]));
+    return res;
+  },
 
   /**
  * Delete object from database

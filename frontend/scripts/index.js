@@ -34,6 +34,9 @@ const signUpModalBtn = document.getElementById("signUpBtn");
 const signUpBtn = document.getElementById("signup-btn");
 const signInBtn = document.getElementById("signin-btn");
 const transactionPopUp = document.getElementById("pop-uptransaction");
+const resetEmail = document.getElementById("resetEmail");
+const resetErrorBadge = document.getElementById("resetErrorBadge");
+const resetPasswordBtn = document.getElementById("resetPasswordBtn");
 const arr = [signUpModal, signInModal, resetPassword]
 const baseURL = "https://bankaproject.herokuapp.com/api/v1";
 const headers = new Headers({'Content-Type': 'application/json'});
@@ -115,7 +118,9 @@ const close = (e) => {
 			signUpConfirmPassword.type = "password";
 		}
 	}
-	
+		resetErrorBadge.innerHTML=""
+		resetErrorBadge.style.display="none";
+
 	if(arr.indexOf(e.target) !== -1)
 	return e.target.style.display="none";
 }
@@ -259,5 +264,47 @@ const registerUser = () => {
 	}).catch(error => {
 		enableSignUpBtn();
 		SignInErrorBadge.innerHTML=error;
+	})
+}
+
+const forgottPassword = () => {
+	if(resetEmail === undefined || resetEmail.value.length < 1){
+		resetErrorBadge.innerHTML = result;
+		resetErrorBadge.style.display = "block";
+		return;
+	}
+	const resetBody = {
+		email: resetEmail.value,
+	}
+	resetPasswordBtn.classList.add("disabled");
+	resetPasswordBtn.style.backgroundColor = "gray";
+	resetPasswordBtn.textContent = "Loading...";
+	const resetRequest = new Request(`${baseURL}/auth/forgotPassword`, authInit("POST", JSON.stringify(resetBody)));
+	fetch(resetRequest)
+	.then(response => response.json())
+	.then(data => {
+		resetPasswordBtn.classList.remove("disabled");
+		resetPasswordBtn.style.backgroundColor = "#09BC8A";
+		resetPasswordBtn.textContent = "Submit";
+		switch(data.status){
+			case 200:
+				resetErrorBadge.innerHTML = data.message || "Email Sent";
+				resetErrorBadge.style.display = "block";
+				break;
+			case 400:
+			case 401:
+			case 403:
+				resetErrorBadge.innerHTML = data.error || data.message;
+				resetErrorBadge.style.display = "block";
+				break;
+			default:
+				break;
+		}
+	}).catch(error => {
+		resetPasswordBtn.classList.remove("disabled");
+		resetPasswordBtn.style.backgroundColor = "#09BC8A";
+		resetPasswordBtn.textContent = "Submit";
+		resetErrorBadge.innerHTML=error;
+		resetErrorBadge.style.display = "block";
 	})
 }

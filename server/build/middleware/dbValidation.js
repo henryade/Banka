@@ -169,29 +169,32 @@ exports.signin = function () {
 }();
 exports.uploadImage = function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res, next) {
-    var User;
+    var _ref6, email, User;
+
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            _context5.next = 2;
-            return _db2.default.queryDb(_controller.DBQUERY.SELECT.USER.EMAIL([req.userData.email]));
+            _ref6 = req.body.email ? req.body : req.userData, email = _ref6.email;
+            _context5.next = 3;
+            return _db2.default.queryDb(_controller.DBQUERY.SELECT.USER.EMAIL([email]));
 
-          case 2:
+          case 3:
             User = _context5.sent;
 
             if (!(User === undefined)) {
-              _context5.next = 5;
+              _context5.next = 6;
               break;
             }
 
             return _context5.abrupt("return", error(res, 400, "email does not exist"));
 
-          case 5:
+          case 6:
+            if (!req.userData) req.User = User;
             next();
             return _context5.abrupt("return", null);
 
-          case 7:
+          case 9:
           case "end":
             return _context5.stop();
         }
@@ -204,7 +207,7 @@ exports.uploadImage = function () {
   };
 }();
 exports.db = function () {
-  var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res, next) {
+  var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res, next) {
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
@@ -239,11 +242,11 @@ exports.db = function () {
   }));
 
   return function (_x16, _x17, _x18) {
-    return _ref6.apply(this, arguments);
+    return _ref7.apply(this, arguments);
   };
 }();
 exports.email = function () {
-  var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res, next) {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res, next) {
     var response;
     return regeneratorRuntime.wrap(function _callee7$(_context7) {
       while (1) {
@@ -275,6 +278,6 @@ exports.email = function () {
   }));
 
   return function (_x19, _x20, _x21) {
-    return _ref7.apply(this, arguments);
+    return _ref8.apply(this, arguments);
   };
 }();

@@ -58,7 +58,7 @@ exports.uploadImage = function () {
             }
 
             return _context2.abrupt("return", res.status(400).json({ message: "Only image files are allowed!" }));
-            
+
           case 6:
 
             cloudinary.config({
@@ -75,7 +75,7 @@ exports.uploadImage = function () {
                     switch (_context.prev = _context.next) {
                       case 0:
                         if (!err) {
-                          _context.next = 3;
+                          _context.next = 2;
                           break;
                         }
 
@@ -84,35 +84,35 @@ exports.uploadImage = function () {
                           error: "Error Occured"
                         }));
 
-                      case 3:
-                        _context.next = 5;
+                      case 2:
+                        _context.next = 4;
                         return result.secure_url;
 
-                      case 5:
+                      case 4:
                         image = _context.sent;
 
                         _fs2.default.unlinkSync(imageURL);
                         user = void 0;
 
                         if (!image) {
-                          _context.next = 13;
+                          _context.next = 12;
                           break;
                         }
 
-                        _context.next = 11;
+                        _context.next = 10;
                         return _dbController2.default.findUserByEmail(image, req.userData.email);
 
-                      case 11:
+                      case 10:
                         user = _context.sent;
                         return _context.abrupt("return", res.status(200).json({
                           status: 200,
                           data: user
                         }));
 
-                      case 13:
+                      case 12:
                         return _context.abrupt("return", null);
 
-                      case 14:
+                      case 13:
                       case "end":
                         return _context.stop();
                     }

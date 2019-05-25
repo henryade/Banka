@@ -241,6 +241,226 @@ var UserController = function () {
 
       return getAccounts;
     }()
+  }, {
+    key: "getUser",
+    value: function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.t0 = res.status(200);
+                _context4.next = 3;
+                return _dbController2.default.findOneUser(req.params.email);
+
+              case 3:
+                _context4.t1 = _context4.sent;
+                _context4.t2 = {
+                  status: 200,
+                  data: _context4.t1
+                };
+                return _context4.abrupt("return", _context4.t0.json.call(_context4.t0, _context4.t2));
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function getUser(_x7, _x8) {
+        return _ref4.apply(this, arguments);
+      }
+
+      return getUser;
+    }()
+  }, {
+    key: "reset",
+    value: function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
+        var _this3 = this;
+
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                if (!(parseInt(req.body.id, 10) !== req.User.id)) {
+                  _context6.next = 2;
+                  break;
+                }
+
+                return _context6.abrupt("return", res.status(400).json({
+                  status: 400,
+                  error: "Bad URL. Reload link from email if not expired"
+                }));
+
+              case 2:
+                _bcryptjs2.default.compare(req.body.password, req.User.password, function (err, response) {
+                  if (response) {
+                    return res.status(400).json({
+                      status: 400,
+                      error: "New password must be different from the old password"
+                    });
+                  }
+                  _bcryptjs2.default.hash(req.body.password, salt, function () {
+                    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(error, hash) {
+                      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                        while (1) {
+                          switch (_context5.prev = _context5.next) {
+                            case 0:
+                              if (!error) {
+                                _context5.next = 2;
+                                break;
+                              }
+
+                              return _context5.abrupt("return", res.status(400).json({
+                                status: 400,
+                                error: "Error Occured"
+                              }));
+
+                            case 2:
+                              _dbController2.default.findUserByEmailAndUpdate(hash, req.body.email);
+                              return _context5.abrupt("return", res.status(200).json({
+                                status: 200,
+                                message: "Password Change Successful"
+                              }));
+
+                            case 4:
+                            case "end":
+                              return _context5.stop();
+                          }
+                        }
+                      }, _callee5, _this3);
+                    }));
+
+                    return function (_x11, _x12) {
+                      return _ref6.apply(this, arguments);
+                    };
+                  }());
+                  return null;
+                });
+                return _context6.abrupt("return", null);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function reset(_x9, _x10) {
+        return _ref5.apply(this, arguments);
+      }
+
+      return reset;
+    }()
+  }, {
+    key: "forgotPassword",
+    value: function () {
+      var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
+        var token, name, message, result;
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                token = _jsonwebtoken2.default.sign({
+                  id: req.User.id,
+                  email: req.body.email
+                }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+                name = req.User.lastName + " " + req.User.firstName;
+                message = _email2.default.resetPassword(token, name, req.body.email);
+                _context7.next = 5;
+                return _email2.default.sendMail(message);
+
+              case 5:
+                result = _context7.sent;
+
+                if (!(result === "Success" || result === undefined)) {
+                  _context7.next = 8;
+                  break;
+                }
+
+                return _context7.abrupt("return", res.status(200).json({
+                  status: 200,
+                  message: "Email Sent"
+                }));
+
+              case 8:
+                return _context7.abrupt("return", res.status(400).json({
+                  status: 400,
+                  error: result
+                }));
+
+              case 9:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+
+      function forgotPassword(_x13, _x14) {
+        return _ref7.apply(this, arguments);
+      }
+
+      return forgotPassword;
+    }()
+  }, {
+    key: "passwordReset",
+    value: function () {
+      var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(req, res) {
+        var _this4 = this;
+
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _jsonwebtoken2.default.verify(req.params.token, process.env.JWT_KEY, function () {
+                  var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(err, decoded) {
+                    return regeneratorRuntime.wrap(function _callee8$(_context8) {
+                      while (1) {
+                        switch (_context8.prev = _context8.next) {
+                          case 0:
+                            if (!err) {
+                              _context8.next = 3;
+                              break;
+                            }
+
+                            res.send("link expired");
+                            return _context8.abrupt("return", null);
+
+                          case 3:
+                            res.redirect("https://henryade.github.io/Banka/forgot.html?email=" + decoded.email + "&id=" + decoded.id);
+
+                          case 4:
+                          case "end":
+                            return _context8.stop();
+                        }
+                      }
+                    }, _callee8, _this4);
+                  }));
+
+                  return function (_x17, _x18) {
+                    return _ref9.apply(this, arguments);
+                  };
+                }());
+
+              case 1:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function passwordReset(_x15, _x16) {
+        return _ref8.apply(this, arguments);
+      }
+
+      return passwordReset;
+    }()
   }]);
 
   return UserController;

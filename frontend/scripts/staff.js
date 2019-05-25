@@ -281,9 +281,9 @@ const checkTransactionError = (arg) => {
 
 const bankAccounts = (data) => {
 	const table = new Table(data);
-	stopLoading()
+	stopLoading();
 	adminDashboard.append(table.createTable("staff"));
-	paginationLogic(1)
+	paginationLogic(1);
 }
 const closeViewSpecificAccount = () => {
 	adminDashboard.innerHTML = "";
@@ -296,22 +296,29 @@ const viewOneBankAccounts = (data) => {
 	adminDashboard.append(table.createTable("staff"));
 }
 
-const viewSpecificAccount = (data) => {
+const viewSpecificAccount = async (data) => {
 	const dataArray = (typeof data === "object" && data[0] !== undefined) ? data : [data];
-	const tableObj = new specificAccountTable(dataArray);
+	const user = await getAccountByEmail(dataArray[0].email);
+	const {firstName, lastName} = user;
+	let newDataArray;
+	for(let object of dataArray) newDataArray = [{firstName, lastName, ...object}];
+	const tableObj = new specificAccountTable(newDataArray);
 	const table = tableObj.createTable()
 	const modalBody = document.getElementById(`modalBody${data.accountNumber}`)
 	document.getElementById(`Loading${data.accountNumber}`).classList.add("makeInvisible");
+	if(document.getElementById("accountImg") && user.imageurl) document.getElementById("accountImg").src = user.imageurl; 
 	modalBody.classList.add("inverse");
 	modalBody.append(table);
 	return;
 }
 
 const successLogic = (data, action) => {
-	console.log(data)
 	switch(action){
 		case "allAccounts":
 			bankAccounts(data.data);
+			break;
+		case "getAccountByEmail":
+			return data.data;
 			break;
 		case "specificAccount":
 			viewSpecificAccount(data.data);
@@ -342,7 +349,6 @@ const successLogic = (data, action) => {
 	}
 }
 const failureLogic = (data, action) => {
-	console.log(data)
 	switch(action){
 		case "allAccounts":
 			adminDashboard.innerHTML = `<p style="font-size:40px; margin:10% auto 3% auto">Banka</p>
@@ -416,7 +422,7 @@ const accountCreated = () => {
 }
 
 const logic = async (Request, action) => {
-	await fetch(Request)
+	return await fetch(Request)
 	.then(response => response.json())
 	.then(data => {
 		switch(data.status){
@@ -434,7 +440,6 @@ const logic = async (Request, action) => {
 				break;
 		}
 	}).catch(error => {
-		console.log(error)
 		return failureLogic(error, action);
 	})
 }
@@ -451,14 +456,12 @@ const getAccountDetail = () => {
 
 const allAccounts = async (status) => {
 	const url  = (status) ? `${baseURL}/accounts?status=${status}` : `${baseURL}/accounts`;
-	console.log(url);
 	const staffAccountRequest = new Request(url, staffGetInit("GET"));
 	logic(staffAccountRequest, "allAccounts");
 }
 
 const alterAccount = (accountNumber, method, action) => {
 	const result = checkError(accountNumber) || checkAccountError(accountNumber);
-	console.log(accountNumber)
 	if (result){
 		searchErrorBadge.innerHTML = result;
 		searchErrorBadge.style.display = "block";
@@ -476,6 +479,10 @@ const searchAccount = () => {
 
 const specificAccount = (accountNumber, action) => alterAccount(accountNumber, "GET", action)
 const deleteAccount = (accountNumber) => alterAccount(accountNumber, "DELETE", "deleteAccount")
+const getAccountByEmail = async (email) => {
+	const createAccountRequest = new Request(`${baseURL}/${email}/user`, staffGetInit("GET"));
+    return logic(createAccountRequest, "getAccountByEmail");
+}
 
 const createTransaction = (accountNumber) => {
 	const Body = {
