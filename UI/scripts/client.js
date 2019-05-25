@@ -324,7 +324,7 @@ const logic = async (Request, action, parsedData) => {
 			case 401:
 				const loaded = sessionStorage.getItem("loaded");
 				if(loaded === "1" && action === "getAccountByEmail"){
-					window.location.href = "../dashboard.html";
+					window.location.href = "./dashboard.html";
 					sessionStorage.setItem("loaded", "2");
 				}
 				else window.location.href = "../../index.html";
