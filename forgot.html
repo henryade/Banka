@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Adeola Adeyemo">
+    <title>Banka | Forgot Password</title>
+    <link rel="stylesheet" type="text/css" href="UI/styles/index.css">
+</head>
+<body class = "forgotBody">
+    <header class="forgotHeader">
+        <div class="container">
+            <div id="header" class="center">
+                <a href="index.html"><img src="UI/public/banka.png">
+                    <h1>Banka </h1>
+                </a>	
+            </div>
+        </div>
+    </header>
+    <section class="sectionDashboard">
+		<div class="forgotContainer">
+                <p id="forgotErrorBadge" class="errorBadge"></p>
+            <form action="javascript:void(0)" onsubmit="forgottenPassword();" method="POST" class="forgotForm">
+                <h2>Reset Password</h2>
+                <div id="showforgotPassword" class="signInPassword forgotInputDiv">
+                    <input type="password" id="forgotPassword" name="password" placeholder="Password" class="authInput forgotInput" required>
+                </div>
+                <div id="showforgotConfirmPassword" class="signInPassword forgotInputDiv">
+                    <input type="password" id="forgotConfirmPassword" name="confirmPassword" placeholder="Confirm password" class="authInput forgotInput" required>
+                </div>
+                <button id="forgotBtn" class="btn btn-lg">Submit</button>
+            </form>		
+		</div>
+    </section>
+    <script type="text/javascript" src="UI/scripts/forgot.js"></script>
+</body>
+</html>

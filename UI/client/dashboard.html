@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width initial-scale=1.0">
+		<meta name="author" content="Adeola Adeyemo">
+		<title>Banka | Dashboard</title>
+		<link rel="stylesheet" type="text/css" href="../styles/index.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	</head>
+	<body>
+		<header>
+			<div class="container user-header-div-user">
+				<div id="brand">
+					<span class="img-icon-user"><img id="small-img" src="../public/profile.png" alt="profile" /></span>
+					<a href="../../index.html"><img src="../public/banka.png">
+					<h1>Banka </h1></a><span id="toggle-user" class="toggle-color fa fa-chevron-circle-down"></span>	
+				</div>
+				<nav id="nav-user">
+					<ul>
+						<li><a href="../../index.html">Logout</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<section id="userSection" class="dashboard dashboard-full">
+			<div id="pop-up13" class="pop-up makeInvisible">
+				<div class="pop-upBody">
+					<span class="pop-upSpan"></span>
+					<div>
+						<h3 class="pop-upH3 center">Create Account</h3>
+						<p id="clientErrorBadge" class="errorBadge"></p>
+						<form id="createAccountForm" onsubmit="createAccount();" action="javascript:void(0)" method="POST">
+							<div>
+									<h4>Account Type</h4>
+									<div id="createAccountType">
+										<p>
+											<input type="radio" id="savings" name="accountType" value="savings">
+											<label for="savings">Savings</label>
+										</p>
+		
+										<p>
+											<input type="radio" id="current" name="accountType" value="current">
+											<label for="current">Current</label>
+										</p>
+									</div>
+								</div>
+								<div>
+									<h4>Customer Information</h4>
+									<div>
+										<p>
+											<input type="text" id="createAccountFullName" name="fullName" placeholder="Fullname" class="authInput input-lm" readonly/>
+										</p>											
+										<p>
+											<input type="email" id="createAccountEmail" name="email" placeholder="Email" readonly class="authInput input-lm" />	
+										</p>
+										<p>
+											<input type="number" id="createAccountOpeningBalance" name="balance" placeholder="Opening Balance" required class="authInput input-lm" />	
+										</p>
+									</div>
+								</div>
+								<button id="createAccountBtn" class="btn btn-ms">Submit</button>
+								<button type="button" onclick="Visibility(13)" class="btn btn-ms">Close</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-9-1 dashboard-full">
+					<aside class="col-1">
+						<div class="profilePic">
+							<a class="normal-link" href="#" onclick="Visibility(8);"><img id="large-img" src="../public/profile.png" alt="profile" />change picture</a>
+							<div>
+								<p>Welcome,</p>
+								<p class="userFullname"></p>
+							</div>
+						</div>
+						<button id="createAccountOuterBtn" class="createuser makeInvisible" onclick="Visibility(13);" >Create Account</button>
+					</aside>
+				<div class="col-9 profilePic">
+					<p id="clientDashboardErrorBadge" class="errorBadge"></p>
+					<button id="createuserbtn" class="makeInvisible hidebtn" onclick="Visibility(13);" >Create Account</button>	
+					<div id="newUser">
+							<h1>Create Account!</h1>
+					</div>
+				</div>
+			</div>	
+			<div id="pop-up8" onclick="hideBadge();" class="pop-up makeInvisible">
+				<div class="pop-upBody">
+					<span class="pop-upSpan"></span>
+					<div>
+						<a class="closePop-up" href="#" onclick="Visibility(8);"><i class="fas fa-times-circle"></i></a>
+						<div>
+							<p id="uploadErrorBadge" class="errorBadge"></p>
+							<h3>CHANGE PICTURE</h3>
+							<form action="javascript:void(0)" method="POST" enctype="multipart/form-data">
+								<div class="profilePic">
+									<img id="other-img" src="../public/profile.png" alt="profile" />
+									<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/*" required>
+								</div>
+								<button id="changebtn" onclick="changeProficPicture()" class="btn btn-md">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer class="adjust-footer">
+			&copy; 2019 Banka Plc. All Rights Reserved.
+		</footer>
+		<script type="text/javascript" src="../scripts/common.js"></script>
+		<script type="text/javascript" src="../scripts/generateTable.js"></script>
+		<script type="text/javascript" src="../scripts/client.js"></script>
+	</body>
+</html>

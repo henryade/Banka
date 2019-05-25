@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width initial-scale=1.0">
+		<meta name="author" content="Adeola Adeyemo">
+		<title>Banka | Dashboard</title>
+		<link rel="stylesheet" type="text/css" href="../styles/index.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	</head>
+	<body>
+		<header>
+			<div class="container user-header-div">
+				<span class="img-icon"><img id="small-img" src="../public/profile.png" alt="profile" /></span>
+				<div id="brand">
+					<a href="../../index.html"><img src="../public/banka.png">
+					<h1>Banka </h1></a><span id="toggle" class="toggle-color fa fa-chevron-circle-down"></span>	
+				</div>
+				<nav class="nav">	
+					<ul>
+						<li><a href="../../index.html">Logout</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<section class="content dashboard dashboard-full">
+			<div class="dashboard-full">
+				<div class="col-9-1 dashboard-full">
+					<aside class="col-1">
+						<div class="profilePic">
+							<a class="normal-link" href="#" onclick="Visibility(8);"><img id="large-img" src="../public/profile.png" alt="profile" />change picture</a>
+							<div>
+								<p>Welcome,</p>
+								<p class="userFullname"></p>
+							<p id="usertype">Banka Staff</p>
+								
+							</div>
+						</div>
+						<button id="newTransaction" onclick="transaction()" class="btn btn-lm createuser">NEW TRANSACTION</button>
+					</aside>
+					<div class="col-9">					
+						<div id="viewAllAccounts">
+							<p style="margin:0 auto">
+								<button id="newTransaction" onclick="transaction()" class="hidebtn btn btn-md">NEW TRANSACTION</button>
+							</p>
+							<p id="searchErrorBadge" class="errorBadge"></p>
+							<div class="transactionForm search" id="account-search">
+								<form action="javascript:void(0);" onsubmit="searchAccount();">
+									<p>				
+										<label for="bankAccNum">Search: </label>
+										<input type="number" id="bankAccNum" placeholder="Account Number" name="bankAccNum" required class="authInput" />
+									</p>
+										<button id="bankAccbtn" class="btn btn-sm">Submit</button>
+								</form>
+							</div>
+							<div id="AdminDashboard">
+
+							</div>
+							<div class="pageNumbers makeInvisible">
+								<a href="">&laquo;</a>
+								<a href=""  class="active">1</a>
+								<a href="">2</a>
+								<a href="">3</a>
+								<a href="">4</a>
+								<a href="">&raquo;</a>
+							</div> 
+						</div>
+						<div id="pop-uptransaction" class="pop-up makeInvisible">
+							<div class="pop-upBodytransaction">
+								<span class="pop-upSpan"></span>
+								<div>
+									<a class="closePop-up" onclick="closetransaction();" href="#"><i class="fas fa-times-circle"></i></a>
+									<p id="transactionErrorBadge" class="errorBadge"></p>
+									<div class="accountNumberSearch">
+										<div id="accountNumberSearch">
+											<form onsubmit="getAccountDetail();" action="javascript:void(0);">			
+												<input type="number" id="accNum" placeholder="Account Number" name="accNum" id="accNum" required class="authInput input-md" />
+												<button id="searchAccountbtn" class="btn btn-ms">Submit</button>
+											</form>
+										</div>
+									</div>				
+									<div id="accountInformation">
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="pop-up8" onclick="hideBadge();" class="pop-up makeInvisible">
+					<div class="pop-upBody">
+
+						<span class="pop-upSpan"></span>
+						<div>
+							<a class="closePop-up" href="#" onclick="Visibility(8);"><i class="fas fa-times-circle"></i></a>
+							<div>
+								<p id="uploadErrorBadge" class="errorBadge"></p>
+								<h3>CHANGE PICTURE</h3>
+								<form action="javascript:void(0)" method="POST" enctype="multipart/form-data">
+									<div class="changePicture">
+										<img id="other-img" src="../public/profile.png" alt="profile" />
+										<input type="file" class="authUpload" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
+									</div>
+									<button id="changebtn" onclick="changeProficPicture();" class="btn btn-sm">Submit</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer>
+			&copy; 2019 Banka Plc. All Rights Reserved.
+		</footer>
+		<script type="text/javascript" src="../scripts/generateTable.js"></script>
+		<script type="text/javascript" src="../scripts/common.js"></script>
+		<script type="text/javascript" src="../scripts/staff.js"></script>
+	</body>
+</html>
