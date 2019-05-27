@@ -53,17 +53,11 @@ class UserController {
     bcrypt.hash(req.body.password, salt, async (err, hash) => {
       const isAdmin = false;
       const type = "client";
-      const token = jwt.sign({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        type,
-        isAdmin,
-      }, process.env.JWT_KEY, { expiresIn: "10h" });
       let newUser = {};
       try {
         newUser = await data.createUser(req.body.firstName.replace(/\s/g, ""), req.body.lastName.replace(/\s/g, ""), req.body.email, hash, type, isAdmin);
         const { password, ...user } = newUser;
+        const token = jwt.sign(user, process.env.JWT_KEY, { expiresIn: "10h" });
         return res.status(201).json({
           status: 201,
           data: { token, ...user },

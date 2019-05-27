@@ -307,6 +307,8 @@ const viewSpecificAccount = async (data) => {
 	const modalBody = document.getElementById(`modalBody${data.accountNumber}`)
 	document.getElementById(`Loading${data.accountNumber}`).classList.add("makeInvisible");
 	if(document.getElementById("accountImg") && user.imageurl) document.getElementById("accountImg").src = user.imageurl; 
+	modalBody.style.color = "initial";
+	modalBody.style.fontSize = "initial";
 	modalBody.classList.add("inverse");
 	modalBody.append(table);
 	return;
@@ -389,6 +391,10 @@ const modal = (a, status) => {
 		p.style.margin = "10% auto";
 		p.id = "Loading"+a;
 		const pText = document.createTextNode("Loading...");
+		if(status !== "transaction"){
+			p.style.color = "white";
+			p.style.fontSize = "35px";
+		}
 		p.appendChild(pText);
 		specificAccount(a, "specificAccount");
 		adminDashboard.append(createAccountModal(a, p, status))

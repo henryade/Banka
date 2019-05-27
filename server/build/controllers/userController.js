@@ -100,7 +100,7 @@ var UserController = function () {
 
       _bcryptjs2.default.hash(req.body.password, salt, function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(err, hash) {
-          var isAdmin, type, token, newUser, _newUser, password, user;
+          var isAdmin, type, newUser, _newUser, password, user, token;
 
           return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
@@ -108,21 +108,15 @@ var UserController = function () {
                 case 0:
                   isAdmin = false;
                   type = "client";
-                  token = _jsonwebtoken2.default.sign({
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email,
-                    type: type,
-                    isAdmin: isAdmin
-                  }, process.env.JWT_KEY, { expiresIn: "10h" });
                   newUser = {};
-                  _context.prev = 4;
-                  _context.next = 7;
+                  _context.prev = 3;
+                  _context.next = 6;
                   return _dbController2.default.createUser(req.body.firstName.replace(/\s/g, ""), req.body.lastName.replace(/\s/g, ""), req.body.email, hash, type, isAdmin);
 
-                case 7:
+                case 6:
                   newUser = _context.sent;
                   _newUser = newUser, password = _newUser.password, user = _objectWithoutProperties(_newUser, ["password"]);
+                  token = _jsonwebtoken2.default.sign(user, process.env.JWT_KEY, { expiresIn: "10h" });
                   return _context.abrupt("return", res.status(201).json({
                     status: 201,
                     data: _extends({ token: token }, user)
@@ -130,7 +124,7 @@ var UserController = function () {
 
                 case 12:
                   _context.prev = 12;
-                  _context.t0 = _context["catch"](4);
+                  _context.t0 = _context["catch"](3);
                   return _context.abrupt("return", res.status(400).json({
                     status: 400,
                     error: _context.t0
@@ -141,7 +135,7 @@ var UserController = function () {
                   return _context.stop();
               }
             }
-          }, _callee, _this, [[4, 12]]);
+          }, _callee, _this, [[3, 12]]);
         }));
 
         return function (_x, _x2) {

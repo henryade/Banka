@@ -255,7 +255,7 @@ const modal = (a, status) => {
 
 const successLogic = (data, action, parsedData) => {
     if(data.data){
-        if((action === "getaccountbyemail" && data.data.length < 1)) {
+        if((action.toLowerCase() === "getaccountbyemail" && data.data.length < 1)) {
             clientDashboard.innerHTML = clientDashboardOld;
             return;
 		}
@@ -322,13 +322,6 @@ const logic = async (Request, action, parsedData) => {
 				return successLogic(data, action);
 				break;
 			case 401:
-				const loaded = sessionStorage.getItem("loaded");
-				if(loaded === "1" && action === "getAccountByEmail"){
-					window.location.href = "../dashboard.html";
-					sessionStorage.setItem("loaded", "2");
-				}
-				else window.location.href = "../index.html";
-				break;
 			case 403:
 			case 407:
 				window.location.href = "../index.html";
