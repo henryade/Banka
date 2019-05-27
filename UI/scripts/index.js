@@ -138,9 +138,9 @@ const selectUser = (data) => {
 	sessionStorage.setItem("pageNumber", "1");
 	sessionStorage.setItem("loaded", "1");
 	sessionStorage.setItem("label", "current")
-	if(data.type === "staff" && data.isAdmin) window.location.href = "admin/dashboard.html";
-	else if (data.type === "staff" && !data.isAdmin) window.location.href = "cashier/dashboard.html";
-	else window.location.href = "client/dashboard.html";
+	if(data.type === "staff" && data.isAdmin) window.location.href = "UI/admin/dashboard.html";
+	else if (data.type === "staff" && !data.isAdmin) window.location.href = "UI/cashier/dashboard.html";
+	else window.location.href = "UI/client/dashboard.html";
 }
 window.addEventListener("click", close);
 closeReset.addEventListener("click", () => {
