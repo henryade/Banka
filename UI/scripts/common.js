@@ -6,10 +6,12 @@ const createAccountModalTemplate = (text, input, content) => {
     div.classList.add("makeVisible");
 
         const div1 = document.createElement("div");
-        div1.classList.add("pop-upBodyTransaction");
         if(text === "transaction") {
             div1.style.marginTop = "2%";
         }
+        if(text !== "transaction" && text !== "confirmAction") {
+            div1.classList.add("pop-upBodyTransaction");
+        }else div1.classList.add("pop-upBody");
 
             const span = document.createElement("span");
             span.classList.add("pop-upSpan");
@@ -93,8 +95,7 @@ const createAccountModal = (a, table, status) => {
         div2.appendChild(divBtn);
     }
     div.appendChild(div2);
-    if(status === "transaction")return createAccountModalTemplate(status, a, div)
-    return createAccountModalTemplate("_",a, div)
+    return createAccountModalTemplate(status, a, div)
 }
 
 const confirmDeleteAction = (a) => {
@@ -189,7 +190,7 @@ const uploadPicture = (Image) => {
 			case 401:			
 			case 403:
 			case 407:
-				window.location.href = "../../index.html";
+				window.location.href = "../index.html";
 				break;
 			case 400:
 			case 404:
