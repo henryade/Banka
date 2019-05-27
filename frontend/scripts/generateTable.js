@@ -379,7 +379,6 @@ class specificAccountTable{
     generateBody(){
         let tbody = this.table.createTBody();
         const exception = ["owner"]
-        console.log(this.tableObject)
             for (let key in this.tableObject[0]) {
                 let row ;
                 if(exception.indexOf(key) === -1){
