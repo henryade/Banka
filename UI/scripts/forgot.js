@@ -63,7 +63,7 @@ const onSuccess = (data) => {
     window.setTimeout(() => {
 			forgotErrorBadge.innerHTML= "";
 			forgotErrorBadge.style.display = "none";
-		window.location.href = "./../index.html";
+		window.location.href = "./index.html";
     }, 500);
     
 }
@@ -91,7 +91,7 @@ const resetLogic = (password, confirm, email, id) => {
 			case 401:			
 			case 403:
 			case 407:
-				window.location.href = "../../index.html";
+				window.location.href = "../index.html";
 				break;
 			case 400:
 			case 404:
