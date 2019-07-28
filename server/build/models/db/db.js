@@ -3,24 +3,29 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports["default"] = void 0;
 
 var _pg = require("pg");
 
-var _dotenv = require("dotenv");
+var _dotenv = _interopRequireDefault(require("dotenv"));
 
-var _dotenv2 = _interopRequireDefault(_dotenv);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-_dotenv2.default.config();
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-var Model = function () {
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+_dotenv["default"].config();
+
+var Model =
+/*#__PURE__*/
+function () {
   function Model() {
     _classCallCheck(this, Model);
 
@@ -30,7 +35,9 @@ var Model = function () {
   _createClass(Model, [{
     key: "createTable",
     value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(type) {
+      var _createTable = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(type) {
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -47,7 +54,7 @@ var Model = function () {
       }));
 
       function createTable(_x) {
-        return _ref.apply(this, arguments);
+        return _createTable.apply(this, arguments);
       }
 
       return createTable;
@@ -55,7 +62,9 @@ var Model = function () {
   }, {
     key: "insertTable",
     value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(query, values) {
+      var _insertTable = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(query, values) {
         var result;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -77,7 +86,7 @@ var Model = function () {
       }));
 
       function insertTable(_x2, _x3) {
-        return _ref2.apply(this, arguments);
+        return _insertTable.apply(this, arguments);
       }
 
       return insertTable;
@@ -85,7 +94,9 @@ var Model = function () {
   }, {
     key: "modifyDb",
     value: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(query) {
+      var _modifyDb = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3(query) {
         var result;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
@@ -107,7 +118,7 @@ var Model = function () {
       }));
 
       function modifyDb(_x4) {
-        return _ref3.apply(this, arguments);
+        return _modifyDb.apply(this, arguments);
       }
 
       return modifyDb;
@@ -115,7 +126,9 @@ var Model = function () {
   }, {
     key: "queryDb",
     value: function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(query) {
+      var _queryDb = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(query) {
         var result;
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
@@ -137,7 +150,7 @@ var Model = function () {
       }));
 
       function queryDb(_x5) {
-        return _ref4.apply(this, arguments);
+        return _queryDb.apply(this, arguments);
       }
 
       return queryDb;
@@ -145,7 +158,9 @@ var Model = function () {
   }, {
     key: "getAll",
     value: function () {
-      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(query) {
+      var _getAll = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee5(query) {
         var result;
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
@@ -167,7 +182,7 @@ var Model = function () {
       }));
 
       function getAll(_x6) {
-        return _ref5.apply(this, arguments);
+        return _getAll.apply(this, arguments);
       }
 
       return getAll;
@@ -175,13 +190,15 @@ var Model = function () {
   }, {
     key: "deleteTable",
     value: function () {
-      var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(table) {
+      var _deleteTable = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee6(table) {
         var queryText;
         return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                queryText = "DELETE FROM " + table;
+                queryText = "DELETE FROM ".concat(table);
                 _context6.next = 3;
                 return this.pool.query(queryText);
 
@@ -194,7 +211,7 @@ var Model = function () {
       }));
 
       function deleteTable(_x7) {
-        return _ref6.apply(this, arguments);
+        return _deleteTable.apply(this, arguments);
       }
 
       return deleteTable;
@@ -207,8 +224,7 @@ var Model = function () {
         password: process.env.PASSWORD,
         database: process.env.DATABASE,
         port: process.env.DBPORT,
-        host: process.env.HOST,
-        ssl: true
+        host: process.env.HOST
       };
       var pool = new _pg.Pool(obj);
       return pool;
@@ -219,4 +235,5 @@ var Model = function () {
 }();
 
 var model = new Model();
-exports.default = model;
+var _default = model;
+exports["default"] = _default;

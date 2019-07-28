@@ -9,7 +9,7 @@
     "start": "node --require babel-polyfill server/build/index.js",
     "seed": "node --require babel-polyfill server/build/models/controller/populate",
     "superuser": "node --require babel-polyfill server/build/models/controller/superuser",
-    "test": "npm run seed && nyc --require babel-polyfill mocha server/build/test/index.spec.js --exit",
+    "test": "npm run seed && nyc --require babel-polyfill mocha server/build/test/index.spec.js  --timeout 10000 --exit",
     "coverage": "nyc report --reporter=text-lcov | nyc report --reporter=lcov",
     "heroku-postbuild": "npm run build && node --require babel-polyfill server/build/models/controller/superuser"
   },

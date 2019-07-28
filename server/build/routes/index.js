@@ -3,40 +3,29 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _express = require("express");
+var _express = _interopRequireDefault(require("express"));
 
-var _express2 = _interopRequireDefault(_express);
+var _userController = _interopRequireDefault(require("../controllers/userController"));
 
-var _userController = require("../controllers/userController");
+var _validation = _interopRequireDefault(require("../middleware/validation"));
 
-var _userController2 = _interopRequireDefault(_userController);
+var _authorization = _interopRequireDefault(require("../middleware/authorization"));
 
-var _validation = require("../middleware/validation");
+var _dbValidation = _interopRequireDefault(require("../middleware/dbValidation"));
 
-var _validation2 = _interopRequireDefault(_validation);
+var _uploadImage = _interopRequireDefault(require("../utils/uploadImage"));
 
-var _authorization = require("../middleware/authorization");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _authorization2 = _interopRequireDefault(_authorization);
+var router = _express["default"].Router();
 
-var _dbValidation = require("../middleware/dbValidation");
-
-var _dbValidation2 = _interopRequireDefault(_dbValidation);
-
-var _uploadImage = require("../utils/uploadImage");
-
-var _uploadImage2 = _interopRequireDefault(_uploadImage);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var router = _express2.default.Router();
-
-router.post("/auth/signup", _validation2.default.signUp, _dbValidation2.default.checkUser, _userController2.default.signup);
-router.post("/auth/signin", _validation2.default.signIn, _dbValidation2.default.signin, _userController2.default.signin);
-router.post("/auth/reset", _validation2.default.forgotPassword, _dbValidation2.default.uploadImage, _userController2.default.reset);
-router.post("/auth/forgotPassword", _validation2.default.reset, _dbValidation2.default.uploadImage, _userController2.default.forgotPassword);
-router.get("/auth/passwordreset/:token/forgot?", _userController2.default.passwordReset);
-router.post("/upload", _authorization2.default.basicAuth, _dbValidation2.default.uploadImage, _uploadImage2.default.uploadImage);
-
-exports.default = router;
+router.post("/auth/signup", _validation["default"].signUp, _dbValidation["default"].checkUser, _userController["default"].signup);
+router.post("/auth/signin", _validation["default"].signIn, _dbValidation["default"].signin, _userController["default"].signin);
+router.post("/auth/reset", _validation["default"].forgotPassword, _dbValidation["default"].uploadImage, _userController["default"].reset);
+router.post("/auth/forgotPassword", _validation["default"].reset, _dbValidation["default"].uploadImage, _userController["default"].forgotPassword);
+router.get("/auth/passwordreset/:token/forgot?", _userController["default"].passwordReset);
+router.post("/upload", _authorization["default"].basicAuth, _dbValidation["default"].uploadImage, _uploadImage["default"].uploadImage);
+var _default = router;
+exports["default"] = _default;

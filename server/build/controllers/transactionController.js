@@ -3,28 +3,30 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _dbController = _interopRequireDefault(require("./dbController"));
 
-var _dbController = require("./dbController");
+var _transactionLogic = _interopRequireDefault(require("../utils/transactionLogic"));
 
-var _dbController2 = _interopRequireDefault(_dbController);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _transactionLogic = require("../utils/transactionLogic");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-var _transactionLogic2 = _interopRequireDefault(_transactionLogic);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
  * Transaction Controller Class
  */
-
-var TransactionController = function () {
+var TransactionController =
+/*#__PURE__*/
+function () {
   function TransactionController() {
     _classCallCheck(this, TransactionController);
   }
@@ -39,14 +41,16 @@ var TransactionController = function () {
     * @return {obj}    - returns response object
     */
     value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
+      var _viewAllAccountTransaction = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(req, res) {
         var transactions;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _dbController2.default.findAllAccountTransactionsByAccountNumber(parseInt(req.params.accountNumber, 10));
+                return _dbController["default"].findAllAccountTransactionsByAccountNumber(parseInt(req.params.accountNumber, 10));
 
               case 2:
                 transactions = _context.sent;
@@ -72,16 +76,15 @@ var TransactionController = function () {
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee);
       }));
 
       function viewAllAccountTransaction(_x, _x2) {
-        return _ref.apply(this, arguments);
+        return _viewAllAccountTransaction.apply(this, arguments);
       }
 
       return viewAllAccountTransaction;
     }()
-
     /**
     * View specific transaction
     * @param {obj} req - request from body
@@ -92,14 +95,16 @@ var TransactionController = function () {
   }, {
     key: "viewSpecificTransaction",
     value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
+      var _viewSpecificTransaction = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(req, res) {
         var transaction;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _dbController2.default.findTransactionById(Number(req.params.transactionId));
+                return _dbController["default"].findTransactionById(Number(req.params.transactionId));
 
               case 2:
                 transaction = _context2.sent;
@@ -125,16 +130,15 @@ var TransactionController = function () {
                 return _context2.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee2);
       }));
 
       function viewSpecificTransaction(_x3, _x4) {
-        return _ref2.apply(this, arguments);
+        return _viewSpecificTransaction.apply(this, arguments);
       }
 
       return viewSpecificTransaction;
     }()
-
     /**
     * Credit an account
     * @param {obj} req - request from body
@@ -145,9 +149,8 @@ var TransactionController = function () {
   }, {
     key: "creditAccount",
     value: function creditAccount(req, res) {
-      return (0, _transactionLogic2.default)(1, req, res);
+      return (0, _transactionLogic["default"])(1, req, res);
     }
-
     /**
     * Debit an Account
     * @param {obj} req - request from body
@@ -158,11 +161,12 @@ var TransactionController = function () {
   }, {
     key: "debitAccount",
     value: function debitAccount(req, res) {
-      return (0, _transactionLogic2.default)(-1, req, res);
+      return (0, _transactionLogic["default"])(-1, req, res);
     }
   }]);
 
   return TransactionController;
 }();
 
-exports.default = TransactionController;
+var _default = TransactionController;
+exports["default"] = _default;
