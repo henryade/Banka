@@ -3,55 +3,45 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _express = require("express");
+var _express = _interopRequireDefault(require("express"));
 
-var _express2 = _interopRequireDefault(_express);
+var _bodyParser = _interopRequireDefault(require("body-parser"));
 
-var _bodyParser = require("body-parser");
+var _expressFileupload = _interopRequireDefault(require("express-fileupload"));
 
-var _bodyParser2 = _interopRequireDefault(_bodyParser);
+var _cors = _interopRequireDefault(require("cors"));
 
-var _expressFileupload = require("express-fileupload");
+var _account = _interopRequireDefault(require("./routes/account"));
 
-var _expressFileupload2 = _interopRequireDefault(_expressFileupload);
+var _transaction = _interopRequireDefault(require("./routes/transaction"));
 
-var _cors = require("cors");
+var _index = _interopRequireDefault(require("./routes/index"));
 
-var _cors2 = _interopRequireDefault(_cors);
+var _user = _interopRequireDefault(require("./routes/user"));
 
-var _account = require("./routes/account");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _account2 = _interopRequireDefault(_account);
-
-var _transaction = require("./routes/transaction");
-
-var _transaction2 = _interopRequireDefault(_transaction);
-
-var _index = require("./routes/index");
-
-var _index2 = _interopRequireDefault(_index);
-
-var _user = require("./routes/user");
-
-var _user2 = _interopRequireDefault(_user);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var app = (0, _express2.default)();
-app.use(_bodyParser2.default.json());
-app.use(_bodyParser2.default.urlencoded({ extended: true }));
-app.use((0, _expressFileupload2.default)({
-  limits: { fileSize: 50 * 1024 * 1024 },
+var app = (0, _express["default"])();
+app.use((0, _cors["default"])({
+  origin: "*",
+  optionsSuccessStatus: 200
+}));
+app.use(_bodyParser["default"].json());
+app.use(_bodyParser["default"].urlencoded({
+  extended: true
+}));
+app.use((0, _expressFileupload["default"])({
+  limits: {
+    fileSize: 50 * 1024 * 1024
+  },
   createParentPath: true
 }));
-app.use((0, _cors2.default)());
-
-app.use("/api/v1", _transaction2.default);
-app.use("/api/v1", _account2.default);
-app.use("/api/v1", _index2.default);
-app.use("/api/v1", _user2.default);
-
+app.use("/api/v1", _transaction["default"]);
+app.use("/api/v1", _account["default"]);
+app.use("/api/v1", _index["default"]);
+app.use("/api/v1", _user["default"]);
 app.get("/", function (req, res) {
   res.send("Home Page");
 });
@@ -61,5 +51,5 @@ app.use("*", function (req, res) {
     message: "Page Not Found"
   });
 });
-
-exports.default = app;
+var _default = app;
+exports["default"] = _default;

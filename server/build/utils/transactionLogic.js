@@ -3,20 +3,23 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _dbController = _interopRequireDefault(require("../controllers/dbController"));
 
-var _dbController = require("../controllers/dbController");
+var _email = _interopRequireDefault(require("./email"));
 
-var _dbController2 = _interopRequireDefault(_dbController);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _email = require("./email");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-var _email2 = _interopRequireDefault(_email);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /**
  * Debit or Credit controller
@@ -27,15 +30,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
  */
 
 /* istanbul ignore logic */
-var logic = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(action, req, res) {
+var logic =
+/*#__PURE__*/
+function () {
+  var _ref = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee(action, req, res) {
     var account, amount, newBalance, createdOn, type, depositor, phoneNumber, cashier, newTransaction, person, email, name, message;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return _dbController2.default.findAccountByAccountNumber(parseInt(req.params.accountNumber, 10));
+            return _dbController["default"].findAccountByAccountNumber(parseInt(req.params.accountNumber, 10));
 
           case 2:
             account = _context.sent;
@@ -81,12 +88,12 @@ var logic = function () {
             phoneNumber = req.body.depositorPhoneNumber || "self";
             cashier = req.userData.id;
 
-            _dbController2.default.updateBalance(newBalance, parseInt(req.params.accountNumber, 10));
+            _dbController["default"].updateBalance(newBalance, parseInt(req.params.accountNumber, 10));
 
             newTransaction = {};
             _context.prev = 18;
             _context.next = 21;
-            return _dbController2.default.createTransaction(createdOn, type, req.params.accountNumber, cashier, parseFloat(amount), parseFloat(account.balance), newBalance, depositor, phoneNumber);
+            return _dbController["default"].createTransaction(createdOn, type, req.params.accountNumber, cashier, parseFloat(amount), parseFloat(account.balance), newBalance, depositor, phoneNumber);
 
           case 21:
             newTransaction = _context.sent;
@@ -108,15 +115,18 @@ var logic = function () {
             }
 
             _context.next = 30;
-            return _dbController2.default.findOwner(account.owner);
+            return _dbController["default"].findOwner(account.owner);
 
           case 30:
             person = _context.sent;
             email = person.email;
-            name = (person.lastName + " " + person.firstName).toUpperCase();
-            message = _email2.default.message(_extends({ name: name, email: email }, newTransaction));
+            name = "".concat(person.lastName, " ").concat(person.firstName).toUpperCase();
+            message = _email["default"].message(_objectSpread({
+              name: name,
+              email: email
+            }, newTransaction));
 
-            _email2.default.sendMail(message);
+            _email["default"].sendMail(message);
 
           case 35:
             return _context.abrupt("return", res.status(200).json({
@@ -129,7 +139,7 @@ var logic = function () {
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[18, 24]]);
+    }, _callee, null, [[18, 24]]);
   }));
 
   return function logic(_x, _x2, _x3) {
@@ -137,4 +147,5 @@ var logic = function () {
   };
 }();
 
-exports.default = logic;
+var _default = logic;
+exports["default"] = _default;

@@ -1,38 +1,41 @@
 "use strict";
 
-var _jsonwebtoken = require("jsonwebtoken");
+var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
-var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+var _dbController = _interopRequireDefault(require("../controllers/dbController"));
 
-var _dbController = require("../controllers/dbController");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _dbController2 = _interopRequireDefault(_dbController);
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 exports.staff = function (req, res, next) {
   var token = req.headers.authorization.split(" ")[1];
-  _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function (err, decoded) {
+
+  _jsonwebtoken["default"].verify(token, process.env.JWT_KEY, function (err, decoded) {
     if (err) {
       return res.status(401).json({
         status: 401,
         message: "Not Authorized"
       });
     }
+
     if (decoded.type !== "staff" || decoded.isAdmin !== false) {
       return res.status(403).json({
         status: 403,
         message: "Not Authorized To Access this Site"
       });
     }
+
     req.userData = decoded;
     next();
     return null;
   });
+
   return null;
 };
+
 exports.staff_admin = function (req, res, next) {
   if (!req.headers.authorization) {
     return res.status(407).json({
@@ -40,26 +43,32 @@ exports.staff_admin = function (req, res, next) {
       message: "Missing Authorization"
     });
   }
+
   var token = req.headers.authorization.split(" ")[1];
-  _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function (err, decoded) {
+
+  _jsonwebtoken["default"].verify(token, process.env.JWT_KEY, function (err, decoded) {
     if (err) {
       return res.status(401).json({
         status: 401,
         message: "Not Authorized"
       });
     }
+
     if (decoded.type !== "staff") {
       return res.status(403).json({
         status: 403,
         message: "Not Authorized To Access this Site"
       });
     }
+
     req.userData = decoded;
     next();
     return null;
   });
+
   return null;
 };
+
 exports.admin = function (req, res, next) {
   if (!req.headers.authorization) {
     return res.status(407).json({
@@ -67,26 +76,32 @@ exports.admin = function (req, res, next) {
       message: "Missing Authorization"
     });
   }
+
   var token = req.headers.authorization.split(" ")[1];
-  _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function (err, decoded) {
+
+  _jsonwebtoken["default"].verify(token, process.env.JWT_KEY, function (err, decoded) {
     if (err) {
       return res.status(401).json({
         status: 401,
         message: "Not Authorized"
       });
     }
+
     if (decoded.isAdmin === false) {
       return res.status(403).json({
         status: 403,
         message: "Not Authorized To Access this Site"
       });
     }
+
     req.userData = decoded;
     next();
     return null;
   });
+
   return null;
 };
+
 exports.user = function (req, res, next) {
   if (!req.headers.authorization) {
     return res.status(407).json({
@@ -94,9 +109,15 @@ exports.user = function (req, res, next) {
       message: "Missing Authorization"
     });
   }
+
   var token = req.headers.authorization.split(" ")[1];
-  _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(err, decoded) {
+
+  _jsonwebtoken["default"].verify(token, process.env.JWT_KEY,
+  /*#__PURE__*/
+  function () {
+    var _ref = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee(err, decoded) {
       var Account, transactionAccount, tokenAccount;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -146,7 +167,7 @@ exports.user = function (req, res, next) {
               }
 
               _context.next = 10;
-              return _dbController2.default.findAccountByAccountNumber(req.params.accountNumber);
+              return _dbController["default"].findAccountByAccountNumber(req.params.accountNumber);
 
             case 10:
               Account = _context.sent;
@@ -173,7 +194,7 @@ exports.user = function (req, res, next) {
               }
 
               _context.next = 17;
-              return _dbController2.default.findTransactionById(req.params.transactionId);
+              return _dbController["default"].findTransactionById(req.params.transactionId);
 
             case 17:
               transactionAccount = _context.sent;
@@ -190,7 +211,7 @@ exports.user = function (req, res, next) {
 
             case 20:
               _context.next = 22;
-              return _dbController2.default.findAccountByEmail(decoded.email);
+              return _dbController["default"].findAccountByEmail(decoded.email);
 
             case 22:
               tokenAccount = _context.sent;
@@ -206,7 +227,6 @@ exports.user = function (req, res, next) {
               }));
 
             case 25:
-
               req.userData = decoded;
               next();
               return _context.abrupt("return", null);
@@ -216,13 +236,14 @@ exports.user = function (req, res, next) {
               return _context.stop();
           }
         }
-      }, _callee, undefined);
+      }, _callee);
     }));
 
     return function (_x, _x2) {
       return _ref.apply(this, arguments);
     };
   }());
+
   return null;
 };
 
@@ -233,9 +254,15 @@ exports.basicAuth = function (req, res, next) {
       message: "Missing Authorization"
     });
   }
+
   var token = req.headers.authorization.split(" ")[1];
-  _jsonwebtoken2.default.verify(token, process.env.JWT_KEY, function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(err, decoded) {
+
+  _jsonwebtoken["default"].verify(token, process.env.JWT_KEY,
+  /*#__PURE__*/
+  function () {
+    var _ref2 = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee2(err, decoded) {
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -260,12 +287,13 @@ exports.basicAuth = function (req, res, next) {
               return _context2.stop();
           }
         }
-      }, _callee2, undefined);
+      }, _callee2);
     }));
 
     return function (_x3, _x4) {
       return _ref2.apply(this, arguments);
     };
   }());
+
   return null;
 };

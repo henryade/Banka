@@ -3,26 +3,28 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
 var errors = function errors(res, error, fieldString) {
   var field = fieldString.replace(/([A-Z])/g, " $1").toLowerCase();
+
   switch (error.type) {
     case "any.required":
       return res.status(400).json({
         status: 400,
-        error: field + " is required"
+        error: "".concat(field, " is required")
       });
 
     case "string.regex.base":
       return res.status(400).json({
         status: 400,
-        error: field + " has invalid parameters"
+        error: "".concat(field, " has invalid parameters")
       });
 
     case "string.email":
       return res.status(400).json({
         status: 400,
-        error: "Invalid " + field
+        error: "Invalid ".concat(field)
       });
 
     case "object.allowUnknown":
@@ -34,47 +36,53 @@ var errors = function errors(res, error, fieldString) {
     case "string.min":
       return res.status(400).json({
         status: 400,
-        error: "Invalid " + field + " ."
+        error: "Invalid ".concat(field, " .")
       });
+
     case "string.max":
       return res.status(400).json({
         status: 400,
-        error: "Invalid " + field
+        error: "Invalid ".concat(field)
       });
-    case "number.min":
 
+    case "number.min":
       return res.status(400).json({
         status: 400,
-        error: "Invalid " + field
+        error: "Invalid ".concat(field)
       });
+
     case "number.max":
       return res.status(400).json({
         status: 400,
-        error: "Invalid " + field
+        error: "Invalid ".concat(field)
       });
+
     case "number.base":
       return res.status(400).json({
         status: 400,
-        error: "Invalid " + field
+        error: "Invalid ".concat(field)
       });
+
     case "any.allowOnly":
       if (field === "status") {
         return res.status(404).json({
           status: 404,
-          error: "Invalid " + field
+          error: "Invalid ".concat(field)
         });
       }
+
       return res.status(400).json({
         status: 400,
-        error: field + " does not match expected value."
+        error: "".concat(field, " does not match expected value.")
       });
 
     default:
       return res.status(400).json({
         status: 400,
-        error: field + " contains incorrect parameters"
+        error: "".concat(field, " contains incorrect parameters")
       });
   }
 };
 
-exports.default = errors;
+var _default = errors;
+exports["default"] = _default;
