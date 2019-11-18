@@ -24,10 +24,6 @@ var _user = _interopRequireDefault(require("./routes/user"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var app = (0, _express["default"])();
-app.use((0, _cors["default"])({
-  origin: "*",
-  optionsSuccessStatus: 200
-}));
 app.use(_bodyParser["default"].json());
 app.use(_bodyParser["default"].urlencoded({
   extended: true
@@ -38,6 +34,7 @@ app.use((0, _expressFileupload["default"])({
   },
   createParentPath: true
 }));
+app.use((0, _cors["default"])());
 app.use("/api/v1", _transaction["default"]);
 app.use("/api/v1", _account["default"]);
 app.use("/api/v1", _index["default"]);

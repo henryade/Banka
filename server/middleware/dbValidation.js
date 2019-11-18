@@ -35,7 +35,7 @@ exports.checkStaff = async (req, res, next) => {
 exports.signin = async (req, res, next) => {
   const User = await dbs.queryDb(DBQUERY.SELECT.USER.EMAIL([req.body.email]));
   if (User === undefined) {
-    return error(res, 401, "Auth failed");
+    return error(res, 401, "Incorrect email or password");
   }
   req.body.User = User;
   next();
