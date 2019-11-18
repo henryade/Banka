@@ -38,7 +38,7 @@ class UserController {
       }
       return res.status(401).json({
         status: 401,
-        error: "Auth failed",
+        error: "Incorrect email or password",
       });
     });
   }

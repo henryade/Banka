@@ -81,7 +81,7 @@ describe("Sign in test", () => {
       })
       .end((error, response) => {
         expect(response).have.a.status(401);
-        expect(response.body.error).to.equal("Auth failed");
+        expect(response.body.error).to.equal("Incorrect email or password");
       });
     done();
   });
@@ -94,7 +94,7 @@ describe("Sign in test", () => {
       })
       .end((error, response) => {
         expect(response).have.a.status(401);
-        expect(response.body.error).to.equal("Auth failed");
+        expect(response.body.error).to.equal("Incorrect email or password");
       });
     done();
   });

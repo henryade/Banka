@@ -8,7 +8,7 @@
     "build": "babel . --ignore node_modules,build --require babel-polyfill --out-dir ./build",
     "start": "node --require babel-polyfill build/index.js",
     "dev": "nodemon --exec babel-node index.js",
-    "test": "npm run model && nyc --require babel-polyfill mocha build/test/index.spec.js --timeout 10000 --exit",
+    "test": "npm run model && nyc --require @babel/polyfill mocha build/test/index.spec.js --timeout 10000 --exit",
     "model": "babel-node models/controller/populate",
     "superuser": "babel-node models/controller/superuser",
     "test-dev": "npm run model && nyc --require @babel/register --require @babel/polyfill mocha test/index.spec.js --timeout 10000 --exit",
