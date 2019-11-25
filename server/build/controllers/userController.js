@@ -316,27 +316,29 @@ function () {
   }, {
     key: "forgotPassword",
     value: function forgotPassword(req, res) {
-      var token, name, message, result;
+      var _req$body, redirectLink, email, homeLink, id, token, name, message, result;
+
       return regeneratorRuntime.async(function forgotPassword$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
+              _req$body = req.body, redirectLink = _req$body.redirectLink, email = _req$body.email, homeLink = _req$body.homeLink, id = req.User.id;
               token = _jsonwebtoken["default"].sign({
-                id: req.User.id,
-                email: req.body.email
+                id: id,
+                email: email
               }, process.env.JWT_KEY, {
                 expiresIn: 60 * 60
               });
               name = "".concat(req.User.lastName, " ").concat(req.User.firstName);
-              message = _email["default"].resetPassword(token, name, req.body.email);
-              _context7.next = 5;
+              message = _email["default"].resetPassword(token, name, email, redirectLink, homeLink);
+              _context7.next = 6;
               return regeneratorRuntime.awrap(_email["default"].sendMail(message));
 
-            case 5:
+            case 6:
               result = _context7.sent;
 
               if (!(result === "Success" || result === undefined)) {
-                _context7.next = 8;
+                _context7.next = 9;
                 break;
               }
 
@@ -345,13 +347,13 @@ function () {
                 message: "Email Sent"
               }));
 
-            case 8:
+            case 9:
               return _context7.abrupt("return", res.status(400).json({
                 status: 400,
                 error: result
               }));
 
-            case 9:
+            case 10:
             case "end":
               return _context7.stop();
           }
@@ -365,29 +367,33 @@ function () {
         while (1) {
           switch (_context9.prev = _context9.next) {
             case 0:
-              _jsonwebtoken["default"].verify(req.params.token, process.env.JWT_KEY, function _callee4(err, decoded) {
-                return regeneratorRuntime.async(function _callee4$(_context8) {
-                  while (1) {
-                    switch (_context8.prev = _context8.next) {
-                      case 0:
-                        if (!err) {
-                          _context8.next = 3;
-                          break;
-                        }
+              if (req.query.site === "2") {
+                res.redirect("https://banka-app-in-react.herokuapp.com/changePassword?".concat(req.params.token));
+              } else {
+                _jsonwebtoken["default"].verify(req.params.token, process.env.JWT_KEY, function _callee4(err, decoded) {
+                  return regeneratorRuntime.async(function _callee4$(_context8) {
+                    while (1) {
+                      switch (_context8.prev = _context8.next) {
+                        case 0:
+                          if (!err) {
+                            _context8.next = 3;
+                            break;
+                          }
 
-                        res.send("link expired");
-                        return _context8.abrupt("return", null);
+                          res.send("link expired");
+                          return _context8.abrupt("return", null);
 
-                      case 3:
-                        res.redirect("https://henryade.github.io/Banka/forgot.html?email=".concat(decoded.email, "&id=").concat(decoded.id));
+                        case 3:
+                          return _context8.abrupt("return", res.redirect("https://henryade.github.io/Banka/forgot.html?email=".concat(decoded.email, "&id=").concat(decoded.id)));
 
-                      case 4:
-                      case "end":
-                        return _context8.stop();
+                        case 4:
+                        case "end":
+                          return _context8.stop();
+                      }
                     }
-                  }
+                  });
                 });
-              });
+              }
 
             case 1:
             case "end":

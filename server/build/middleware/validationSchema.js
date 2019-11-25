@@ -28,7 +28,9 @@ var SchemaObject = {
   amount: _joi["default"].number().positive().min(100).max(10000000).required(),
   type: _joi["default"].string().trim().valid(["savings", "current", "fixed", "fixed deposit", "joint"]).lowercase().required(),
   userType: _joi["default"].string().trim().valid(["admin", "staff"]).lowercase().required(),
-  status: _joi["default"].string().trim().valid(["active", "dormant"]).lowercase()
+  status: _joi["default"].string().trim().valid(["active", "dormant"]).lowercase(),
+  link: _joi["default"].string().uri(),
+  func: _joi["default"].any()
 };
 var _default = SchemaObject;
 exports["default"] = _default;
