@@ -35,6 +35,8 @@ const SchemaObject = {
   userType: Joi.string().trim().valid(["admin", "staff"]).lowercase()
     .required(),
   status: Joi.string().trim().valid(["active", "dormant"]).lowercase(),
+  link: Joi.string().uri(),
+  func: Joi.any(),
 };
 
 export default SchemaObject;

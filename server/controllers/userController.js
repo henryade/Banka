@@ -143,13 +143,14 @@ class UserController {
   }
 
   static async forgotPassword(req, res) {
+    const { body: { redirectLink, email, homeLink }, User: { id } } = req;
     const token = jwt.sign({
-      id: req.User.id,
-      email: req.body.email,
+      id,
+      email,
     }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
 
     const name = `${req.User.lastName} ${req.User.firstName}`;
-    const message = mail.resetPassword(token, name, req.body.email);
+    const message = mail.resetPassword(token, name, email, redirectLink, homeLink);
     const result = await mail.sendMail(message);
     if (result === "Success" || result === undefined) {
       return res.status(200).json({
@@ -164,13 +165,18 @@ class UserController {
   }
 
   static async passwordReset(req, res) {
-    jwt.verify(req.params.token, process.env.JWT_KEY, async (err, decoded) => {
-      if (err) {
-        res.send("link expired");
-        return null;
-      }
-      res.redirect(`https://henryade.github.io/Banka/forgot.html?email=${decoded.email}&id=${decoded.id}`);
-    });
+    if (req.query.site === "2") {
+      res.redirect(`https://banka-app-in-react.herokuapp.com/changePassword?${req.params.token}`);
+    } else {
+      jwt.verify(req.params.token, process.env.JWT_KEY, async (err, decoded) => {
+        if (err) {
+          res.send("link expired");
+          return null;
+        }
+
+        return res.redirect(`https://henryade.github.io/Banka/forgot.html?email=${decoded.email}&id=${decoded.id}`);
+      });
+    }
   }
 }
 

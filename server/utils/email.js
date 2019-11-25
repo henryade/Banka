@@ -3,10 +3,13 @@ import nodemailer from "nodemailer";
 class Email {
   static transport() {
     return nodemailer.createTransport({
-      service: "gmail",
+      service: "Gmail",
       auth: {
         user: process.env.OfficialBankaEmail,
         pass: process.env.EMAIL_PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false,
       },
     });
   }
@@ -22,7 +25,7 @@ class Email {
 
   static staffSignUp(name, email, password) {
     return {
-      from: process.env.EMAIL,
+      from: "noreply@banka.com",
       to: email,
       subject: "New Banka Account",
       html: `<div style="font-family:georgia">
@@ -40,7 +43,7 @@ class Email {
 
   static message(transaction) {
     return {
-      from: process.env.EMAIL,
+      from: "noreply@banka.com",
       to: transaction.email,
       subject: "Transaction Alert",
       html: `<div style="font-family:georgia">
@@ -87,23 +90,37 @@ class Email {
     };
   }
 
-  static resetPassword(token, name, email) {
+  static resetPassword(token, name, email, link, hlink) {
+    const redirectLink = `http://localhost:3000/api/v1/auth/passwordreset/${token}/forgot?${(link === "second") ? "site=2" : ""}`;
+    const homeLink = hlink || "https://henryade.github.io/Banka/";
     return {
-      from: process.env.EMAIL,
+      from: "noreply@banka.com",
       to: email,
       subject: "Reset Your Password",
-      html: `<div style="font-family:georgia">
-      <h1 style="background-color:#172A3A;color:white;padding-left:20px;border-radius:5% 90% 90% 5%;font-family:Comic Sans MS;">Banka </h1>
-      <p style="padding-bottom:10px;padding-left:5px;">Dear ${name},</p> 
-        <p style="padding-left:15px;">Banka electronic Notification Service (BeNS).
-        We got a request to reset your Banka password.</p>
-        <p style="padding-left:15px;">Find below the password reset link:</p>
-  <p style="text-align:center;"><a href=http://localhost:4030/api/v1/auth/passwordreset/${token}/forgot?>Reset Password</a></p>
-  <p style="padding-left:15px;">If you ignore this message, your password will not be changed and you can click the link below to access the app</p>
-         </div>
-        <p style="text-align:center;margin-top:50px">Click <a href="https://henryade.github.io/Banka/">here</a> to sign into your account.</p>
-
-<p style="text-align:center;color:#172A3A;font-weight:bolder;">&copy; Banka</p>`,
+      html: `<div class="container" style="width: 45%; margin: 10px auto; background: radial-gradient(circle, rgb(0, 255, 158) 50%, rgb(29, 90, 178) 100%);border-radius: 5px; padding:0 50px; color:#1d5ab2;">
+      <div style="font-family:georgia; color:#1d5ab2;font-weight: 600;">
+          <h1 style="font-family:Comic Sans MS; text-align:center;"><a href=${homeLink} onMouseOut={this.style.color='#1d5ab2'} onMouseOver={this.style.color='#ffab57'}>Banka</a> </h1>
+          <p style="padding-bottom:10px;color:#ffbf80;">Dear <span style="color:#fff;">${name},</span> </p> 
+          <p>Banka electronic Notification Service (BeNS).</p>
+          <p>We got a request to reset your Banka password. This link expires in one(1) hour. Find below the password reset link:</p>
+          <p style="text-align:center;"><a href=${redirectLink} onMouseOut={this.style.color='#1d5ab2'} onMouseOver={this.style.color='#ffab57'}>Reset Password</a></p>
+          <p>If you ignore this message, your password will not be changed and you can click the link below to access the app</p>
+      </div>
+      <p style="text-align:center;margin-top:50px">Click <a onMouseOut={this.style.color='#1d5ab2'} onMouseOver={this.style.color='#ffab57'} href=${homeLink}>here</a> to sign into your account.</p>
+      <p style="text-align:center;font-weight:bolder;">&copy; Banka</p>
+    <style scoped>
+    @media screen and (max-width: 650px) {
+      .container {
+        width: 75% !important;
+      }
+    }
+    @media screen and (max-width: 400px) {
+      .container {
+        width: 95%! important;
+      }
+    }
+    </style>
+    </div>`,
     };
   }
 }
