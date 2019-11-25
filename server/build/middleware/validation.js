@@ -69,7 +69,9 @@ exports.forgotPassword = function (req, res, next) {
 
 exports.reset = function (req, res, next) {
   var schema = _joi["default"].object().keys({
-    email: _validationSchema["default"].email
+    email: _validationSchema["default"].email,
+    homeLink: _validationSchema["default"].link,
+    redirectLink: _validationSchema["default"].func
   });
 
   footer(req, res, schema, next);

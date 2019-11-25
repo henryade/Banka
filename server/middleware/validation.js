@@ -56,6 +56,8 @@ exports.forgotPassword = (req, res, next) => {
 exports.reset = (req, res, next) => {
   const schema = Joi.object().keys({
     email: check.email,
+    homeLink: check.link,
+    redirectLink: check.func,
   });
 
   footer(req, res, schema, next);
