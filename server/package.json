@@ -29,7 +29,7 @@
     "dotenv": "^7.0.0",
     "eslint-config-airbnb": "^17.1.0",
     "express": "^4.16.4",
-    "express-fileupload": "^1.1.4",
+    "express-fileupload": "^1.1.9",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-authentication": "^0.4.0",
